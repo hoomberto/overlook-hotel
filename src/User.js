@@ -7,3 +7,5 @@ class User {
     this.type;
   }
 }
+
+export default User;

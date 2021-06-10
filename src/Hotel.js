@@ -3,21 +3,21 @@ class Hotel {
     this.customers = customersData;
     this.staff = [];
     this.rooms = roomsData;
-    this.allBookings = bookingsData;
+    this.bookings = bookingsData;
     this.calendar = calendar;
     this.roomTypes = this.uniqueRoomTypes();
+    this.availableToday = this.checkAvailability(this.calendar.currentDate)
   }
 
-  checkAvailability() {
-    // Go through calendar, check if any dates
-    // Correspond to dates held in bookings
-    // If so, block off those dates
+  checkAvailability(date) {
+    return {
+      bookedRooms: this.roomsBookedOnDay(this.bookedOnDay(date)),
+      availableRooms: this.roomsAvailableOnDay(this.bookedOnDay(date))
+    }
   }
 
   bookedOnDay(date) {
-    return this.allBookings.filter(booking => booking.date === date)
-
-    // I want to go through the bookings and
+    return this.bookings.filter(booking => booking.date === date)
   }
 
   roomsAvailableOnDay(bookings) {
@@ -29,17 +29,6 @@ class Hotel {
   }
 
   uniqueRoomTypes() {
-    // let rooms = [];
-    // this.rooms.forEach(room => {
-    //   if (!rooms.includes(room.roomType)) {
-    //     rooms.push(room.roomType)
-    //   }
-    // })
-    //
-    // this.rooms.forEach(room => {
-    //   if (rooms.includes(room.roomType))
-    // })
-
     return this.rooms.reduce((acc, currentVal, index) => {
       let roomInfo = { type: currentVal.roomType, price: currentVal.costPerNight}
       if (!acc.some(room => room.type === roomInfo.type)) {
@@ -47,6 +36,18 @@ class Hotel {
       }
       return acc
     }, [])
+  }
+
+  correlateData() {
+    // Sort bookings before correlating with users, easier to read
+    let sortedBookings = this.bookings.sort((a, b) => a.date > b.date ? 1 : -1);
+    this.customers.forEach(user => {
+      sortedBookings.forEach(booking => {
+        if (booking.userID === user.id) {
+          user.bookings.push(booking)
+        }
+      })
+    })
   }
 }
 

@@ -6,6 +6,7 @@ dayjs.extend(weekOfYear)
 
 import apiCalls from './apiCalls'
 import Hotel from './Hotel'
+import User from './User'
 import Calendar from './Calendar'
 
 // This is the JavaScript entry file - your code begins here
@@ -20,29 +21,38 @@ import './images/turing-logo.png'
 
 // Global Variables
 
-let hotel;
-
+let hotel, currentUser;
 
 console.log('This is the JavaScript entry file - your code begins here.');
 let fetched = apiCalls.getData().then(data => {
   let customerData = data[0];
   let bookingsData = data[1];
   let roomsData = data[2];
-  // console.log(bookingsData)
+
   let calendar = new Calendar()
-  hotel = new Hotel(customerData.customers, roomsData.rooms, bookingsData.bookings, calendar)
-  console.log(hotel.calendar.currentDate)
-  console.log(hotel)
-  let bookedOnFirstDay = hotel.bookedOnDay("2020/01/08")
-  let roomsBookedToday = hotel.roomsBookedOnDay(bookedOnFirstDay)
-  let availableToday = hotel.roomsAvailableOnDay(bookedOnFirstDay)
-  console.log(roomsBookedToday)
-  console.log(availableToday)
-  console.log(hotel.roomTypes)
-  // let sorted = bookingsData.bookings.sort((a, b) => a.date > b.date ? 1 : -1);
-  //
-  // let uniqueDates =  getUniqueDates(sorted)
+  let instaUsers = customerData.customers.map(customer => new User(customer))
+  hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
+  hotel.correlateData()
+  getUser(Math.floor(Math.random() * hotel.customers.length))
 })
+
+const getUser = (id) => {
+  apiCalls.fetchUser(id).then(data => {
+    let foundUser = hotel.customers.find(customer => customer.id === data.id)
+    currentUser = foundUser
+  })
+}
+
+window.addEventListener('click', function() {
+  console.log(currentUser)
+})
+
+// let user1 = apiCalls.fetchUser(1).then(data => {
+//   console.log(data)
+//   let correlated = hotel.customers.find(customer => customer.id === data.id)
+//   console.log(correlated)
+// })
+
 
 // const getUniqueDates = (sorted) => {
 //   let uniqueDates = [];
