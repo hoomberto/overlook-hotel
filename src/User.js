@@ -7,10 +7,12 @@ class User {
     this.type;
   }
 
-  setTotalSpent(hotel) {
+  setRoomData(hotel) {
     let spent = 0;
     this.bookings.forEach(booking => {
       let correlatedRoom = hotel.rooms.find(room => room.number === booking.roomNumber)
+      booking.roomType = correlatedRoom.roomType
+      booking.cost = correlatedRoom.costPerNight
       spent += correlatedRoom.costPerNight
     })
     this.spent = spent.toFixed(2);
