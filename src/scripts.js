@@ -40,19 +40,26 @@ const getUser = (id) => {
   apiCalls.fetchUser(id).then(data => {
     let foundUser = hotel.customers.find(customer => customer.id === data.id)
     currentUser = foundUser
+    currentUser.setTotalSpent(hotel);
   })
 }
 
-window.addEventListener('click', function() {
+let test = document.getElementById('test')
+let test2 = document.getElementById('test2')
+let test3 = document.getElementById('test3')
+test.addEventListener('click', function() {
   console.log(currentUser)
 })
 
-// let user1 = apiCalls.fetchUser(1).then(data => {
-//   console.log(data)
-//   let correlated = hotel.customers.find(customer => customer.id === data.id)
-//   console.log(correlated)
-// })
 
+test2.addEventListener('click', function() {
+  let spent = currentUser.getTotalSpent();
+  console.log(spent)
+})
+
+test3.addEventListener('click', function() {
+  console.log(currentUser.getBookings())
+})
 
 // const getUniqueDates = (sorted) => {
 //   let uniqueDates = [];
