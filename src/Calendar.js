@@ -1,6 +1,8 @@
+import dayjs from 'dayjs';
 class Calendar {
   constructor() {
-    this.start;
-    this.end;
+    this.currentDate = dayjs().format('YYYY/MM/DD')
   }
 }
+
+export default Calendar
