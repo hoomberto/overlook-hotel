@@ -8,6 +8,7 @@ import apiCalls from './apiCalls'
 import Hotel from './Hotel'
 import User from './User'
 import Calendar from './Calendar'
+import { greetUser, displayPreviousBookings } from './domUpdates'
 
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
@@ -33,32 +34,28 @@ let fetched = apiCalls.getData().then(data => {
   let instaUsers = customerData.customers.map(customer => new User(customer))
   hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
   hotel.correlateData()
-  getUser(Math.floor(Math.random() * hotel.customers.length))
+  getUser(Math.floor(Math.random() * hotel.customers.length + 1))
 })
 
 const getUser = (id) => {
   apiCalls.fetchUser(id).then(data => {
     let foundUser = hotel.customers.find(customer => customer.id === data.id)
     currentUser = foundUser
-    currentUser.setTotalSpent(hotel);
+    currentUser.setRoomData(hotel);
+    greetUser(currentUser)
+    displayPreviousBookings(currentUser);
   })
 }
 
-let test = document.getElementById('test')
-let test2 = document.getElementById('test2')
+// let test = document.getElementById('test')
 let test3 = document.getElementById('test3')
-test.addEventListener('click', function() {
-  console.log(currentUser)
-})
+// test.addEventListener('click', function() {
+//   console.log(currentUser)
+// })
 
-
-test2.addEventListener('click', function() {
-  let spent = currentUser.getTotalSpent();
-  console.log(spent)
-})
 
 test3.addEventListener('click', function() {
-  console.log(currentUser.getBookings())
+  console.log(currentUser)
 })
 
 // const getUniqueDates = (sorted) => {
