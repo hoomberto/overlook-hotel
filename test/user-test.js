@@ -75,6 +75,7 @@ describe('User', () => {
     let users = [user, user2];
 
     hotel = new Hotel(users, rooms, bookings, calendar)
+    hotel.correlateData();
 
   })
   it('should be a function', () => {
@@ -91,5 +92,12 @@ describe('User', () => {
 
   it('should have a name', () => {
     expect(user.name).to.equal('Nerdo');
+  });
+
+  it('should be able to set correlated data from the hotel', () => {
+    user.setRoomData(hotel)
+    user2.setRoomData(hotel)
+    expect(user.bookings.length).to.equal(2)
+    expect(user2.bookings.length).to.equal(1);
   });
 });
