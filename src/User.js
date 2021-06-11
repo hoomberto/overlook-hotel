@@ -9,14 +9,14 @@ class User {
   }
 
   setRoomData(hotel) {
-    let spent = 0;
+    // let spent = 0;
     this.bookings.forEach(booking => {
       let correlatedRoom = hotel.rooms.find(room => room.number === booking.roomNumber)
       booking.roomType = correlatedRoom.roomType
       booking.cost = correlatedRoom.costPerNight
-      spent += correlatedRoom.costPerNight
+      this.spent += correlatedRoom.costPerNight
     })
-    this.spent = spent.toFixed(2);
+    this.spent = this.spent.toFixed(2);
     this.getPreferredRoomType()
   }
 
@@ -29,9 +29,6 @@ class User {
   }
 
   getPreferredRoomType() {
-    // I want to create a count for each type of room that the user
-    // has visited. Then I want to sort by the count, and return
-    // Just the top value.
     let count = this.bookings.reduce((acc, currentVal) => {
       let typeOfRoom = currentVal.roomType;
       if (!acc[typeOfRoom]) {

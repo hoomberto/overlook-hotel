@@ -34,7 +34,7 @@ let fetched = apiCalls.getData().then(data => {
   let instaUsers = customerData.customers.map(customer => new User(customer))
   hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
   hotel.correlateData()
-  getUser(Math.floor(Math.random() * hotel.customers.length))
+  getUser(Math.floor(Math.random() * hotel.customers.length + 1))
 })
 
 const getUser = (id) => {
