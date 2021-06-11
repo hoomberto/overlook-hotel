@@ -48,15 +48,15 @@ const getUser = (id) => {
 }
 
 // let test = document.getElementById('test')
-// let test3 = document.getElementById('test3')
+let test3 = document.getElementById('test3')
 // test.addEventListener('click', function() {
 //   console.log(currentUser)
 // })
 
 
-// test3.addEventListener('click', function() {
-//   console.log(currentUser.getBookings())
-// })
+test3.addEventListener('click', function() {
+  console.log(currentUser)
+})
 
 // const getUniqueDates = (sorted) => {
 //   let uniqueDates = [];

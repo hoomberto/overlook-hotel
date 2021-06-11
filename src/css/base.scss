@@ -238,4 +238,47 @@ li:hover::after {
 
 #previousBookings article {
   box-shadow: $main-box-shadow;
+  border-bottom: 1px solid gray;
 }
+
+// #previousBookings article::after {
+//   position: absolute;
+//   content: '';
+//   width: 0;
+//   height: 170px;
+//   transform: translate(0px, -34.5px);
+//   border-radius: 4px;
+//   background: $main-grad;
+//   transition: all .2s linear;
+// }
+//
+// #previousBookings article:hover::after {
+//   width: 90%;
+// }
+
+
+// .card-box {
+//   background-color: #DBD7D2;
+//   margin: 3% 0;
+//   border-radius: 4px;
+//   cursor: pointer;
+//   height: 35px;
+//   transition: all .2s ease;
+// }
+//
+// .card-box p {
+//   position: relative;
+//   margin: 9px 0;
+//   margin-left: 3%;
+//   z-index: 2;
+//   font-weight: 300;
+//   font-size: 14px;
+//   text-transform: uppercase;
+// }
+// .card-box p::after {
+//   position: absolute;
+//   font-family: "Font Awesome 5 Free";
+//   content: '\f105';
+//   font-weight: 900;
+//   transform: translate(70px, 1px)
+// }
