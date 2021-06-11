@@ -107,4 +107,48 @@ describe('User', () => {
     expect(user.getTotalSpent()).to.equal('$968.52')
     expect(user2.getTotalSpent()).to.equal('$358.40');
   });
+
+  it('should be able to retrieve bookings', () => {
+    user.setRoomData(hotel)
+    user2.setRoomData(hotel)
+    expect(user.getBookings()).to.deep.equal([
+      {
+        id: '5fwrgu4i7k55hl6t5',
+        userID: 1,
+        date: '2020/01/24',
+        roomNumber: 2,
+        roomServiceCharges: [],
+        roomType: 'single room',
+        cost: 477.38
+      },
+      {
+        id: '5fwrgu4i7k55hl6sz',
+        userID: 1,
+        date: '2020/04/22',
+        roomNumber: 3,
+        roomServiceCharges: [],
+        roomType: 'single room',
+        cost: 491.14
+      }
+    ]);
+    expect(user2.getBookings()).to.deep.equal([
+      {
+        id: '5fwrgu4i7k55hl6t6',
+        userID: 2,
+        date: '2020/01/10',
+        roomNumber: 1,
+        roomServiceCharges: [],
+        roomType: 'residential suite',
+        cost: 358.4
+      }
+    ]);
+  });
+
+  it('should be able to retrieve the preferred room type', () => {
+    user.setRoomData(hotel)
+    user2.setRoomData(hotel)
+    expect(user.roomPreference).to.equal('single room')
+    expect(user2.roomPreference).to.equal('residential suite');
+  });
+
 });
