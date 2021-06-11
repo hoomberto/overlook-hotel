@@ -44,7 +44,17 @@ class Hotel {
     this.customers.forEach(user => {
       sortedBookings.forEach(booking => {
         if (booking.userID === user.id) {
-          user.bookings.push(booking)
+          let isPastBooking = this.calendar.checkIfPastBooking(booking.date);
+          let isCurrentBooking = this.calendar.checkIfCurrentBooking(booking.date)
+          if (isPastBooking && !isCurrentBooking) {
+            user.bookings.past.push(booking)
+          }
+          else if (isCurrentBooking) {
+            user.bookings.current.push(booking)
+          }
+          else {
+            user.bookings.future.push(booking)
+          }
         }
       })
     })

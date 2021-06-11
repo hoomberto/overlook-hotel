@@ -6,12 +6,12 @@ export const greetUser = (currentUser) => {
 }
 
 export const displayPreviousBookings = (currentUser) => {
-  currentUser.bookings.forEach((booking) => {
+  currentUser.bookings.past.forEach((booking) => {
     document.getElementById('previousBookings').innerHTML += `
       <article>
         <h3>Date stayed: ${booking.date}</h3>
         <h4>Room Type: ${booking.roomType}</h4>
-        <h5>Room Cost: ${booking.cost}</h5>
+        <h5>Room Cost: $${booking.cost}</h5>
       </article>
     `
 
