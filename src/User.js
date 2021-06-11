@@ -17,7 +17,7 @@ class User {
       spent += correlatedRoom.costPerNight
     })
     this.spent = spent.toFixed(2);
-    // this.getPreferredRoomType()
+    this.getPreferredRoomType()
   }
 
   getTotalSpent() {

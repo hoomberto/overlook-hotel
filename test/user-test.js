@@ -100,4 +100,11 @@ describe('User', () => {
     expect(user.bookings.length).to.equal(2)
     expect(user2.bookings.length).to.equal(1);
   });
+
+  it('should be able to calculate the total cost spent across prior visits', () => {
+    user.setRoomData(hotel)
+    user2.setRoomData(hotel)
+    expect(user.getTotalSpent()).to.equal('$968.52')
+    expect(user2.getTotalSpent()).to.equal('$358.40');
+  });
 });
