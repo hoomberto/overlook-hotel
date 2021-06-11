@@ -94,11 +94,15 @@ describe('User', () => {
     expect(user.name).to.equal('Nerdo');
   });
 
+  it('should be able to hold previous bookings a name', () => {
+    expect(user.name).to.equal('Nerdo');
+  });
+
   it('should be able to set correlated data from the hotel', () => {
     user.setRoomData(hotel)
     user2.setRoomData(hotel)
-    expect(user.bookings.length).to.equal(2)
-    expect(user2.bookings.length).to.equal(1);
+    expect(user.bookings.past.length).to.equal(2)
+    expect(user2.bookings.past.length).to.equal(1);
   });
 
   it('should be able to calculate the total cost spent across prior visits', () => {
@@ -110,8 +114,7 @@ describe('User', () => {
 
   it('should be able to retrieve bookings', () => {
     user.setRoomData(hotel)
-    user2.setRoomData(hotel)
-    expect(user.getBookings()).to.deep.equal([
+    expect(user.getBookings('past')).to.deep.equal([
       {
         id: '5fwrgu4i7k55hl6t5',
         userID: 1,
@@ -129,17 +132,6 @@ describe('User', () => {
         roomServiceCharges: [],
         roomType: 'single room',
         cost: 491.14
-      }
-    ]);
-    expect(user2.getBookings()).to.deep.equal([
-      {
-        id: '5fwrgu4i7k55hl6t6',
-        userID: 2,
-        date: '2020/01/10',
-        roomNumber: 1,
-        roomServiceCharges: [],
-        roomType: 'residential suite',
-        cost: 358.4
       }
     ]);
   });

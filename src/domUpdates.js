@@ -6,7 +6,7 @@ export const greetUser = (currentUser) => {
 }
 
 export const displayPreviousBookings = (currentUser) => {
-  currentUser.bookings.past.forEach((booking) => {
+  currentUser.getBookings('past').forEach((booking) => {
     document.getElementById('previousBookings').innerHTML += `
       <article>
         <h3>Date stayed: ${booking.date}</h3>

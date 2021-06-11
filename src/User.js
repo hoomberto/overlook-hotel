@@ -31,8 +31,8 @@ class User {
     return `$${this.spent}`;
   }
 
-  getBookings() {
-    return this.bookings
+  getBookings(time) {
+    return this.bookings[time]
   }
 
   getPreferredRoomType() {
@@ -44,7 +44,8 @@ class User {
       acc[typeOfRoom].count++;
       return acc
     }, {})
-    let preferred = Object.values(count).sort((a, b) => a.count > b.count ? -1 : 1)[0]
+    let preferred = Object.values(count)
+    .sort((a, b) => a.count > b.count ? -1 : 1)[0];
     this.roomPreference = preferred.type;
   }
 }
