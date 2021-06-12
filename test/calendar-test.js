@@ -27,7 +27,7 @@ describe('Calendar', () => {
 
   it('should check if an input date is a past date relative to the current date', () => {
     expect(calendar.checkIfPastBooking("2020/01/01")).to.be.true;
-    expect(calendar.checkIfPastBooking("2022/01/01")).to.be.true;
+    expect(calendar.checkIfPastBooking("2022/01/01")).to.be.false;
   });
 
 

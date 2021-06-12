@@ -26,9 +26,8 @@ class Hotel {
   }
 
   filterByType(type, date) {
-    let availability = this.checkAvailability(date).availableRooms
+    return this.checkAvailability(date).availableRooms
     .filter(room => room.roomType === type)
-    return availability
   }
 
   addBooking(newBooking) {
