@@ -16,6 +16,21 @@ class Hotel {
     }
   }
 
+  checkIfRoomAvailable(number, date) {
+    let roomsOnDay = this.checkAvailability(date);
+    let bookedRoom = roomsOnDay.bookedRooms.find(room => room.number === number)
+    if (bookedRoom) {
+      return false
+    }
+    return true
+  }
+
+  filterByType(type, date) {
+    let availability = this.checkAvailability(date).availableRooms
+    .filter(room => room.roomType === type)
+    return availability
+  }
+
   addBooking(newBooking) {
     this.bookings.push(newBooking)
   }
