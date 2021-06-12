@@ -1,9 +1,9 @@
 class Hotel {
   constructor(customersData, roomsData, bookingsData, calendar) {
-    this.customers = customersData;
+    this.customers = customersData || [];
     this.staff = [];
-    this.rooms = roomsData;
-    this.bookings = bookingsData;
+    this.rooms = roomsData || [];
+    this.bookings = bookingsData || [];
     this.calendar = calendar;
     this.roomTypes = this.uniqueRoomTypes();
     this.availableToday = this.checkAvailability(this.calendar.currentDate)
@@ -14,6 +14,10 @@ class Hotel {
       bookedRooms: this.roomsBookedOnDay(this.bookedOnDay(date)),
       availableRooms: this.roomsAvailableOnDay(this.bookedOnDay(date))
     }
+  }
+
+  addBooking(newBooking) {
+    this.bookings.push(newBooking)
   }
 
   bookedOnDay(date) {
