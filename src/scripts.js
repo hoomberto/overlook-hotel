@@ -36,6 +36,15 @@ let fetched = apiCalls.getData().then(data => {
   hotel.correlateData()
   getUser(Math.floor(Math.random() * hotel.customers.length + 1))
 })
+.catch(err => displayPageLevelError(err))
+
+const displayPageLevelError = (err) => {
+  let dashboard = document.getElementById('dashboard');
+  dashboard.innerHTML = `
+  <h2>Technical Difficulties - try again later!</h2>
+  `
+  console.log(err)
+}
 
 const getUser = (id) => {
   apiCalls.fetchUser(id).then(data => {

@@ -46,7 +46,7 @@ class Hotel {
         if (booking.userID === user.id) {
           let isPastBooking = this.calendar.checkIfPastBooking(booking.date);
           let isCurrentBooking = this.calendar.checkIfCurrentBooking(booking.date)
-          if (isPastBooking && !isCurrentBooking) {
+          if (isPastBooking) {
             user.bookings.past.push(booking)
           }
           else if (isCurrentBooking) {
