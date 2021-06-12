@@ -133,12 +133,60 @@ describe('Hotel', () => {
     ])
   });
 
+  it('should correlate bookings data with users data', () => {
+    hotel.correlateData();
+    expect(hotel.customers[0].bookings.past.length).to.equal(2)
+    expect(hotel.customers[1].bookings.past.length).to.equal(1)
+  });
 
-  // it('should check if an input date is a past date relative to the current date', () => {
-  //   expect(calendar.checkIfPastBooking("2020/01/01")).to.be.true;
-  //   expect(calendar.checkIfPastBooking("2022/01/01")).to.be.true;
-  // });
-  //
-  //
+  it('should be able to return bookings on a specified date', () => {
+    expect(hotel.bookedOnDay('2020/01/24').length).to.equal(1)
+    expect(hotel.bookedOnDay('2020/04/22').length).to.equal(1)
+  });
+
+  it('should be able to return a list of available rooms for a given day', () => {
+    let bookingsOnJan10 = hotel.bookedOnDay('2020/01/10')
+    expect(hotel.roomsAvailableOnDay(bookingsOnJan10).length).to.equal(2)
+
+  });
+
+  it('should be able to return a list of booked rooms for a given day', () => {
+    let bookingsOnJan10 = hotel.bookedOnDay('2020/01/10')
+    expect(hotel.roomsBookedOnDay(bookingsOnJan10).length).to.equal(1)
+
+  });
+
+  it('should be able to return a list of both booked and available rooms for a given day', () => {
+    expect(hotel.checkAvailability('2020/01/10')).to.deep.equal({
+      bookedRooms: [
+        {
+          number: 1,
+          roomType: 'residential suite',
+          bidet: true,
+          bedSize: 'queen',
+          numBeds: 1,
+          costPerNight: 358.4
+        }
+      ],
+      availableRooms: [
+        {
+          number: 2,
+          roomType: 'single room',
+          bidet: false,
+          bedSize: 'full',
+          numBeds: 2,
+          costPerNight: 477.38
+        },
+        {
+          number: 3,
+          roomType: 'single room',
+          bidet: false,
+          bedSize: 'king',
+          numBeds: 1,
+          costPerNight: 491.14
+        }
+      ]
+    });
+  });
 
 });
