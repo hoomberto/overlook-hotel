@@ -189,4 +189,23 @@ describe('Hotel', () => {
     });
   });
 
+  it('should be able to filter available rooms by a specified room type', () => {
+    expect(hotel.filterByType('single room', '2020/01/01').length).to.equal(2)
+    expect(hotel.filterByType('residential suite', '2020/01/01').length).to.equal(1)
+  });
+
+  it('should be able add a new booking', () => {
+    let newBooking = {
+      "id": "asdjfkl",
+      "userID": 1,
+      "date": "2020/11/11",
+      "roomNumber": 1,
+      "roomServiceCharges": []
+    }
+
+    expect(hotel.bookings.length).to.equal(3)
+    hotel.addBooking(newBooking)
+    expect(hotel.bookings.length).to.equal(4)
+  });
+
 });

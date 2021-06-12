@@ -16,14 +16,14 @@ class Hotel {
     }
   }
 
-  checkIfRoomAvailable(number, date) {
-    let roomsOnDay = this.checkAvailability(date);
-    let bookedRoom = roomsOnDay.bookedRooms.find(room => room.number === number)
-    if (bookedRoom) {
-      return false
-    }
-    return true
-  }
+  // checkIfRoomAvailable(number, date) {
+  //   let roomsOnDay = this.checkAvailability(date);
+  //   let bookedRoom = roomsOnDay.bookedRooms.find(room => room.number === number)
+  //   if (bookedRoom) {
+  //     return false
+  //   }
+  //   return true
+  // }
 
   filterByType(type, date) {
     return this.checkAvailability(date).availableRooms
