@@ -87,6 +87,53 @@ describe('Hotel', () => {
     expect(hotel.customers.length).to.equal(2);
   });
 
+  it('should have a list reserved for hotel staff', () => {
+    expect(hotel.staff).to.deep.equal([]);
+  });
+
+  it('should have a list of its rooms', () => {
+    expect(hotel.rooms.length).to.equal(3);
+  });
+
+  it('should have a list of bookings', () => {
+    expect(hotel.bookings.length).to.equal(3);
+  });
+
+  it('should have a calendar that is an instance of Calendar class', () => {
+    expect(hotel.calendar).to.be.an.instanceof(Calendar)
+  });
+
+  it('should have a calendar that is an instance of Calendar class', () => {
+    expect(hotel.calendar).to.be.an.instanceof(Calendar)
+  });
+
+  it('should have a method to return a list of unique room types', () => {
+    expect(hotel.uniqueRoomTypes()).to.deep.equal([
+      {
+        "price": 358.4,
+        "type": "residential suite"
+      },
+      {
+        "price": 477.38,
+        "type": "single room"
+      }
+    ])
+  });
+
+  it('should have a property that holds a list of unique room types', () => {
+    expect(hotel.roomTypes).to.deep.equal([
+      {
+        "price": 358.4,
+        "type": "residential suite"
+      },
+      {
+        "price": 477.38,
+        "type": "single room"
+      }
+    ])
+  });
+
+
   // it('should check if an input date is a past date relative to the current date', () => {
   //   expect(calendar.checkIfPastBooking("2020/01/01")).to.be.true;
   //   expect(calendar.checkIfPastBooking("2022/01/01")).to.be.true;
