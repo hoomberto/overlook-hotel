@@ -253,7 +253,5 @@ describe('Hotel', () => {
     .to.equal(1)
     expect(hotel.checkAvailability(hotel.calendar.currentDate).availableRooms.length)
     .to.equal(2)
-
   });
-
 });
