@@ -66,7 +66,7 @@ class Hotel {
 
   correlateData() {
     // Sort bookings before correlating with users, easier to read
-    let sortedBookings = this.bookings.sort((a, b) => a.date > b.date ? 1 : -1);
+    let sortedBookings = this.bookings.sort((a, b) => a.date > b.date ? -1 : 1);
     this.customers.forEach(user => {
       sortedBookings.forEach(booking => {
         if (booking.userID === user.id) {

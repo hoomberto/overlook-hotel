@@ -27,9 +27,14 @@ export const displayAvailableRooms = (hotel) => {
   hotel.checkAvailability(hotel.calendar.currentDate).availableRooms.forEach((room) => {
     document.getElementById('availableRoomsSection').innerHTML += `
       <article class="available-room">
+      <div class="info-container">
         <h3>Room Number: ${room.number}</h3>
         <h4>Room Type: ${room.roomType.toUpperCase()}</h4>
-        <h4>Room Cost Per Night: $${room.costPerNight}</h5>
+        <h4>Cost Per Night: $${room.costPerNight}</h5>
+      </div>
+      <div>
+        <img alt="hotel-room-photo" />
+      </div>
       </article>
     `
 

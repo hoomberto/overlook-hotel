@@ -282,6 +282,11 @@ input {
   width: 60%;
 }
 
+.available-room {
+  display: flex;
+  justify-content: space-between;
+}
+
 // #previousBookings article::after {
 //   position: absolute;
 //   content: '';
