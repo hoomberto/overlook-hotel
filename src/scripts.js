@@ -8,7 +8,7 @@ import apiCalls from './apiCalls'
 import Hotel from './Hotel'
 import User from './User'
 import Calendar from './Calendar'
-import { greetUser, displayPreviousBookings } from './domUpdates'
+import { greetUser, displayPreviousBookings, displayAvailableRooms } from './domUpdates'
 
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
@@ -34,15 +34,18 @@ let fetched = apiCalls.getData().then(data => {
   let instaUsers = customerData.customers.map(customer => new User(customer))
   hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
   hotel.correlateData()
+  displayAvailableRooms(hotel)
+  let formattedForInput = hotel.calendar.currentDate.split('/').join('-')
+  document.getElementById('dateSelector').setAttribute('min', `${formattedForInput}`)
   getUser(Math.floor(Math.random() * hotel.customers.length + 1))
   let availableSingle = hotel.filterByType('single room', hotel.calendar.currentDate)
   let residential = hotel.filterByType('residential suite', hotel.calendar.currentDate)
-  console.log(availableSingle)
-  console.log(residential)
+  // console.log(availableSingle)
+  // console.log(residential)
   let junior = hotel.filterByType('junior suite', hotel.calendar.currentDate)
   let suite = hotel.filterByType('suite', hotel.calendar.currentDate)
-  console.log(junior)
-  console.log(suite)
+  // console.log(junior)
+  // console.log(suite)
 })
 .catch(err => displayPageLevelError(err))
 

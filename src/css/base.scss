@@ -22,18 +22,15 @@ body {
 }
 
 main {
-  margin-top: 8%;
+  // margin-top: 8%;
 }
 
 main h1 {
   position: absolute;
-  margin-left: 2%;
+  // margin-left: 2%;
 }
 
-main section {
-  width: 60%;
-  transform: translate(50px, 150px);
-}
+
 
 /* SCROLLBAR */
 
@@ -60,7 +57,7 @@ nav {
   color: #333333;
   width: 100vw;
   box-shadow: $main-box-shadow;
-  margin-bottom: 10%;
+  // margin-bottom: 10%;
 }
 
 nav div {
@@ -241,6 +238,50 @@ li:hover::after {
   border-bottom: 1px solid gray;
 }
 
+
+
+// MAIN BOOKING SECTION
+
+main {
+  display: flex;
+  width: 100%;
+}
+
+section {
+  margin: 0;
+}
+
+main section {
+  // width: 60%;
+  transform: translate(50px, 150px);
+}
+
+.user-dashboard {
+  width: 30%;
+}
+
+.booking-section {
+  width: 60%;
+}
+
+#availableRoomsSection {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  margin: 0;
+  margin-top: -10%;
+  height: 600px;
+  overflow: auto;
+}
+
+.available-rooms {
+  width: 100%;
+}
+
+input {
+  width: 60%;
+}
+
 // #previousBookings article::after {
 //   position: absolute;
 //   content: '';
@@ -282,3 +323,29 @@ li:hover::after {
 //   font-weight: 900;
 //   transform: translate(70px, 1px)
 // }
+
+@media screen and (max-width: 808px) {
+  main {
+    flex-direction: column;
+  }
+
+  .booking-section {
+    order: 1;
+    margin-bottom: 21%;
+  }
+
+  .user-dashboard {
+    order: 2;
+    margin-top: 10%;
+  }
+
+  #availableRoomsSection {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: 1fr;
+    height: 500px;
+    margin-top: -43%;
+  }
+
+
+
+}

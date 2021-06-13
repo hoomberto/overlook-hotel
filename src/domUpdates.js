@@ -22,3 +22,17 @@ export const displayPreviousBookings = (currentUser) => {
   });
 
 }
+
+export const displayAvailableRooms = (hotel) => {
+  hotel.checkAvailability(hotel.calendar.currentDate).availableRooms.forEach((room) => {
+    document.getElementById('availableRoomsSection').innerHTML += `
+      <article class="available-room">
+        <h3>Room Number: ${room.number}</h3>
+        <h4>Room Type: ${room.roomType.toUpperCase()}</h4>
+        <h4>Room Cost Per Night: $${room.costPerNight}</h5>
+      </article>
+    `
+
+  });
+
+}
