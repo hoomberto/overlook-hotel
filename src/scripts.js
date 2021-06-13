@@ -1,6 +1,9 @@
 import dayjs from 'dayjs';
 import dayOfYear from 'dayjs/plugin/dayOfYear'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+
+dayjs.extend(localizedFormat)
 dayjs.extend(dayOfYear)
 dayjs.extend(weekOfYear)
 
@@ -106,8 +109,9 @@ roomTypeFilter.addEventListener('change', () => {
   let choice = roomTypeFilter.value;
   let selectedDate = datePicker.value;
   let filtered = hotel.filterByType(choice, selectedDate);
+  let formatted = dayjs(selectedDate, "YYYY-MM-DD").format('LL')
   availableText.innerText = "";
-  availableText.innerText += `${choice.toUpperCase()} Rooms Available on ${selectedDate}`
+  availableText.innerText += `${choice.toUpperCase()} Rooms Available on ${formatted}`
   renderFilter(filtered)
 })
 
@@ -120,20 +124,31 @@ event.preventDefault();
 
   if (event.target.name === "info") {
 
-
-
     let modal = document.getElementById('userInputModal')
     // alert("working")
     modal.innerHTML = "";
     let previous = event.target.previousElementSibling;
+    let next = event.target.nextElementSibling
+    let roomImage = next
+    let selectedDate = datePicker.value;
+    let formatted = dayjs(selectedDate, "YYYY-MM-DD").format('LL')
 
+    console.log(roomImage)
     // console.log(previous.children[1].innerText)
     // document.getElementById('userInputModal').innerHTML = "";
+    // <img class="${roomImg}-modal">
     modal.style.display = 'flex'
     modal.innerHTML += `
     <article class='user-input-content'>
+    <div class=info-container>
+      <h3>${previous.children[0].innerText}</h3>
+      <h4>${previous.children[1].innerText}</h4>
+      <h4>${previous.children[2].innerText}</h4>
+    </div>
+    <img src="${roomImage.src}" alt="${roomImage.alt}">
+    <h5>Make Booking for: ${formatted}</h5>
+    <button class="new-booking">BOOK ROOM</button>
     <button class="close-modal">CLOSE</button>
-    <h3>${previous.children[1].innerText}</h3>
     </article>
     `
 
