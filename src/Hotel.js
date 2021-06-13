@@ -1,9 +1,9 @@
 class Hotel {
   constructor(customersData, roomsData, bookingsData, calendar) {
-    this.customers = customersData;
+    this.customers = customersData || [];
     this.staff = [];
-    this.rooms = roomsData;
-    this.bookings = bookingsData;
+    this.rooms = roomsData || [];
+    this.bookings = bookingsData || [];
     this.calendar = calendar;
     this.roomTypes = this.uniqueRoomTypes();
     this.availableToday = this.checkAvailability(this.calendar.currentDate)
@@ -13,6 +13,32 @@ class Hotel {
     return {
       bookedRooms: this.roomsBookedOnDay(this.bookedOnDay(date)),
       availableRooms: this.roomsAvailableOnDay(this.bookedOnDay(date))
+    }
+  }
+
+  // checkIfRoomAvailable(number, date) {
+  //   let roomsOnDay = this.checkAvailability(date);
+  //   let bookedRoom = roomsOnDay.bookedRooms.find(room => room.number === number)
+  //   if (bookedRoom) {
+  //     return false
+  //   }
+  //   return true
+  // }
+
+  filterByType(type, date) {
+    return this.checkAvailability(date).availableRooms
+    .filter(room => room.roomType === type)
+  }
+
+  addBooking(newBooking) {
+    this.bookings.push(newBooking)
+    let found = this.customers.find(user => user.id === newBooking.userID)
+    let isCurrentBooking = this.calendar.checkIfCurrentBooking(newBooking.date)
+    if (isCurrentBooking) {
+      found.bookings.present.push(newBooking)
+    }
+    else {
+      found.bookings.future.push(newBooking)
     }
   }
 
@@ -46,7 +72,7 @@ class Hotel {
         if (booking.userID === user.id) {
           let isPastBooking = this.calendar.checkIfPastBooking(booking.date);
           let isCurrentBooking = this.calendar.checkIfCurrentBooking(booking.date)
-          if (isPastBooking && !isCurrentBooking) {
+          if (isPastBooking) {
             user.bookings.past.push(booking)
           }
           else if (isCurrentBooking) {

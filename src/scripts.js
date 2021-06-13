@@ -35,7 +35,24 @@ let fetched = apiCalls.getData().then(data => {
   hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
   hotel.correlateData()
   getUser(Math.floor(Math.random() * hotel.customers.length + 1))
+  let availableSingle = hotel.filterByType('single room', hotel.calendar.currentDate)
+  let residential = hotel.filterByType('residential suite', hotel.calendar.currentDate)
+  console.log(availableSingle)
+  console.log(residential)
+  let junior = hotel.filterByType('junior suite', hotel.calendar.currentDate)
+  let suite = hotel.filterByType('suite', hotel.calendar.currentDate)
+  console.log(junior)
+  console.log(suite)
 })
+.catch(err => displayPageLevelError(err))
+
+const displayPageLevelError = (err) => {
+  let dashboard = document.getElementById('dashboard');
+  dashboard.innerHTML = `
+  <h2>Technical Difficulties - try again later!</h2>
+  `
+  console.log(err)
+}
 
 const getUser = (id) => {
   apiCalls.fetchUser(id).then(data => {
@@ -46,6 +63,24 @@ const getUser = (id) => {
     displayPreviousBookings(currentUser);
   })
 }
+
+const addBooking = (user, date, selection) => {
+  let newBooking = {
+    "id": Date.now(),
+    "userID": user.id,
+    "date": date,
+    "roomNumber": selection.roomNumber,
+    "roomServiceCharges": []
+   }
+  hotel.addBooking(newBooking)
+  setNewBookingData(booking, hotel)
+
+  apiCalls.postBooking(newBooking)
+}
+
+// const updateUserDate = () => {
+//   hotel.
+// }
 
 // let test = document.getElementById('test')
 let test3 = document.getElementById('test3')

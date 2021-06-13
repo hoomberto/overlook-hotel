@@ -27,6 +27,20 @@ class User {
     this.getPreferredRoomType()
   }
 
+  setNewBookingData(booking, hotel) {
+    let correlatedRoom = hotel.rooms.find(room => room.number === booking.roomNumber)
+    booking.roomType = correlatedRoom.roomType
+    booking.cost = correlatedRoom.costPerNight
+    this.spent += correlatedRoom.costPerNight
+    isCurrentBooking = hotel.calendar.checkIfCurrentBooking(booking.date)
+    if (isCurrentBooking) {
+      this.bookings.current.push(booking)
+    }
+    else {
+      this.bookings.future.push(booking)
+    }
+  }
+
   getTotalSpent() {
     return `$${this.spent}`;
   }

@@ -21,7 +21,39 @@ const fetchUser = (id) => {
     .catch(err => console.error("not working"))
 }
 
+const postBooking = (newBooking) => {
+  let url = 'http://localhost:3001/api/v1/bookings/'
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newBooking)
+  })
+  .then(checkResponse);
+}
+
+const checkResponse = (response) => {
+  if (response.ok) {
+    // document.getElementById('errorMessage').innerText = ""
+    return response.json();
+  }
+  else {
+    console.log(response.status)
+    if (response.status === 422) {
+      let error = new Error('Bad Post Request')
+      // let message = `${response.status} ${error.message} - Please enter data correctly`
+      // document.getElementById('errorMessage').innerText = message
+      throw error;
+    }
+    else {
+      let error = new Error('Something went wrong')
+      let message = `${error.message}`;
+      document.getElementById('errorMessage').innerText = message
+      throw error
+    }
+  }
+}
+
 const getData = () => {
   return Promise.all([fetchCustomersData(), fetchBookingsData(), fetchRoomsData()])
 }
-export default { getData, fetchUser }
+export default { getData, fetchUser, postBooking }

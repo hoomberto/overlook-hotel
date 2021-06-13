@@ -7,16 +7,34 @@ class Calendar {
     this.currentDate = dayjs().format('YYYY/MM/DD')
   }
   checkIfPastBooking(inputDate) {
-    if (dayjs(inputDate).dayOfYear() < dayjs(this.currentDate).dayOfYear()) {
+    let inputYear = inputDate.split('/')[0];
+    let currentYear = this.currentDate.split('/')[0];
+    if (inputYear > currentYear) {
+      return false
+    }
+    else if (inputYear < currentYear) {
       return true
     }
-    return false
+    else {
+      if (dayjs(inputDate).dayOfYear() < dayjs(this.currentDate).dayOfYear()) {
+        return true
+      }
+      return false
+    }
   }
   checkIfCurrentBooking(inputDate) {
-    if (dayjs(inputDate).dayOfYear() === dayjs(this.currentDate).dayOfYear()) {
+    let inputYear = inputDate.split('/')[0];
+    let currentYear = this.currentDate.split('/')[0];
+    let equalDays = (dayjs(inputDate).dayOfYear() === dayjs(this.currentDate).dayOfYear())
+    let equalYears = (inputYear === currentYear)
+    if (equalDays && equalYears) {
       return true
     }
     return false
+    // if (dayjs(inputDate).dayOfYear() === dayjs(this.currentDate).dayOfYear()) {
+    //   return true
+    // }
+    // return false
   }
 }
 
