@@ -220,11 +220,40 @@ describe('Hotel', () => {
       roomNumber: 1,
       roomServiceCharges: []
     }
-    
+
     hotel.addBooking(newBooking)
     hotel.addBooking(newBooking2)
     expect(hotel.customers[0].bookings.future.length).to.equal(1)
     expect(hotel.customers[1].bookings.present.length).to.equal(1)
+  });
+
+  it('should be able to update availability when a room is booked', () => {
+    let newBooking = {
+      "id": "jghfdsa",
+      "userID": 1,
+      "date": "2021/11/11",
+      "roomNumber": 1,
+      "roomServiceCharges": []
+    }
+
+    let newBooking2 = {
+      id: "asdjfkl",
+      userID: 2,
+      date: hotel.calendar.currentDate,
+      roomNumber: 1,
+      roomServiceCharges: []
+    }
+
+    expect(hotel.checkAvailability(hotel.calendar.currentDate).bookedRooms.length)
+    .to.equal(0)
+    expect(hotel.checkAvailability(hotel.calendar.currentDate).availableRooms.length)
+    .to.equal(3)
+    hotel.addBooking(newBooking2)
+    expect(hotel.checkAvailability(hotel.calendar.currentDate).bookedRooms.length)
+    .to.equal(1)
+    expect(hotel.checkAvailability(hotel.calendar.currentDate).availableRooms.length)
+    .to.equal(2)
+
   });
 
 });
