@@ -103,10 +103,6 @@ describe('Hotel', () => {
     expect(hotel.calendar).to.be.an.instanceof(Calendar)
   });
 
-  it('should have a calendar that is an instance of Calendar class', () => {
-    expect(hotel.calendar).to.be.an.instanceof(Calendar)
-  });
-
   it('should have a method to return a list of unique room types', () => {
     expect(hotel.uniqueRoomTypes()).to.deep.equal([
       {
@@ -156,7 +152,7 @@ describe('Hotel', () => {
 
   });
 
-  it('should be able to return a list of both booked and available rooms for a given day', () => {
+  it('should be able to return both booked and available rooms for a given day', () => {
     expect(hotel.checkAvailability('2020/01/10')).to.deep.equal({
       bookedRooms: [
         {
@@ -198,7 +194,7 @@ describe('Hotel', () => {
     let newBooking = {
       "id": "asdjfkl",
       "userID": 1,
-      "date": "2020/11/11",
+      "date": "2021/11/11",
       "roomNumber": 1,
       "roomServiceCharges": []
     }
@@ -206,6 +202,29 @@ describe('Hotel', () => {
     expect(hotel.bookings.length).to.equal(3)
     hotel.addBooking(newBooking)
     expect(hotel.bookings.length).to.equal(4)
+  });
+
+  it('should be able to add new booking to relevant user', () => {
+    let newBooking = {
+      "id": "jghfdsa",
+      "userID": 1,
+      "date": "2021/11/11",
+      "roomNumber": 1,
+      "roomServiceCharges": []
+    }
+
+    let newBooking2 = {
+      id: "asdjfkl",
+      userID: 2,
+      date: hotel.calendar.currentDate,
+      roomNumber: 1,
+      roomServiceCharges: []
+    }
+    
+    hotel.addBooking(newBooking)
+    hotel.addBooking(newBooking2)
+    expect(hotel.customers[0].bookings.future.length).to.equal(1)
+    expect(hotel.customers[1].bookings.present.length).to.equal(1)
   });
 
 });

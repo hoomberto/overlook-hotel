@@ -32,6 +32,14 @@ class Hotel {
 
   addBooking(newBooking) {
     this.bookings.push(newBooking)
+    let found = this.customers.find(user => user.id === newBooking.userID)
+    let isCurrentBooking = this.calendar.checkIfCurrentBooking(newBooking.date)
+    if (isCurrentBooking) {
+      found.bookings.present.push(newBooking)
+    }
+    else {
+      found.bookings.future.push(newBooking)
+    }
   }
 
   bookedOnDay(date) {

@@ -39,6 +39,10 @@ let fetched = apiCalls.getData().then(data => {
   let residential = hotel.filterByType('residential suite', hotel.calendar.currentDate)
   console.log(availableSingle)
   console.log(residential)
+  let junior = hotel.filterByType('junior suite', hotel.calendar.currentDate)
+  let suite = hotel.filterByType('suite', hotel.calendar.currentDate)
+  console.log(junior)
+  console.log(suite)
 })
 .catch(err => displayPageLevelError(err))
 
