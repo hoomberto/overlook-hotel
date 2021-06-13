@@ -20,7 +20,14 @@ import { greetUser, displayPreviousBookings, displayAvailableRooms, renderRoomTy
 import './css/base.scss';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png'
+import './images/single.jpg'
+import './images/junior.jpg'
+import './images/residential.jpg'
+import './images/suite.jpg'
+// import './images/img5.jpg'
+// import './images/img6.jpg'
+// import './images/img7.jpg'
+// import './images/img8.jpg'
 
 
 // Global Variables
@@ -115,8 +122,10 @@ roomTypeFilter.addEventListener('change', () => {
   renderFilter(filtered)
 })
 
+
+
 document.body.addEventListener('click', (event) => {
-event.preventDefault();
+
   if (
   event.target.closest(".close-modal") || !event.target.closest(".user-input-modal")) {
     closeModal()
@@ -145,7 +154,7 @@ event.preventDefault();
       <h4>${previous.children[1].innerText}</h4>
       <h4>${previous.children[2].innerText}</h4>
     </div>
-    <img src="${roomImage.src}" alt="${roomImage.alt}">
+    <img class="modal-img" src="${roomImage.src}" alt="${roomImage.alt}">
     <h5>Make Booking for: ${formatted}</h5>
     <button class="new-booking">BOOK ROOM</button>
     <button class="close-modal">CLOSE</button>

@@ -23,8 +23,19 @@ export const displayPreviousBookings = (currentUser) => {
 
 }
 
+
+export const checkForSpace = (input) => {
+  let regex = new RegExp(' ');
+  if (regex.test(input)) {
+    let first = input.split(' ')[0];
+    return first
+  }
+  return input
+}
+
 export const displayAvailableRooms = (hotel) => {
   hotel.checkAvailability(hotel.calendar.currentDate).availableRooms.forEach((room) => {
+    let imgClass = checkForSpace(room.roomType)
     document.getElementById('availableRoomsSection').innerHTML += `
       <article class="available-room">
       <div class="info-container">
@@ -34,7 +45,7 @@ export const displayAvailableRooms = (hotel) => {
       </div>
       <button class="info-btn" name="info">More Info</button
       <div>
-        <img alt="hotel-room-photo" />
+        <img src="./images/${imgClass}.jpg" alt="hotel-room-photo" />
       </div>
       </article>
     `
@@ -71,6 +82,7 @@ export const renderFilter = (result) => {
   }
   availableSection.innerHTML = ""
   result.forEach(room => {
+    let imgClass = checkForSpace(room.roomType)
 
     availableSection.innerHTML += `
     <article class="available-room">
@@ -80,10 +92,14 @@ export const renderFilter = (result) => {
     <h4>Cost Per Night: $${room.costPerNight}</h5>
     </div>
     <button class="info-btn" name="info">More Info</button>
-    <img alt="hotel-room-photo" />
+    <img src="./images/${imgClass}.jpg" alt="hotel-room-photo" />
     </article>
     `
   })
+
+
+
+
 
 
   // `
