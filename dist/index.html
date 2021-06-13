@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;700&display=swap" rel="stylesheet">
   <title>OVERLOOK HOTEL</title>
 </head>
-<body>
+<body id="body">
   <nav>
      <ul>
        <li class="one icon contact" tabindex="0">Book a Stay</li>
@@ -26,6 +26,8 @@
    </nav>
   <!-- <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px"> -->
   <main>
+    <section id='userInputModal' class='user-input-modal'>
+    </section>
     <section class="user-dashboard">
       <h1 id="userGreeting"></h1>
       <section id="dashboard">
@@ -45,8 +47,12 @@
     <section class="booking-section">
       <h2>Book a Stay with Us</h2>
       <input id="dateSelector" type="date" name="" value="">
-      <h2>Rooms Available Today</h2>
-      <section id="availableRoomsSection">
+      <label for="typePick">Filter by Room Type:</label>
+      <select id="typeFilter" name="typePick">
+
+      </select>
+      <h2 id="availableText">Rooms Available Today</h2>
+      <section id="availableRoomsSection" class="available-rooms-section">
 
       </section>
     </section>

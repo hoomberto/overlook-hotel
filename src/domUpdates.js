@@ -32,6 +32,7 @@ export const displayAvailableRooms = (hotel) => {
         <h4>Room Type: ${room.roomType.toUpperCase()}</h4>
         <h4>Cost Per Night: $${room.costPerNight}</h5>
       </div>
+      <button class="info-btn" name="info">More Info</button
       <div>
         <img alt="hotel-room-photo" />
       </div>
@@ -39,5 +40,52 @@ export const displayAvailableRooms = (hotel) => {
     `
 
   });
+
+}
+
+export const renderRoomTypes = (hotel) => {
+  console.log(hotel)
+  hotel.roomTypes.forEach((room) => {
+    let type = room.type
+    document.getElementById('typeFilter').innerHTML += `
+      <option value="${type}">${type.toUpperCase()}</option>
+    `
+
+  });
+
+}
+
+export const renderDefaultDate = (date) => {
+  document.getElementById('dateSelector').value = date
+}
+
+
+export const renderFilter = (result) => {
+  // console.log(hotel)
+  let availableSection = document.getElementById('availableRoomsSection')
+  availableSection.classList.add('available-rooms-section')
+  availableSection.classList.remove('smaller-set')
+  if (result.length < 8) {
+    availableSection.classList.remove('available-rooms-section')
+    availableSection.classList.add('smaller-set')
+  }
+  availableSection.innerHTML = ""
+  result.forEach(room => {
+
+    availableSection.innerHTML += `
+    <article class="available-room">
+    <div class="info-container">
+    <h3>Room Number: ${room.number}</h3>
+    <h4>Room Type: ${room.roomType.toUpperCase()}</h4>
+    <h4>Cost Per Night: $${room.costPerNight}</h5>
+    </div>
+    <button class="info-btn" name="info">More Info</button>
+    <div>
+    <img alt="hotel-room-photo" />
+    </div>
+    </article>
+    `
+  })
+
 
 }

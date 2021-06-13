@@ -8,7 +8,7 @@ import apiCalls from './apiCalls'
 import Hotel from './Hotel'
 import User from './User'
 import Calendar from './Calendar'
-import { greetUser, displayPreviousBookings, displayAvailableRooms } from './domUpdates'
+import { greetUser, displayPreviousBookings, displayAvailableRooms, renderRoomTypes, renderFilter, renderDefaultDate } from './domUpdates'
 
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
@@ -37,6 +37,8 @@ let fetched = apiCalls.getData().then(data => {
   displayAvailableRooms(hotel)
   let formattedForInput = hotel.calendar.currentDate.split('/').join('-')
   document.getElementById('dateSelector').setAttribute('min', `${formattedForInput}`)
+  document.getElementById('dateSelector').setAttribute('value', `${formattedForInput}`)
+  renderRoomTypes(hotel)
   getUser(Math.floor(Math.random() * hotel.customers.length + 1))
   let availableSingle = hotel.filterByType('single room', hotel.calendar.currentDate)
   let residential = hotel.filterByType('residential suite', hotel.calendar.currentDate)
@@ -90,11 +92,67 @@ let test3 = document.getElementById('test3')
 // test.addEventListener('click', function() {
 //   console.log(currentUser)
 // })
+let roomTypeFilter = document.getElementById('typeFilter');
+let datePicker = document.getElementById('dateSelector');
+let availableText = document.getElementById('availableText');
+let availableSection = document.getElementById('availableRoomsSection');
 
 
 test3.addEventListener('click', function() {
   console.log(currentUser)
 })
+
+roomTypeFilter.addEventListener('change', () => {
+  let choice = roomTypeFilter.value;
+  let selectedDate = datePicker.value;
+  let filtered = hotel.filterByType(choice, selectedDate);
+  availableText.innerText = "";
+  availableText.innerText += `${choice.toUpperCase()} Rooms Available on ${selectedDate}`
+  renderFilter(filtered)
+})
+
+document.body.addEventListener('click', (event) => {
+event.preventDefault();
+  if (
+  event.target.closest(".close-modal") || !event.target.closest(".user-input-modal")) {
+    closeModal()
+  }
+
+  if (event.target.name === "info") {
+
+
+
+    let modal = document.getElementById('userInputModal')
+    // alert("working")
+    modal.innerHTML = "";
+    let previous = event.target.previousElementSibling;
+
+    // console.log(previous.children[1].innerText)
+    // document.getElementById('userInputModal').innerHTML = "";
+    modal.style.display = 'flex'
+    modal.innerHTML += `
+    <article class='user-input-content'>
+    <button class="close-modal">CLOSE</button>
+    <h3>${previous.children[1].innerText}</h3>
+    </article>
+    `
+
+
+    // body.addEventListener('click', function() {
+    //   modal.style.display = "none";
+    // })
+
+  }
+
+
+
+})
+
+const closeModal = () => {
+  document.getElementById("userInputModal").style.display = "none"
+}
+
+
 
 // const getUniqueDates = (sorted) => {
 //   let uniqueDates = [];

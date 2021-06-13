@@ -264,10 +264,31 @@ main section {
   width: 60%;
 }
 
-#availableRoomsSection {
+// #availableRoomsSection {
+//   display: grid;
+//   grid-template-columns: repeat(2, 1fr);
+//   grid-template-rows: 1fr;
+//   margin: 0;
+//   margin-top: -10%;
+//   height: 600px;
+//   overflow: auto;
+// }
+
+.available-rooms-section {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr;
+  grid-gap: 1rem;
+  margin: 0;
+  margin-top: -10%;
+  height: 600px;
+  overflow: auto;
+}
+
+.smaller-set {
+  display: grid;
+  // grid-template-columns: 1fr;
+  // grid-template-rows: 1fr;
   margin: 0;
   margin-top: -10%;
   height: 600px;
@@ -285,6 +306,42 @@ input {
 .available-room {
   display: flex;
   justify-content: space-between;
+}
+
+.info-btn {
+  height: 40px;
+  width: 90px;
+  align-self: center;
+}
+
+
+// MODAL
+
+.user-input-modal {
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: 50vh;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  // background-color: rgba(0, 0, 0, 0.5);
+  justify-content: flex-start;
+  // display: flex;
+  display: none;
+}
+
+.user-input-content {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 15% auto;
+  padding: 0px;
+  border: 1px solid #888;
+  width: 35%;
+  height: 80%;
+  overflow-y: scroll;
+  box-shadow: 0px 7px 29px 0px black;
 }
 
 // #previousBookings article::after {
@@ -329,7 +386,20 @@ input {
 //   transform: translate(70px, 1px)
 // }
 
-@media screen and (max-width: 808px) {
+@media screen and (max-width: 1046px) {
+  .booking-section {
+    width: 50%;
+  }
+
+  #availableRoomsSection {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: 1fr;
+    // height: 500px;
+    // margin-top: -43%;
+  }
+}
+
+@media screen and (max-width: 946px) {
   main {
     flex-direction: column;
   }
@@ -347,10 +417,7 @@ input {
   #availableRoomsSection {
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: 1fr;
-    height: 500px;
+    height: 400px;
     margin-top: -43%;
   }
-
-
-
 }
