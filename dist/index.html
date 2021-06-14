@@ -11,7 +11,7 @@
 <body id="body">
   <nav>
      <ul>
-       <li class="one icon contact" tabindex="0">Book a Stay</li>
+       <li class="one icon contact" tabindex="0">About Us</li>
        <!-- <li class="two" tabindex="0">Press</li>
        <li class="three" tabindex="0">Book a Stay</li> -->
      </ul>
@@ -30,9 +30,12 @@
     </section>
     <section class="user-dashboard">
       <h1 id="userGreeting"></h1>
+      <h2 id="upcoming" class="upcoming hidden">Upcoming Bookings</h2>
+      <section id="upcomingBookings" class="upcoming-container hidden">
+        <div id="spacer" class="spacer upcoming-spacer hidden"></div>
+      </section>
       <section id="dashboard">
         <!-- <h2 id="test">USER TEST</h2> -->
-        <p></p>
         <h3 id="test2">Total Spent</h3>
         <p id="spent"></p>
         <h3>Preferred Room Type</h3>
@@ -40,7 +43,7 @@
         <h3 id="test3">Previous Stays</h3>
       </section>
 
-      <section id="previousBookings">
+      <section id="previousBookings" class="user-booking-section">
         <div class="spacer"></div>
       </section>
     </section>
@@ -49,7 +52,7 @@
       <input id="dateSelector" type="date" name="" value="">
       <label for="typePick">Filter by Room Type:</label>
       <select id="typeFilter" name="typePick">
-
+        <option value="viewAll">VIEW ALL</option>
       </select>
       <h2 id="availableText">Rooms Available Today</h2>
       <section id="availableRoomsSection" class="available-rooms-section">
