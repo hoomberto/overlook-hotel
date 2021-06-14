@@ -34,9 +34,11 @@ export const checkForSpace = (input) => {
 }
 
 export const displayAvailableRooms = (hotel) => {
+  const availableRoomsSection = document.getElementById('availableRoomsSection')
+  availableRoomsSection.innerHTML = "";
   hotel.checkAvailability(hotel.calendar.currentDate).availableRooms.forEach((room) => {
     let imgClass = checkForSpace(room.roomType)
-    document.getElementById('availableRoomsSection').innerHTML += `
+    availableRoomsSection.innerHTML += `
       <article class="available-room">
       <div class="info-container">
         <h3>Room Number: ${room.number}</h3>

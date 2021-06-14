@@ -149,23 +149,23 @@ document.body.addEventListener('click', (event) => {
     modal.style.display = 'flex'
     modal.innerHTML += `
     <article class='user-input-content'>
-    <div class=info-container>
-      <h3>${previous.children[0].innerText}</h3>
-      <h4>${previous.children[1].innerText}</h4>
-      <h4>${previous.children[2].innerText}</h4>
-    </div>
-    <img class="modal-img" src="${roomImage.src}" alt="${roomImage.alt}">
-    <h5>Make Booking for: ${formatted}</h5>
-    <button class="new-booking">BOOK ROOM</button>
-    <button class="close-modal">CLOSE</button>
+      <div class='info-container modal'>
+        <h3>${previous.children[0].innerText}</h3>
+        <h4>${previous.children[1].innerText}</h4>
+        <h4>${previous.children[2].innerText}</h4>
+      </div>
+      <img class="modal-img" src="${roomImage.src}" alt="${roomImage.alt}">
+      <h5>Make Booking for: ${formatted}</h5>
+      <button class="new-booking">BOOK ROOM</button>
+      <button class="close-modal">CLOSE</button>
     </article>
     `
 
 
-    // body.addEventListener('click', function() {
-    //   modal.style.display = "none";
-    // })
+  }
 
+  if (event.target.closest('.new-booking')) {
+    bookRoom(event)
   }
 
 
@@ -174,6 +174,34 @@ document.body.addEventListener('click', (event) => {
 
 const closeModal = () => {
   document.getElementById("userInputModal").style.display = "none"
+}
+
+
+const bookRoom = (event) => {
+  let bookingInfo = event.target.previousElementSibling
+  .previousElementSibling
+  .previousElementSibling;
+  let bookingDate = event.target.previousElementSibling.innerText.split('for: ')[1];
+  let formattedDate = dayjs(bookingDate).format("YYYY/MM/DD");
+  // let bookingImage = bookingSubtext.previousElementSibling;
+  // let bookingInfo = bookingImage.previousElementSibling;
+  // console.log(previous)
+  let roomNum = bookingInfo.children[0].innerText.split(': ')[1]
+  // let roomNum = bookingInfo[0].innerText;]
+  // console.log(roomNum)
+  let newBooking = {
+    id: Date.now().toString(),
+    userID: currentUser.id,
+    date: formattedDate,
+    roomNumber: parseInt(roomNum),
+    roomServiceCharges: []
+  }
+  hotel.addBooking(newBooking);
+  displayAvailableRooms(hotel);
+  console.log(hotel)
+  closeModal();
+
+  // console.log(newBooking)
 }
 
 
