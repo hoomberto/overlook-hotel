@@ -34,8 +34,10 @@ const postBooking = (newBooking) => {
 const checkResponse = (response) => {
   if (response.ok) {
     // document.getElementById('errorMessage').innerText = ""
-    console.log(response)
-    alert("BOOKING WORKED")
+    let message = {
+      message: `Booking successfully posted`,
+    };
+    console.log(message)
     return response.json();
   }
   else {
@@ -60,6 +62,7 @@ const deleteBooking = (bookingID) => {
   let url = 'http://localhost:3001/api/v1/bookings/'
   fetch(url + bookingID, {
     method: 'DELETE',
+    headers: { "Content-Type": "application/json" },
   })
   .then(checkResponse);
 }
