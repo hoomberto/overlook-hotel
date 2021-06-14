@@ -241,7 +241,7 @@ const updateHeader = () => {
   setTimeout(function() {
     availableText.innerText = "";
     availableText.innerText += `All Rooms Available on ${displayDate}`
-  }, 1500)
+  }, 700)
   // availableText.innerText += `All Rooms Available on ${displayDate}`
 
 }
