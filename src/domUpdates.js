@@ -161,7 +161,8 @@ export const renderFilter = (result) => {
         </div>
         </article>
       `
-
+      // document.getElementById('availableText').innerText = ""
+      // document.getElementById('availableText').innerText +=
     });
 
   }

@@ -178,7 +178,7 @@ document.body.addEventListener('click', (event) => {
       <div class='info-container modal'>
         <h3>${previous.children[0].innerText}</h3>
         <h4>${previous.children[1].innerText}</h4>
-        <h4>${previous.children[2].innerText}</h4>
+        <h4>${previous.children[2].innerText} + Tax</h4>
       </div>
       <img class="modal-img" src="${roomImage.src}" alt="${roomImage.alt}">
       <h5>Make Booking for: ${formatted}</h5>
@@ -228,10 +228,23 @@ const bookRoom = (event) => {
   roomTypeFilter.selectedIndex = 0;
   currentUser.setRoomData(hotel)
   updateUserUpcomingBookings(currentUser)
+  updateHeader();
   // console.log(newBooking)
 }
 
+const updateHeader = () => {
+  let selectedDate = datePicker.value;
+  let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
+  let displayDate = dayjs(selectedDate).format('LL')
+  availableText.innerText = "";
+  availableText.innerText += `Thank you for booking with us!`
+  setTimeout(function() {
+    availableText.innerText = "";
+    availableText.innerText += `All Rooms Available on ${displayDate}`
+  }, 1500)
+  // availableText.innerText += `All Rooms Available on ${displayDate}`
 
+}
 
 // const getUniqueDates = (sorted) => {
 //   let uniqueDates = [];
