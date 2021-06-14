@@ -9,7 +9,24 @@
   <title>OVERLOOK HOTEL</title>
 </head>
 <body id="body">
-  <nav>
+  <section id="login" class="login-section">
+    <div class="login-img-container">
+
+      <img class="entrance-pic" src="./images/hotel-entrance.jpg" alt="Hotel entrance" />
+      <img class="pool-pic" src="./images/pool-pic.jpg" alt="Hotel pool" />
+    </div>
+
+    <form class="login-form">
+      <h2>Welcome to the Overlook Hotel</h2>
+      <h3>Please log in</h3>
+      <label for="username">Username</label>
+      <input id="username" type="text" name="" value="" autocomplete="off" required>
+      <label for="password">Password</label>
+      <input id="password" type="text" name="" value="" autocomplete="off" required>
+      <button id="loginBtn" name="button">Login</button>
+    </form>
+  </section>
+  <nav class="hidden">
      <ul>
        <li class="one icon contact" tabindex="0">About Us</li>
        <!-- <li class="two" tabindex="0">Press</li>
@@ -25,7 +42,7 @@
      </section>
    </nav>
   <!-- <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px"> -->
-  <main>
+  <main class="hidden">
     <section id='userInputModal' class='user-input-modal'>
     </section>
     <section class="user-dashboard">

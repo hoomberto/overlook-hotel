@@ -24,6 +24,8 @@ import './images/single.jpg'
 import './images/junior.jpg'
 import './images/residential.jpg'
 import './images/suite.jpg'
+import './images/hotel-entrance.jpg'
+import './images/pool-pic.jpg'
 // import './images/img5.jpg'
 // import './images/img6.jpg'
 // import './images/img7.jpg'
@@ -34,32 +36,98 @@ import './images/suite.jpg'
 
 let hotel, currentUser;
 
-console.log('This is the JavaScript entry file - your code begins here.');
-let fetched = apiCalls.getData().then(data => {
-  let customerData = data[0];
-  let bookingsData = data[1];
-  let roomsData = data[2];
+// console.log('This is the JavaScript entry file - your code begins here.');
 
-  let calendar = new Calendar()
-  let instaUsers = customerData.customers.map(customer => new User(customer))
-  hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
-  hotel.correlateData()
-  displayAvailableRooms(hotel)
-  let formattedForInput = hotel.calendar.currentDate.split('/').join('-')
-  document.getElementById('dateSelector').setAttribute('min', `${formattedForInput}`)
-  document.getElementById('dateSelector').setAttribute('value', `${formattedForInput}`)
-  renderRoomTypes(hotel)
-  getUser(Math.floor(Math.random() * hotel.customers.length + 1))
-  let availableSingle = hotel.filterByType('single room', hotel.calendar.currentDate)
-  let residential = hotel.filterByType('residential suite', hotel.calendar.currentDate)
-  // console.log(availableSingle)
-  // console.log(residential)
-  let junior = hotel.filterByType('junior suite', hotel.calendar.currentDate)
-  let suite = hotel.filterByType('suite', hotel.calendar.currentDate)
-  // console.log(junior)
-  // console.log(suite)
-})
-.catch(err => displayPageLevelError(err))
+const userNameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password')
+const loginBtn = document.getElementById('loginBtn');
+
+// loginBtn.addEventListener('click', login)
+
+const login = (event) => {
+  event.preventDefault();
+  let username = userNameInput.value;
+  let password = passwordInput.value;
+  // let customerCheck = username.split('r')
+  let userCheck = username.split('r')
+  let passwordMatch = (password === 'overlook2021')
+  let id = parseInt(userCheck[1])
+  // console.log('userCheck', customerCheck)
+  if (userCheck[0] === 'custome' && (id > 0 && id < 51) && passwordMatch) {
+    fetch(id);
+  }
+  else {
+    unsuccessfulLogin();
+    return
+  }
+}
+
+loginBtn.addEventListener('click', login)
+// const successfulLogin = (id) => {
+//   fetch(id);
+// }
+
+const unsuccessfulLogin = () => {
+  alert("PLEASE TRY AGAIN")
+}
+
+const hide = (element) => {
+  element.classList.add('hidden')
+}
+
+const show = (element) => {
+  element.classList.remove('hidden')
+}
+
+
+const fetch = (id) => {
+  apiCalls.getData().then(data => {
+    let customerData = data[0];
+    let bookingsData = data[1];
+    let roomsData = data[2];
+
+    let calendar = new Calendar()
+    let instaUsers = customerData.customers.map(customer => new User(customer))
+    hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
+    hotel.correlateData()
+    show(document.querySelector('main'))
+    show(document.querySelector('nav'))
+    hide(document.getElementById('login'))
+    displayAvailableRooms(hotel)
+    let formattedForInput = hotel.calendar.currentDate.split('/').join('-')
+    document.getElementById('dateSelector').setAttribute('min', `${formattedForInput}`)
+    document.getElementById('dateSelector').setAttribute('value', `${formattedForInput}`)
+    renderRoomTypes(hotel)
+    getUser(id)
+  })
+  .catch(err => displayPageLevelError(err))
+}
+
+// let fetched = apiCalls.getData().then(data => {
+//   let customerData = data[0];
+//   let bookingsData = data[1];
+//   let roomsData = data[2];
+//
+//   let calendar = new Calendar()
+//   let instaUsers = customerData.customers.map(customer => new User(customer))
+//   hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
+//   hotel.correlateData()
+//   displayAvailableRooms(hotel)
+//   let formattedForInput = hotel.calendar.currentDate.split('/').join('-')
+//   document.getElementById('dateSelector').setAttribute('min', `${formattedForInput}`)
+//   document.getElementById('dateSelector').setAttribute('value', `${formattedForInput}`)
+//   renderRoomTypes(hotel)
+//   getUser(Math.floor(Math.random() * hotel.customers.length + 1))
+//   let availableSingle = hotel.filterByType('single room', hotel.calendar.currentDate)
+//   let residential = hotel.filterByType('residential suite', hotel.calendar.currentDate)
+//   // console.log(availableSingle)
+//   // console.log(residential)
+//   let junior = hotel.filterByType('junior suite', hotel.calendar.currentDate)
+//   let suite = hotel.filterByType('suite', hotel.calendar.currentDate)
+//   // console.log(junior)
+//   // console.log(suite)
+// })
+// .catch(err => displayPageLevelError(err))
 
 const displayPageLevelError = (err) => {
   let dashboard = document.getElementById('dashboard');
