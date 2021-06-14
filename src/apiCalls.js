@@ -35,6 +35,7 @@ const checkResponse = (response) => {
   if (response.ok) {
     // document.getElementById('errorMessage').innerText = ""
     console.log(response)
+    alert("BOOKING WORKED")
     return response.json();
   }
   else {
@@ -68,4 +69,4 @@ const deleteBooking = (bookingID) => {
 const getData = () => {
   return Promise.all([fetchCustomersData(), fetchBookingsData(), fetchRoomsData()])
 }
-export default { getData, fetchUser, postBooking }
+export default { getData, fetchUser, postBooking, deleteBooking }

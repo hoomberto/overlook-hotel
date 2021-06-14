@@ -288,6 +288,7 @@ const bookRoom = (event) => {
     roomServiceCharges: []
   }
   hotel.addBooking(newBooking);
+  apiCalls.postBooking(newBooking)
   console.log(hotel)
   closeModal();
   let selectedDate = datePicker.value;
