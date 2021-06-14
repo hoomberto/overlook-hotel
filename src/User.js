@@ -15,6 +15,7 @@ class User {
   setRoomData(hotel) {
     // let spent = 0;
     // console.log(Object.values(this.bookings))
+    this.resetDataForUpdate();
     Object.values(this.bookings).forEach(dataset => {
       dataset.forEach(booking => {
         let correlatedRoom = hotel.rooms.find(room => room.number === booking.roomNumber)
@@ -25,6 +26,23 @@ class User {
     })
     this.spent = this.spent.toFixed(2);
     this.getPreferredRoomType()
+  }
+
+  resetDataForUpdate() {
+    this.spent = 0;
+    Object.values(this.bookings).forEach(dataset => {
+      if (dataset.length) {
+        dataset.map(booking => {
+          return {
+            id: booking.id,
+            userID: booking.userID,
+            date: booking.date,
+            roomNumber: booking.roomNumber,
+            roomServiceCharges: []
+          }
+        })
+      }
+    })
   }
 
   setNewBookingData(booking, hotel) {

@@ -8,10 +8,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;700&display=swap" rel="stylesheet">
   <title>OVERLOOK HOTEL</title>
 </head>
-<body>
+<body id="body">
   <nav>
      <ul>
-       <li class="one icon contact" tabindex="0">Book a Stay</li>
+       <li class="one icon contact" tabindex="0">About Us</li>
        <!-- <li class="two" tabindex="0">Press</li>
        <li class="three" tabindex="0">Book a Stay</li> -->
      </ul>
@@ -26,21 +26,39 @@
    </nav>
   <!-- <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px"> -->
   <main>
-    <h1 id="userGreeting"></h1>
-    <section id="dashboard">
-      <!-- <h2 id="test">USER TEST</h2> -->
-      <input type="date" name="" value="">
-      <p></p>
-      <h3 id="test2">Total Spent</h3>
-      <p id="spent"></p>
-      <h3>Preferred Room Type</h3>
-      <p id="preferredRoomType"></p>
-      <h3 id="test3">Previous Stays</h3>
+    <section id='userInputModal' class='user-input-modal'>
     </section>
+    <section class="user-dashboard">
+      <h1 id="userGreeting"></h1>
+      <h2 id="upcoming" class="upcoming hidden">Upcoming Bookings</h2>
+      <section id="upcomingBookings" class="upcoming-container hidden">
+        <div id="spacer" class="spacer upcoming-spacer hidden"></div>
+      </section>
+      <section id="dashboard">
+        <!-- <h2 id="test">USER TEST</h2> -->
+        <h2 id="test2">Total Spent</h3>
+        <p id="spent"></p>
+        <h3>Preferred Room Type</h3>
+        <p id="preferredRoomType"></p>
+        <h3 id="test3">Previous Stays</h3>
+      </section>
 
-    <section id="previousBookings">
-      <div class="spacer"></div>
+      <section id="previousBookings" class="user-booking-section">
+        <div class="spacer"></div>
+      </section>
+    </section>
+    <section class="booking-section">
+      <h2>Book a Stay with Us</h2>
+      <label for="dateSelector">Select a Date:</label>
+      <input id="dateSelector" type="date" name="datePick" value="" max="2022-06-13">
+      <label for="typeFilter">Filter by Room Type:</label>
+      <select id="typeFilter" name="typePick">
+        <option value="viewAll">VIEW ALL</option>
+      </select>
+      <h2 id="availableText">Rooms Available Today</h2>
+      <section id="availableRoomsSection" class="available-rooms-section">
 
+      </section>
     </section>
   </main>
   <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
