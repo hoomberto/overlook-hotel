@@ -39,23 +39,31 @@ export const checkForSpace = (input) => {
 export const displayAvailableRooms = (hotel) => {
   let availableRoomsSection = document.getElementById('availableRoomsSection')
   availableRoomsSection.innerHTML = "";
-  hotel.checkAvailability(hotel.calendar.currentDate).availableRooms.forEach((room) => {
-    let imgClass = checkForSpace(room.roomType)
-    availableRoomsSection.innerHTML += `
+  let available = hotel.checkAvailability(hotel.calendar.currentDate).availableRooms
+  if (available.length) {
+
+    available.forEach((room) => {
+      let imgClass = checkForSpace(room.roomType)
+      availableRoomsSection.innerHTML += `
       <article class="available-room">
       <div class="info-container">
-        <h3>Room Number: ${room.number}</h3>
-        <h4>Room Type: ${room.roomType.toUpperCase()}</h4>
-        <h4>Cost Per Night: $${room.costPerNight}</h5>
+      <h3>Room Number: ${room.number}</h3>
+      <h4>Room Type: ${room.roomType.toUpperCase()}</h4>
+      <h4>Cost Per Night: $${room.costPerNight}</h5>
       </div>
       <button class="info-btn" name="info">More Info</button
       <div>
-        <img src="./images/${imgClass}.jpg" alt="hotel-room-photo" />
+      <img src="./images/${imgClass}.jpg" alt="hotel-room-photo" />
       </div>
       </article>
+      `
+    });
+  }
+  else {
+    availableRoomsSection.innerHTML += `
+    <h2>We're sorry! There are no rooms available for this date, please try selecting another date.</h2>
     `
-
-  });
+  }
 
 }
 
@@ -89,6 +97,7 @@ export const updateUserUpcomingBookings = (currentUser) => {
   <div id="spacer" class="spacer upcoming-spacer"></div>
   `
   if (currentBookings.length) {
+    currentBookings.sort((a, b) => a.date > b.date ? 1 : -1)
     currentUser.bookings.present.forEach(booking => {
       upcomingBookings.innerHTML += `
       <article>
@@ -101,7 +110,7 @@ export const updateUserUpcomingBookings = (currentUser) => {
     })
   }
   if (futureBookings.length) {
-
+    futureBookings.sort((a, b) => a.date > b.date ? 1 : -1)
     currentUser.bookings.future.forEach(booking => {
       upcomingBookings.innerHTML += `
       <article>
@@ -146,24 +155,33 @@ export const renderFilter = (result) => {
   export const updateAvailableRooms = (hotel, date) => {
     let availableRoomsSection = document.getElementById('availableRoomsSection')
     availableRoomsSection.innerHTML = "";
-    hotel.checkAvailability(date).availableRooms.forEach((room) => {
-      let imgClass = checkForSpace(room.roomType)
-      availableRoomsSection.innerHTML += `
+    let available = hotel.checkAvailability(date).availableRooms;
+    if (available.length) {
+
+      available.forEach((room) => {
+        let imgClass = checkForSpace(room.roomType)
+        availableRoomsSection.innerHTML += `
         <article class="available-room">
         <div class="info-container">
-          <h3>Room Number: ${room.number}</h3>
-          <h4>Room Type: ${room.roomType.toUpperCase()}</h4>
-          <h4>Cost Per Night: $${room.costPerNight}</h5>
+        <h3>Room Number: ${room.number}</h3>
+        <h4>Room Type: ${room.roomType.toUpperCase()}</h4>
+        <h4>Cost Per Night: $${room.costPerNight}</h5>
         </div>
         <button class="info-btn" name="info">More Info</button
         <div>
-          <img src="./images/${imgClass}.jpg" alt="hotel-room-photo" />
+        <img src="./images/${imgClass}.jpg" alt="hotel-room-photo" />
         </div>
         </article>
+        `
+        // document.getElementById('availableText').innerText = ""
+        // document.getElementById('availableText').innerText +=
+      });
+    }
+    else {
+      availableRoomsSection.innerHTML += `
+      <h2>We're sorry! There are no rooms available for this date, please try selecting another date.</h2>
       `
-      // document.getElementById('availableText').innerText = ""
-      // document.getElementById('availableText').innerText +=
-    });
+    }
 
   }
 
