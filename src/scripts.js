@@ -143,6 +143,11 @@ const displayManagerDashBoard = () => {
   hide(document.getElementById('login'))
   show(document.getElementById('managerDash'))
   manager.setCurrentBookings();
+  if (!manager.hotel.availableToday.bookedRooms.length) {
+    document.getElementById('managerCurrentBookings').innerHTML += `
+    <h1>No bookings for today currently!</h1>
+    `
+  }
   manager.hotel.availableToday.bookedRooms.forEach(booking => {
     document.getElementById('managerCurrentBookings').innerHTML += `
       <article>
@@ -153,7 +158,6 @@ const displayManagerDashBoard = () => {
         </div>
       </article>
     `
-
   })
   document.getElementById('revenue').innerText += ` ${manager.getTotalRevenueOnDay(manager.hotel.calendar.currentDate)}`
   document.getElementById('occupied').innerText += ` ${manager.occupiedPercentageOnDate(manager.hotel.calendar.currentDate)}`
@@ -246,16 +250,24 @@ const resetUserInfo = () => {
   // upcomingBookings.classList.add('')
 }
 
+const makeChangeable = (element) => {
+  element.addEventListener('change', () => {
+    let selectedDate = element.value;
+    let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
+    let displayDate = dayjs(selectedDate).format('LL')
+    updateAvailableRooms(hotel, formatted, document.getElementById('availableForUsers'));
+    // availableText.innerText = `All Room Types Available on ${displayDate}`
+    // roomTypeFilter.selectedIndex = 0;
+  })
+}
+
 const renderDatePicker = (element, name) => {
+  let formatted = manager.hotel.calendar.currentDate.split('/').join('-')
   element.innerHTML = "";
   element.innerHTML += `<h1>Create a booking for ${name}</h1>`
   element.innerHTML += `
-  <label for="dateSelector">Select a Date:</label>
-  <input id="dateSelector" type="date" name="datePick" value="" max="2022-06-13">
-  <label for="typeFilter">Filter by Room Type:</label>
-  <select id="typeFilter" name="typePick">
-    <option value="viewAll">VIEW ALL</option>
-  </select>
+  <label for="datePick">Select a Date:</label>
+  <input id="datePick" type="date" name="datePick" min="${formatted}" value="${formatted}" max="2022-06-13">
   <h2 id="availableText">Rooms Available</h2>
   <section id="availableForUsers" class="available-rooms-section search-container">
 
@@ -264,14 +276,7 @@ const renderDatePicker = (element, name) => {
   let availableForUsers = document.getElementById('availableForUsers')
 
   displayAvailableRooms(manager.hotel, availableForUsers)
-  document.getElementById('dateSelector').addEventListener('change', () => {
-    let selectedDate = datePicker.value;
-    let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
-    let displayDate = dayjs(selectedDate).format('LL')
-    updateAvailableRooms(hotel, formatted);
-    availableText.innerText = `All Room Types Available on ${displayDate}`
-    roomTypeFilter.selectedIndex = 0;
-  })
+  makeChangeable(document.getElementById('datePick'))
 }
 
 
@@ -315,6 +320,7 @@ const renderSearch = (searchValue) => {
       <h4>Room Type: ${booking.roomType.toUpperCase()}</h4>
       <h4>Room Number: ${booking.roomNumber}</h4>
       <h4>Room Cost: $${booking.cost}</h4>
+      <button class="delete">Delete Booking</button>
       </article>
       `
     })
@@ -328,6 +334,7 @@ const renderSearch = (searchValue) => {
       <h4>Room Type: ${booking.roomType.toUpperCase()}</h4>
       <h4>Room Number: ${booking.roomNumber}</h4>
       <h4>Room Cost: $${booking.cost}</h4>
+      <button class="delete">Delete Booking</button>
       </article>
       `
     })
@@ -383,50 +390,50 @@ searchBtn.addEventListener('click', () => {
 })
 
 
-const makeChangeable = () => {
-  datePicker.addEventListener('change', () => {
-    let selectedDate = datePicker.value;
-    let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
-    let displayDate = dayjs(selectedDate).format('LL')
-    updateAvailableRooms(hotel, formatted);
-    availableText.innerText = `All Room Types Available on ${displayDate}`
-    roomTypeFilter.selectedIndex = 0;
-  })
-
-  roomTypeFilter.addEventListener('change', () => {
-    availableText.innerText = "";
-    if (roomTypeFilter.value === 'viewAll') {
-      let selectedDate = datePicker.value;
-      let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
-      let displayDate = dayjs(selectedDate).format('LL')
-      updateAvailableRooms(hotel, formatted);
-      availableText.innerText += `All Room Types Available on ${displayDate}`
-      return
-    }
-    let choice = roomTypeFilter.value;
-    let selectedDate = datePicker.value;
-    let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
-    let filtered = hotel.filterByType(choice, formatted);
-    let displayDate = dayjs(selectedDate).format('LL')
-    if (!filtered.length) {
-      availableText.innerText = "";
-      availableText.innerText +=`
-      We're sorry! We're currently out of this room type for this date, please try another.`;
-      renderFilter(filtered)
-      return
-    }
-    availableText.innerText = "";
-    availableText.innerText += `${choice.toUpperCase()} Rooms Available on ${displayDate}`
-    renderFilter(filtered)
-  })
-}
+// const makeChangeable = () => {
+//   datePicker.addEventListener('change', () => {
+//     let selectedDate = datePicker.value;
+//     let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
+//     let displayDate = dayjs(selectedDate).format('LL')
+//     updateAvailableRooms(hotel, formatted);
+//     availableText.innerText = `All Room Types Available on ${displayDate}`
+//     roomTypeFilter.selectedIndex = 0;
+//   })
+//
+//   roomTypeFilter.addEventListener('change', () => {
+//     availableText.innerText = "";
+//     if (roomTypeFilter.value === 'viewAll') {
+//       let selectedDate = datePicker.value;
+//       let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
+//       let displayDate = dayjs(selectedDate).format('LL')
+//       updateAvailableRooms(hotel, formatted);
+//       availableText.innerText += `All Room Types Available on ${displayDate}`
+//       return
+//     }
+//     let choice = roomTypeFilter.value;
+//     let selectedDate = datePicker.value;
+//     let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
+//     let filtered = hotel.filterByType(choice, formatted);
+//     let displayDate = dayjs(selectedDate).format('LL')
+//     if (!filtered.length) {
+//       availableText.innerText = "";
+//       availableText.innerText +=`
+//       We're sorry! We're currently out of this room type for this date, please try another.`;
+//       renderFilter(filtered)
+//       return
+//     }
+//     availableText.innerText = "";
+//     availableText.innerText += `${choice.toUpperCase()} Rooms Available on ${displayDate}`
+//     renderFilter(filtered)
+//   })
+// }
 
 
 datePicker.addEventListener('change', () => {
   let selectedDate = datePicker.value;
   let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
   let displayDate = dayjs(selectedDate).format('LL')
-  updateAvailableRooms(hotel, formatted);
+  updateAvailableRooms(hotel, formatted, document.getElementById('availableRoomsSection'));
   availableText.innerText = `All Room Types Available on ${displayDate}`
   roomTypeFilter.selectedIndex = 0;
 })
@@ -437,7 +444,7 @@ roomTypeFilter.addEventListener('change', () => {
     let selectedDate = datePicker.value;
     let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
     let displayDate = dayjs(selectedDate).format('LL')
-    updateAvailableRooms(hotel, formatted);
+    updateAvailableRooms(hotel, formatted, document.getElementById('availableRoomsSection'));
     availableText.innerText += `All Room Types Available on ${displayDate}`
     return
   }
@@ -458,7 +465,31 @@ roomTypeFilter.addEventListener('change', () => {
   renderFilter(filtered)
 })
 
+const renderModal = (modal) => {
+  modal.innerHTML = "";
+  let previous = event.target.previousElementSibling;
+  let next = event.target.nextElementSibling
+  let roomImage = next
+  let selectedDate = datePicker.value;
+  let formatted = dayjs(selectedDate, "YYYY-MM-DD").format('LL')
 
+  console.log(roomImage)
+
+  modal.style.display = 'flex'
+  modal.innerHTML += `
+  <article class='user-input-content'>
+    <div class='info-container modal'>
+      <h3>${previous.children[0].innerText}</h3>
+      <h4>${previous.children[1].innerText}</h4>
+      <h4>${previous.children[2].innerText}</h4>
+    </div>
+    <img class="modal-img" src="${roomImage.src}" alt="${roomImage.alt}">
+    <h5>Make Booking for: ${formatted}</h5>
+    <button class="new-booking">BOOK ROOM</button>
+    <button class="close-modal">CLOSE</button>
+  </article>
+  `
+}
 
 document.body.addEventListener('click', (event) => {
 
@@ -470,33 +501,35 @@ document.body.addEventListener('click', (event) => {
   if (event.target.name === "info") {
 
     let modal = document.getElementById('userInputModal')
-    // alert("working")
-    modal.innerHTML = "";
-    let previous = event.target.previousElementSibling;
-    let next = event.target.nextElementSibling
-    let roomImage = next
-    let selectedDate = datePicker.value;
-    let formatted = dayjs(selectedDate, "YYYY-MM-DD").format('LL')
-
-    console.log(roomImage)
-    // console.log(previous.children[1].innerText)
-    // document.getElementById('userInputModal').innerHTML = "";
-    // <img class="${roomImg}-modal">
-    modal.style.display = 'flex'
-    modal.innerHTML += `
-    <article class='user-input-content'>
-      <div class='info-container modal'>
-        <h3>${previous.children[0].innerText}</h3>
-        <h4>${previous.children[1].innerText}</h4>
-        <h4>${previous.children[2].innerText}</h4>
-      </div>
-      <img class="modal-img" src="${roomImage.src}" alt="${roomImage.alt}">
-      <h5>Make Booking for: ${formatted}</h5>
-      <button class="new-booking">BOOK ROOM</button>
-      <button class="close-modal">CLOSE</button>
-    </article>
-    `
+    let managerModal = document.getElementById('managerModal')
+    renderModal(modal)
+    renderModal(managerModal)
+    // // alert("working")
+    // modal.innerHTML = "";
+    // let previous = event.target.previousElementSibling;
+    // let next = event.target.nextElementSibling
+    // let roomImage = next
+    // let selectedDate = datePicker.value;
+    // let formatted = dayjs(selectedDate, "YYYY-MM-DD").format('LL')
+    //
+    // console.log(roomImage)
+    //
+    // modal.style.display = 'flex'
+    // modal.innerHTML += `
+    // <article class='user-input-content'>
+    //   <div class='info-container modal'>
+    //     <h3>${previous.children[0].innerText}</h3>
+    //     <h4>${previous.children[1].innerText}</h4>
+    //     <h4>${previous.children[2].innerText}</h4>
+    //   </div>
+    //   <img class="modal-img" src="${roomImage.src}" alt="${roomImage.alt}">
+    //   <h5>Make Booking for: ${formatted}</h5>
+    //   <button class="new-booking">BOOK ROOM</button>
+    //   <button class="close-modal">CLOSE</button>
+    // </article>
+    // `
   }
+
 
   if (event.target.closest('.new-booking')) {
     bookRoom(event)
@@ -533,7 +566,7 @@ const bookRoom = (event) => {
   closeModal();
   let selectedDate = datePicker.value;
   let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
-  updateAvailableRooms(hotel, formatted);
+  updateAvailableRooms(hotel, formatted, document.getElementById('availableRoomsSection'));
   roomTypeFilter.selectedIndex = 0;
   currentUser.setRoomData(hotel)
   updateUserUpcomingBookings(currentUser)

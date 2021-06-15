@@ -153,15 +153,15 @@ export const renderFilter = (result) => {
   })
 }
 
-  export const updateAvailableRooms = (hotel, date) => {
-    let availableRoomsSection = document.getElementById('availableRoomsSection')
-    availableRoomsSection.innerHTML = "";
+  export const updateAvailableRooms = (hotel, date, element) => {
+    // let availableRoomsSection = document.getElementById('availableRoomsSection')
+    element.innerHTML = "";
     let available = hotel.checkAvailability(date).availableRooms;
     if (available.length) {
 
       available.forEach((room) => {
         let imgClass = checkForSpace(room.roomType)
-        availableRoomsSection.innerHTML += `
+        element.innerHTML += `
         <article class="available-room">
         <div class="info-container">
         <h3>Room Number: ${room.number}</h3>
@@ -179,7 +179,7 @@ export const renderFilter = (result) => {
       });
     }
     else {
-      availableRoomsSection.innerHTML += `
+      element.innerHTML += `
       <h2>We're sorry! There are no rooms available for this date, please try selecting another date.</h2>
       `
     }
