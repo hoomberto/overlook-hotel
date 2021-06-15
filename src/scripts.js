@@ -33,23 +33,18 @@ import './images/pool-pic.jpg'
 
 let hotel, currentUser, manager;
 
-// console.log('This is the JavaScript entry file - your code begins here.');
 
 const userNameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password')
 const loginBtn = document.getElementById('loginBtn');
 
-// loginBtn.addEventListener('click', login)
-
 const login = (event) => {
   event.preventDefault();
   let username = userNameInput.value;
   let password = passwordInput.value;
-  // let customerCheck = username.split('r')
   let userCheck = username.split('r')
   let passwordMatch = (password === 'overlook2021')
   let id = parseInt(userCheck[1])
-  // console.log('userCheck', customerCheck)
   if (userCheck[0] === 'custome' && (id > 0 && id < 51) && passwordMatch) {
     fetch(id);
   }
@@ -76,8 +71,32 @@ const show = (element) => {
   element.classList.remove('hidden')
 }
 
+
+const retrieveFreshManagerData = (found) => {
+  apiCalls.getData().then(data => {
+    let customerData = data[0];
+    let bookingsData = data[1];
+    let roomsData = data[2];
+
+    let calendar = new Calendar()
+    let instaUsers = customerData.customers.map(customer => new User(customer))
+    hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
+    hotel.correlateData()
+    manager = new Manager(hotel)
+    let currentManager = manager
+    hideLoginShowManager();
+    renderAllUsers(currentManager)
+    displayManagerDashBoard(currentManager);
+    if (found) {
+      renderSearch(found.name, currentManager)
+    }
+  })
+  .catch(err => displayPageLevelError(err))
+}
+
+
 const loginManager = () => {
-  retrieveFreshData();
+  retrieveFreshManagerData();
 }
 
 
@@ -126,7 +145,6 @@ const renderAllUsers = (manager) => {
   })
 }
 
-
 const displayUserDashboard = () => {
   show(document.querySelector('main'))
   show(document.querySelector('nav'))
@@ -148,13 +166,10 @@ const resetManagerDashboard = () => {
 }
 
 const displayManagerDashBoard = (manager) => {
-  // show(document.querySelector('main'))
-  // show(document.querySelector('nav'))
-  // hide(document.getElementById('login'))
-  // show(document.getElementById('managerDash'))
+
   resetManagerDashboard();
   let managerCurrentBookings = document.getElementById('managerCurrentBookings')
-  // managerCurrentBookings.innerHTML = "";
+
   manager.setCurrentBookings();
   if (!manager.hotel.availableToday.bookedRooms.length) {
     managerCurrentBookings.innerHTML += `
@@ -174,34 +189,7 @@ const displayManagerDashBoard = (manager) => {
   })
   document.getElementById('revenue').innerText += ` ${manager.getTotalRevenueOnDay(manager.hotel.calendar.currentDate)}`
   document.getElementById('occupied').innerText += ` ${manager.occupiedPercentageOnDate(manager.hotel.calendar.currentDate)}`
-  // displayAvailableRooms(hotel)
 }
-
-// let fetched = apiCalls.getData().then(data => {
-//   let customerData = data[0];
-//   let bookingsData = data[1];
-//   let roomsData = data[2];
-//
-//   let calendar = new Calendar()
-//   let instaUsers = customerData.customers.map(customer => new User(customer))
-//   hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
-//   hotel.correlateData()
-//   displayAvailableRooms(hotel)
-//   let formattedForInput = hotel.calendar.currentDate.split('/').join('-')
-//   document.getElementById('dateSelector').setAttribute('min', `${formattedForInput}`)
-//   document.getElementById('dateSelector').setAttribute('value', `${formattedForInput}`)
-//   renderRoomTypes(hotel)
-//   getUser(Math.floor(Math.random() * hotel.customers.length + 1))
-//   let availableSingle = hotel.filterByType('single room', hotel.calendar.currentDate)
-//   let residential = hotel.filterByType('residential suite', hotel.calendar.currentDate)
-//   // console.log(availableSingle)
-//   // console.log(residential)
-//   let junior = hotel.filterByType('junior suite', hotel.calendar.currentDate)
-//   let suite = hotel.filterByType('suite', hotel.calendar.currentDate)
-//   // console.log(junior)
-//   // console.log(suite)
-// })
-// .catch(err => displayPageLevelError(err))
 
 const displayPageLevelError = (err) => {
   let dashboard = document.getElementById('dashboard');
@@ -235,10 +223,6 @@ const addBooking = (user, date, selection) => {
 
   apiCalls.postBooking(newBooking)
 }
-
-// const updateUserDate = () => {
-//   hotel.
-// }
 
 const resetSearch = () => {
   let searchResults = document.getElementById('searchResults')
@@ -302,14 +286,13 @@ const renderSearch = (searchValue, manager) => {
   resetSearch();
   resetUserInfo();
 
-  // console.log(manager.hotel.bookings)
   let found = manager.searchForUser(searchValue)
   let searchResults = document.getElementById('searchResults')
   let userInfo = document.getElementById('userSearchInfo')
   let pastBookings = document.getElementById('userPastSearchInfo')
   let upcomingBookings = document.getElementById('userUpcomingSearchInfo')
   let bookForUser = document.getElementById('bookForUser')
-  // userInfo.innerHTML = "";
+
   if (!found) {
     userInfo.innerHTML += `
     <h1>No results found. Please try another search.</h1>
@@ -360,7 +343,6 @@ const renderSearch = (searchValue, manager) => {
       </article>
       `
     })
-
   }
 
   pastBookings.innerHTML += `
@@ -449,8 +431,6 @@ const renderModal = (modal) => {
   let selectedDate = datePicker.value;
   let formatted = dayjs(selectedDate, "YYYY-MM-DD").format('LL')
 
-  console.log(roomImage)
-
   modal.style.display = 'flex'
   modal.innerHTML += `
   <article class='user-input-content'>
@@ -476,8 +456,6 @@ const renderManagerModal = (modal) => {
   let roomImage = next
   let selectedDate = document.getElementById('datePick').value;
   let formatted = dayjs(selectedDate, "YYYY-MM-DD").format('LL')
-
-  console.log(roomImage)
 
   modal.style.display = 'flex'
   modal.innerHTML += `
@@ -535,9 +513,6 @@ document.body.addEventListener('click', (event) => {
   }
 
   if (event.target.closest('.delete')) {
-    // let id = event.target.closest('h3');
-    // console.log(id)
-    // manager.currentToDelete = id;
     let deleteModal = document.getElementById('deleteModal')
     renderDeleteModal(deleteModal)
   }
@@ -582,21 +557,19 @@ const renderDeleteModal = (modal) => {
 
 
 
+
+
+
+// ADDING / DELETING BOOKINGS
+
 const deleteBooking = () => {
   console.log(manager)
   const found = manager.currentSearch
   manager.deleteBooking(manager.currentSearch, manager.currentToDelete)
   apiCalls.deleteBooking(manager.currentToDelete)
-  retrieveFreshData(found)
+  retrieveFreshManagerData(found)
   closeDeleteModal();
 }
-
-
-
-
-
-
-
 
 const bookRoom = (event) => {
   let bookingInfo = event.target.previousElementSibling
@@ -625,7 +598,6 @@ const bookRoom = (event) => {
   currentUser.setRoomData(hotel)
   updateUserUpcomingBookings(currentUser)
   updateHeader();
-  // console.log(newBooking)
 }
 
 const bookRoomAsManager = (event) => {
@@ -634,7 +606,6 @@ const bookRoomAsManager = (event) => {
   .previousElementSibling;
 
   let bookingDate = document.getElementById('datePick').value;
-
   let formattedDate = dayjs(bookingDate).format("YYYY/MM/DD");
   let found = manager.currentSearch;
   let roomNum = bookingInfo.children[0].innerText.split(': ')[1]
@@ -647,36 +618,14 @@ const bookRoomAsManager = (event) => {
     roomServiceCharges: []
   }
 
-  console.log("NEW BOOKING", newBooking)
-  manager.addBookingForUser(found, newBooking)
-
+  // console.log("NEW BOOKING", newBooking)
+  // manager.addBookingForUser(found, newBooking)
   apiCalls.postBooking(newBooking)
-  retrieveFreshData(found)
+  retrieveFreshManagerData(found)
   closeManagerModal();
-
-
 }
 
-const retrieveFreshData = (found) => {
-  apiCalls.getData().then(data => {
-    let customerData = data[0];
-    let bookingsData = data[1];
-    let roomsData = data[2];
 
-    let calendar = new Calendar()
-    let instaUsers = customerData.customers.map(customer => new User(customer))
-    hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
-    hotel.correlateData()
-    manager = new Manager(hotel)
-    hideLoginShowManager();
-    renderAllUsers(manager)
-    displayManagerDashBoard(manager);
-    if (found) {
-      renderSearch(found.name, manager)
-    }
-  })
-  .catch(err => displayPageLevelError(err))
-}
 
 const updateHeader = () => {
   let selectedDate = datePicker.value;
