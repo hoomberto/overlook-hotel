@@ -87,7 +87,25 @@
       <h3 id="occupied">Today's Occupancy: </h3>
     </div>
     <div class="users-data">
+      <form class="search-form" onkeypress="return event.keyCode != 13">
+        <label for="userSearch">Search for Users</label>
+        <input id="userSearch"class="user-search" type="text" name="" value="">
+        <button id="searchBtn" class="user-search-btn" type="button" name="button">Search</button>
+      </form>
+      <article id="searchResults" class="search-results">
+        <div id="userSearchInfo" class="user-info-search">
 
+        </div>
+        <div id="userUpcomingSearchInfo" class="user-past-info-search">
+
+        </div>
+        <div id="userPastSearchInfo" class="user-upcoming-info-search">
+
+        </div>
+      </article>
+      <article id="bookForUser" class="book-for-user">
+
+      </article>
     </div>
   </section>
   <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->

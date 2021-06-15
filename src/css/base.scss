@@ -594,12 +594,15 @@ article button {
 .users-data {
   display: flex;
   height: 100vh;
-}
-
-.hotel-data {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.hotel-data {
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: center;
   background: $nav-grad;
   width: 35%;
   border-right: 8px solid white;
@@ -621,6 +624,39 @@ article button {
 
 .bookings-today-manager article {
   border-bottom: 1px solid gray;
+}
+
+.search-form {
+  width: 60%;
+}
+
+.search-results {
+  display: flex;
+  margin-top: 3%;
+  width: 80%;
+  height: 400px;
+  background-color: white;
+}
+
+.user-info-search {
+  width: 32%;
+}
+
+.user-past-info-search,
+.user-upcoming-info-search {
+  width: 34%;
+  overflow: auto;
+}
+
+.book-for-user {
+  width: 80%;
+}
+
+.search-container {
+  margin-top: 5%;
+  background-color: white;
+  height: 400px;
+  overflow: auto;
 }
 
 .hidden {

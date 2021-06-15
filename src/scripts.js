@@ -119,7 +119,8 @@ const fetch = (id) => {
     show(document.querySelector('main'))
     show(document.querySelector('nav'))
     hide(document.getElementById('login'))
-    displayAvailableRooms(hotel)
+    let availableRoomsSection = document.getElementById('availableRoomsSection')
+    displayAvailableRooms(hotel, availableRoomsSection)
     let formattedForInput = hotel.calendar.currentDate.split('/').join('-')
     document.getElementById('dateSelector').setAttribute('min', `${formattedForInput}`)
     document.getElementById('dateSelector').setAttribute('value', `${formattedForInput}`)
@@ -221,6 +222,134 @@ const addBooking = (user, date, selection) => {
 //   hotel.
 // }
 
+const resetSearch = () => {
+  let searchResults = document.getElementById('searchResults')
+  searchResults.innerHTML = "";
+  searchResults.innerHTML += `
+  <div id="userSearchInfo" class="user-info-search">
+  </div>
+  <div id="userUpcomingSearchInfo" class="user-past-info-search">
+  </div>
+  <div id="userPastSearchInfo" class="user-upcoming-info-search">
+  </div>
+  `
+}
+
+const resetUserInfo = () => {
+  let userInfo = document.getElementById('userSearchInfo')
+  let pastBookings = document.getElementById('userPastSearchInfo')
+  let upcomingBookings = document.getElementById('userUpcomingSearchInfo')
+  userInfo.innerHTML = "";
+  pastBookings.innerHTML = "";
+  upcomingBookings.innerHTML = "";
+  // pastBookings.classList.add('user-booking-info-search')
+  // upcomingBookings.classList.add('')
+}
+
+const renderDatePicker = (element, name) => {
+  element.innerHTML = "";
+  element.innerHTML += `<h1>Create a booking for ${name}</h1>`
+  element.innerHTML += `
+  <label for="dateSelector">Select a Date:</label>
+  <input id="dateSelector" type="date" name="datePick" value="" max="2022-06-13">
+  <label for="typeFilter">Filter by Room Type:</label>
+  <select id="typeFilter" name="typePick">
+    <option value="viewAll">VIEW ALL</option>
+  </select>
+  <h2 id="availableText">Rooms Available</h2>
+  <section id="availableForUsers" class="available-rooms-section search-container">
+
+  </section>
+  `
+  let availableForUsers = document.getElementById('availableForUsers')
+
+  displayAvailableRooms(manager.hotel, availableForUsers)
+  document.getElementById('dateSelector').addEventListener('change', () => {
+    let selectedDate = datePicker.value;
+    let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
+    let displayDate = dayjs(selectedDate).format('LL')
+    updateAvailableRooms(hotel, formatted);
+    availableText.innerText = `All Room Types Available on ${displayDate}`
+    roomTypeFilter.selectedIndex = 0;
+  })
+}
+
+
+const renderSearch = (searchValue) => {
+  let found = manager.searchForUser(searchValue)
+  resetSearch();
+  resetUserInfo();
+  let searchResults = document.getElementById('searchResults')
+  let userInfo = document.getElementById('userSearchInfo')
+  let pastBookings = document.getElementById('userPastSearchInfo')
+  let upcomingBookings = document.getElementById('userUpcomingSearchInfo')
+  let bookForUser = document.getElementById('bookForUser')
+  // userInfo.innerHTML = "";
+  if (!found) {
+    userInfo.innerHTML += `
+    <h1>No results found. Please try another search.</h1>
+    `
+    bookForUser.innerHTML = "";
+    return
+  }
+  renderDatePicker(bookForUser, found.name)
+  // makeChangeable();
+  userInfo.innerHTML += `
+  <h2>Name: ${found.name}</h2>
+  <h3>ID: ${found.id}</h3>
+  <h3>Total Spent: $${found.spent}</h3>
+  <h3>Room Preference: ${found.roomPreference}</h3>
+  `
+
+  if (found.bookings.present.length || found.bookings.future.length) {
+    upcomingBookings.innerHTML += `
+    <h2>Upcoming Bookings</h3>
+    `
+  }
+
+  if (found.bookings.present.length) {
+    found.bookings.present.forEach(booking => {
+      upcomingBookings.innerHTML += `
+      <article>
+      <h3>Booking Today: ${booking.date}</h3>
+      <h4>Room Type: ${booking.roomType.toUpperCase()}</h4>
+      <h4>Room Number: ${booking.roomNumber}</h4>
+      <h4>Room Cost: $${booking.cost}</h4>
+      </article>
+      `
+    })
+  }
+
+  if (found.bookings.future.length) {
+    found.bookings.future.forEach(booking => {
+      upcomingBookings.innerHTML += `
+      <article>
+      <h3>Booking On: ${booking.date}</h3>
+      <h4>Room Type: ${booking.roomType.toUpperCase()}</h4>
+      <h4>Room Number: ${booking.roomNumber}</h4>
+      <h4>Room Cost: $${booking.cost}</h4>
+      </article>
+      `
+    })
+
+  }
+
+  pastBookings.innerHTML += `
+  <h2>Past Bookings</h3>
+  `
+  found.bookings.past.forEach(booking => {
+    pastBookings.innerHTML += `
+    <article>
+      <h3>Date stayed: ${booking.date}</h3>
+      <h4>Room Type: ${booking.roomType.toUpperCase()}</h4>
+      <h4>Room Number: ${booking.roomNumber}</h4>
+      <h4>Room Cost: $${booking.cost}</h5>
+    </article>
+    `
+  })
+}
+
+
 // let test = document.getElementById('test')
 let test3 = document.getElementById('test3')
 // test.addEventListener('click', function() {
@@ -230,11 +359,68 @@ let roomTypeFilter = document.getElementById('typeFilter');
 let datePicker = document.getElementById('dateSelector');
 let availableText = document.getElementById('availableText');
 let availableSection = document.getElementById('availableRoomsSection');
+const userSearch = document.getElementById('userSearch')
+const searchBtn = document.getElementById('searchBtn');
+let searchResults = document.getElementById('searchResults')
 
+// test3.addEventListener('click', function() {
+//   console.log(currentUser)
+// })
 
-test3.addEventListener('click', function() {
-  console.log(currentUser)
+userSearch.addEventListener('keyup', (event) => {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    if (userSearch.value) {
+      renderSearch(userSearch.value)
+    }
+  }
 })
+
+searchBtn.addEventListener('click', () => {
+  if (userSearch.value) {
+    renderSearch(userSearch.value)
+  }
+})
+
+
+const makeChangeable = () => {
+  datePicker.addEventListener('change', () => {
+    let selectedDate = datePicker.value;
+    let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
+    let displayDate = dayjs(selectedDate).format('LL')
+    updateAvailableRooms(hotel, formatted);
+    availableText.innerText = `All Room Types Available on ${displayDate}`
+    roomTypeFilter.selectedIndex = 0;
+  })
+
+  roomTypeFilter.addEventListener('change', () => {
+    availableText.innerText = "";
+    if (roomTypeFilter.value === 'viewAll') {
+      let selectedDate = datePicker.value;
+      let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
+      let displayDate = dayjs(selectedDate).format('LL')
+      updateAvailableRooms(hotel, formatted);
+      availableText.innerText += `All Room Types Available on ${displayDate}`
+      return
+    }
+    let choice = roomTypeFilter.value;
+    let selectedDate = datePicker.value;
+    let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
+    let filtered = hotel.filterByType(choice, formatted);
+    let displayDate = dayjs(selectedDate).format('LL')
+    if (!filtered.length) {
+      availableText.innerText = "";
+      availableText.innerText +=`
+      We're sorry! We're currently out of this room type for this date, please try another.`;
+      renderFilter(filtered)
+      return
+    }
+    availableText.innerText = "";
+    availableText.innerText += `${choice.toUpperCase()} Rooms Available on ${displayDate}`
+    renderFilter(filtered)
+  })
+}
+
 
 datePicker.addEventListener('change', () => {
   let selectedDate = datePicker.value;

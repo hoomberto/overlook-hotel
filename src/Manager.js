@@ -68,16 +68,16 @@ class Manager extends User {
   }
 
   searchForUser(search) {
-    let foundUser = this.hotel.customers.find(customer => customer.name.toLowerCase()
-    .includes(search.toLowerCase()) ||
-    customer.name.toLowerCase().split(' ')
-    .some(word => search.includes(word)));
+    let foundUser = this.hotel.customers.find(customer => customer.name
+    .toLowerCase().split(' ').includes(search))
     this.retrieveUserInfo(foundUser)
     return foundUser
   }
 
   retrieveUserInfo(foundUser) {
-    foundUser.setRoomData(this.hotel);
+    if (foundUser) {
+      foundUser.setRoomData(this.hotel);
+    }
   }
 }
 
