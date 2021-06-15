@@ -1,0 +1,50 @@
+.user-input-modal {
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: 50vh;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  display: none;
+}
+
+.user-input-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  margin: 15% auto;
+  padding: 0px;
+  border: 1px solid #888;
+  width: 450px;
+  height: 500px;
+  padding: 10px;
+  box-shadow: 0px 7px 29px 0px black;
+}
+
+.modal-img {
+  width: 270px;
+  height: 200px;
+  align-self: center;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.user-input-content h5 {
+  align-self: center;
+}
+
+article button {
+  align-self: center;
+  margin-bottom: 3%;
+  height: 80px;
+  width: 50%;
+  cursor: pointer;
+}
