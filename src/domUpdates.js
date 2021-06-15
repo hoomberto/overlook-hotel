@@ -186,7 +186,26 @@ export const renderFilter = (result) => {
 
   }
 
-
+export const renderAllUsers = (manager) => {
+  document.querySelector('.all-users-container').innerHTML = ""
+  manager.hotel.customers.forEach(customer => {
+    manager.retrieveUserInfo(customer)
+    customer.numBookings = 0;
+    Object.values(customer.bookings).forEach(dataset => {
+      if (dataset.length) {
+        customer.numBookings += dataset.length
+      }
+    })
+    document.querySelector('.all-users-container').innerHTML += `
+    <article>
+      <h3 class="all-users-name-id">Name: ${customer.name} ID: ${customer.id}</h3>
+      <p class="all-users-spent">Total Spent: $${customer.spent}</p>
+      <p class="all-users-preference">Room Preference: ${customer.roomPreference}</p>
+      <p class="all-users-bookings"># of Bookings: ${customer.numBookings}</p>
+    </article>
+    `
+  })
+}
 
   // `
   //   <article class="available-room">

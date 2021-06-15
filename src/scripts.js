@@ -12,7 +12,16 @@ import Hotel from './Hotel'
 import User from './User'
 import Manager from './Manager'
 import Calendar from './Calendar'
-import { greetUser, displayPreviousBookings, displayAvailableRooms, renderRoomTypes, renderFilter, renderDefaultDate, updateAvailableRooms, updateUserUpcomingBookings } from './domUpdates'
+import {
+  greetUser,
+  displayPreviousBookings,
+  displayAvailableRooms,
+  renderRoomTypes,
+  renderFilter,
+  renderDefaultDate,
+  updateAvailableRooms,
+  updateUserUpcomingBookings,
+  renderAllUsers} from './domUpdates'
 
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
@@ -124,26 +133,26 @@ const fetch = (id) => {
   .catch(err => displayPageLevelError(err))
 }
 
-const renderAllUsers = (manager) => {
-  document.querySelector('.all-users-container').innerHTML = ""
-  manager.hotel.customers.forEach(customer => {
-    manager.retrieveUserInfo(customer)
-    customer.numBookings = 0;
-    Object.values(customer.bookings).forEach(dataset => {
-      if (dataset.length) {
-        customer.numBookings += dataset.length
-      }
-    })
-    document.querySelector('.all-users-container').innerHTML += `
-    <article>
-      <h3 class="all-users-name-id">Name: ${customer.name} ID: ${customer.id}</h3>
-      <p class="all-users-spent">Total Spent: $${customer.spent}</p>
-      <p class="all-users-preference">Room Preference: ${customer.roomPreference}</p>
-      <p class="all-users-bookings"># of Bookings: ${customer.numBookings}</p>
-    </article>
-    `
-  })
-}
+// const renderAllUsers = (manager) => {
+//   document.querySelector('.all-users-container').innerHTML = ""
+//   manager.hotel.customers.forEach(customer => {
+//     manager.retrieveUserInfo(customer)
+//     customer.numBookings = 0;
+//     Object.values(customer.bookings).forEach(dataset => {
+//       if (dataset.length) {
+//         customer.numBookings += dataset.length
+//       }
+//     })
+//     document.querySelector('.all-users-container').innerHTML += `
+//     <article>
+//       <h3 class="all-users-name-id">Name: ${customer.name} ID: ${customer.id}</h3>
+//       <p class="all-users-spent">Total Spent: $${customer.spent}</p>
+//       <p class="all-users-preference">Room Preference: ${customer.roomPreference}</p>
+//       <p class="all-users-bookings"># of Bookings: ${customer.numBookings}</p>
+//     </article>
+//     `
+//   })
+// }
 
 const displayUserDashboard = () => {
   show(document.querySelector('main'))
