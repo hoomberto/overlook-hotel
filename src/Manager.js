@@ -60,8 +60,11 @@ class Manager extends User {
     this.hotel.availableToday = this.hotel.checkAvailability(this.hotel.calendar.currentDate)
   }
 
-  deleteBooking(foundUser, bookingID) {
+  deleteBooking(bookingID) {
     let found = this.hotel.bookings.find(booking => booking.id == bookingID);
+    if (!found) {
+      return
+    }
     let isPastBooking = this.hotel.calendar.checkIfPastBooking(found.date);
     if (isPastBooking) {
       return
@@ -77,7 +80,7 @@ class Manager extends User {
       this.hotel.correlateData();
     }
     // this.hotel.customers[3].resetRoomData();
-    console.log(this.hotel.customers[3]);
+    // console.log(this.hotel.customers[3]);
     this.hotel.availableToday = this.hotel.checkAvailability(this.hotel.calendar.currentDate)
   }
 

@@ -172,7 +172,7 @@ const login = (event) => {
 const deleteBooking = () => {
   // console.log(manager.currentSearch, manager.currentToDelete)
   const found = manager.currentSearch
-  manager.deleteBooking(manager.currentSearch, manager.currentToDelete)
+  manager.deleteBooking(manager.currentToDelete)
   apiCalls.deleteBooking(manager.currentToDelete)
   retrieveFreshManagerData(found)
   closeDeleteModal();

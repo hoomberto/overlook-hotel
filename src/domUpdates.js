@@ -84,7 +84,6 @@ const checkForSpace = (input) => {
 export const displayAvailableRooms = (hotel, element) => {
   element.innerHTML = "";
   let available = hotel.checkAvailability(hotel.calendar.currentDate).availableRooms
-  console.log(available)
   if (available.length) {
 
     available.forEach((room) => {
