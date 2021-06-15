@@ -28,6 +28,12 @@ class User {
     this.getPreferredRoomType()
   }
 
+  resetRoomData() {
+    this.bookings.past = [];
+    this.bookings.present = [];
+    this.bookings.future = [];
+  }
+
   resetDataForUpdate() {
     this.spent = 0;
     Object.values(this.bookings).forEach(dataset => {
@@ -50,12 +56,14 @@ class User {
     booking.roomType = correlatedRoom.roomType
     booking.cost = correlatedRoom.costPerNight
     this.spent += correlatedRoom.costPerNight
-    isCurrentBooking = hotel.calendar.checkIfCurrentBooking(booking.date)
+    let isCurrentBooking = hotel.calendar.checkIfCurrentBooking(booking.date)
     if (isCurrentBooking) {
       this.bookings.current.push(booking)
+      return
     }
     else {
       this.bookings.future.push(booking)
+      return
     }
   }
 
@@ -68,18 +76,35 @@ class User {
   }
 
   getPreferredRoomType() {
-    let count = this.bookings.past.reduce((acc, currentVal) => {
-      let typeOfRoom = currentVal.roomType;
-      if (!acc[typeOfRoom]) {
-        acc[typeOfRoom] = {type: typeOfRoom, count: 0};
-      }
-      acc[typeOfRoom].count++;
-      return acc
-    }, {})
-    let preferred = Object.values(count)
-    .sort((a, b) => a.count > b.count ? -1 : 1)[0];
-    this.roomPreference = preferred.type;
+    if (this.bookings.past.length) {
+
+      let count = this.bookings.past.reduce((acc, currentVal) => {
+        let typeOfRoom = currentVal.roomType;
+        if (!acc[typeOfRoom]) {
+          acc[typeOfRoom] = {type: typeOfRoom, count: 0};
+        }
+        acc[typeOfRoom].count++;
+        return acc
+      }, {})
+      let preferred = Object.values(count)
+      .sort((a, b) => a.count > b.count ? -1 : 1)[0];
+      this.roomPreference = preferred.type;
+    }
   }
+
+  // deleteBooking(hotel) {
+    // let allUserBookings = []
+    // Object.values(this.bookings).forEach((dataset) => {
+    //   if (dataset.length) {
+    //     dataset.forEach(booking => {
+    //       allUserBookings.push(booking)
+    //     })
+    //   }
+    // });
+    // let foundBooking = allUserBookings.find(booking => booking.id === bookingID)
+    // console.log(result)
+    // this.setRoomData(hotel)
+  // }
 }
 
 export default User;

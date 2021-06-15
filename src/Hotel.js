@@ -64,7 +64,15 @@ class Hotel {
     }, [])
   }
 
+
+  resetCustomerData() {
+    this.customers.forEach(customer => {
+      customer.resetRoomData();
+    })
+  }
+
   correlateData() {
+    this.resetCustomerData();
     // Sort bookings before correlating with users, easier to read
     let sortedBookings = this.bookings.sort((a, b) => a.date > b.date ? -1 : 1);
     this.customers.forEach(user => {

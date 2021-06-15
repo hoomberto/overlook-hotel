@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="cache-control" content="no-cache">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;700&display=swap" rel="stylesheet">
   <title>OVERLOOK HOTEL</title>
@@ -78,6 +79,46 @@
       </section>
     </section>
   </main>
+  <section id="managerDash" class="manager hidden">
+    <section id='managerModal' class='user-input-modal'>
+    </section>
+    <section id='deleteModal' class='user-input-modal'>
+    </section>
+    <div class="hotel-data">
+      <h2>Bookings Today</h2>
+      <article id="managerCurrentBookings" class="bookings-today-manager">
+      </article>
+      <h3 id="revenue">Today's Revenue: </h3>
+      <h3 id="occupied">Today's Occupancy: </h3>
+      <article id="allUsers" class="all-users-section">
+        <h3>All Users</h3>
+        <div class="all-users-container">
+
+        </div>
+      </article>
+    </div>
+    <div class="users-data">
+      <form class="search-form" onkeypress="return event.keyCode != 13">
+        <label for="userSearch">Search for Users</label>
+        <input id="userSearch"class="user-search" type="text" name="" value="">
+        <button id="searchBtn" class="user-search-btn" type="button" name="button">Search</button>
+      </form>
+      <article id="searchResults" class="search-results">
+        <div id="userSearchInfo" class="user-info-search">
+
+        </div>
+        <div id="userUpcomingSearchInfo" class="user-past-info-search">
+
+        </div>
+        <div id="userPastSearchInfo" class="user-upcoming-info-search">
+
+        </div>
+      </article>
+      <article id="bookForUser" class="book-for-user">
+
+      </article>
+    </div>
+  </section>
   <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   <script src="bundle.js"></script>
   <script src="https://kit.fontawesome.com/4f6e467d8c.js" crossorigin="anonymous"></script>
