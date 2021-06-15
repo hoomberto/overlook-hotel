@@ -91,6 +91,7 @@ const loginManager = () => {
     manager = new Manager(hotel)
     hotel.correlateData()
     hideLoginShowManager();
+    renderAllUsers();
     displayManagerDashBoard();
     console.log(manager)
     // show(document.querySelector('main'))
@@ -130,6 +131,28 @@ const fetch = (id) => {
   })
   .catch(err => displayPageLevelError(err))
 }
+
+const renderAllUsers = () => {
+  document.querySelector('.all-users-container').innerHTML = ""
+  manager.hotel.customers.forEach(customer => {
+    manager.retrieveUserInfo(customer)
+    customer.numBookings = 0;
+    Object.values(customer.bookings).forEach(dataset => {
+      if (dataset.length) {
+        customer.numBookings += dataset.length
+      }
+    })
+    document.querySelector('.all-users-container').innerHTML += `
+    <article>
+      <h3 class="all-users-name-id">Name: ${customer.name} ID: ${customer.id}</h3>
+      <p class="all-users-spent">Total Spent: $${customer.spent}</p>
+      <p class="all-users-preference">Room Preference: ${customer.roomPreference}</p>
+      <p class="all-users-bookings"># of Bookings: ${customer.numBookings}</p>
+    </article>
+    `
+  })
+}
+
 
 const displayUserDashboard = () => {
   show(document.querySelector('main'))
@@ -663,6 +686,7 @@ const bookRoomAsManager = (event) => {
   // let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
   // updateAvailableRooms(manager.hotel, formatted, document.getElementById('availableForUsers'));
   renderSearch(found.name)
+  renderAllUsers();
   displayManagerDashBoard();
   // roomTypeFilter.selectedIndex = 0;
   // currentUser.setRoomData(hotel)

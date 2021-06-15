@@ -659,8 +659,22 @@ article button {
   overflow: auto;
 }
 
+.all-users-container {
+  padding: 5px;
+  width: 100%;
+  background-color: white;
+  overflow-y: auto;
+  border-radius: 8px;
+  height: 350px;
+}
+
+.all-users-section {
+  width: 80%;
+}
+
 .delete {
-  height: 30px;
+  height: 40px;
+  width: 100px;
 }
 
 .hidden {
