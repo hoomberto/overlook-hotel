@@ -1,5 +1,8 @@
-class Manager {
+import User from '../src/User'
+
+class Manager extends User {
   constructor(hotelData) {
+    super(hotelData)
     this.hotel = hotelData
   }
 
@@ -32,9 +35,21 @@ class Manager {
   }
 
   searchForUser(search) {
-    this.customers
-    .filter(customer => customer.name.includes(search.toLowerCase()) ||
+    return this.customers
+    .find(customer => customer.name.includes(search.toLowerCase()) ||
     customer.name.toLowerCase().split(' ')
     .some(word => search.includes(word)));
   }
+
+  viewUserInfo(foundUser) {
+    foundUser.setRoomData(this.hotel);
+    return foundUser.getTotalSpent();
+  }
+
+//   I should be able to search for any user by name and:
+// View their name, a list of all of their bookings, and the total amount they’ve spent
+// Add a room booking for that user
+// Delete any upcoming room bookings for that user (they cannot delete a booking from the past)
 }
+
+export default Manager;
