@@ -153,4 +153,20 @@ describe('Manager', () => {
     expect(manager.hotel.bookings.length).to.equal(2)
   });
 
+  it('should be able add a booking for a found user', () => {
+    let found = manager.searchForUser("nerdo")
+    let newBooking = {
+      "id": "four",
+      "userID": 1,
+      "date": "2023/01/01",
+      "roomNumber": 3,
+      "roomServiceCharges": []
+    }
+
+    manager.addBookingForUser(found, newBooking)
+    found = manager.searchForUser("nerdo")
+    expect(manager.hotel.bookings.length).to.equal(4)
+    expect(found.bookings.future.length).to.equal(2)
+  });
+
 });

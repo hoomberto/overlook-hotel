@@ -28,6 +28,11 @@ class Manager extends User {
     return `${Math.floor(occupied)}%`;
   }
 
+  addBookingForUser(foundUser, newBooking) {
+    this.hotel.addBooking(newBooking)
+    foundUser.setRoomData(this.hotel)
+  }
+
   deleteBooking(bookingID) {
     let found = this.hotel.bookings.find(booking => booking.id === bookingID);
     let isPastBooking = this.hotel.calendar.checkIfPastBooking(found.date);

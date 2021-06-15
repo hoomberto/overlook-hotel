@@ -50,12 +50,14 @@ class User {
     booking.roomType = correlatedRoom.roomType
     booking.cost = correlatedRoom.costPerNight
     this.spent += correlatedRoom.costPerNight
-    isCurrentBooking = hotel.calendar.checkIfCurrentBooking(booking.date)
+    let isCurrentBooking = hotel.calendar.checkIfCurrentBooking(booking.date)
     if (isCurrentBooking) {
       this.bookings.current.push(booking)
+      return
     }
     else {
       this.bookings.future.push(booking)
+      return
     }
   }
 
@@ -69,7 +71,7 @@ class User {
 
   getPreferredRoomType() {
     if (this.bookings.past.length) {
-      
+
       let count = this.bookings.past.reduce((acc, currentVal) => {
         let typeOfRoom = currentVal.roomType;
         if (!acc[typeOfRoom]) {
