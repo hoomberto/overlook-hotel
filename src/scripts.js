@@ -145,9 +145,11 @@ const displayManagerDashBoard = () => {
   manager.hotel.availableToday.bookedRooms.forEach(booking => {
     document.getElementById('managerCurrentBookings').innerHTML += `
       <article>
-        <h3>Booked By: ${booking.bookedBy}, customer ID: ${booking.customerID}</h3>
-        <h3>Booking ID: ${booking.bookingID}</h3>
-        <h3>Profit: $${booking.costPerNight}</h4>
+        <div>
+          <h3>Booked By: ${booking.bookedBy}, customer ID: ${booking.customerID}</h3>
+          <h3>Booking ID: ${booking.bookingID}</h3>
+          <h3>Profit: $${booking.costPerNight}</h4>
+        </div>
       </article>
     `
 
@@ -300,7 +302,7 @@ document.body.addEventListener('click', (event) => {
       <div class='info-container modal'>
         <h3>${previous.children[0].innerText}</h3>
         <h4>${previous.children[1].innerText}</h4>
-        <h4>${previous.children[2].innerText} + Tax</h4>
+        <h4>${previous.children[2].innerText}</h4>
       </div>
       <img class="modal-img" src="${roomImage.src}" alt="${roomImage.alt}">
       <h5>Make Booking for: ${formatted}</h5>
@@ -308,8 +310,6 @@ document.body.addEventListener('click', (event) => {
       <button class="close-modal">CLOSE</button>
     </article>
     `
-
-
   }
 
   if (event.target.closest('.new-booking')) {

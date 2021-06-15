@@ -611,12 +611,17 @@ article button {
 }
 
 .bookings-today-manager {
-  width: 500px;
+  padding: 5px;
+  width: 90%;
   height: 500px;
   background-color: white;
   overflow-y: auto;
+  border-radius: 8px;
 }
 
+.bookings-today-manager article {
+  border-bottom: 1px solid gray;
+}
 
 .hidden {
   display: none;
