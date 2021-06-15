@@ -66,11 +66,13 @@ class Manager extends User {
       let updated = this.hotel.bookings.filter(booking => booking.id !== bookingID)
       this.hotel.bookings = updated
     }
+    this.hotel.availableToday = this.hotel.checkAvailability(this.hotel.calendar.currentDate)
   }
 
   searchForUser(search) {
+    let formattedSearch = search.toLowerCase();
     let foundUser = this.hotel.customers.find(customer => customer.name
-    .toLowerCase().split(' ').includes(search) || customer.name === search)
+    .toLowerCase().split(' ').includes(formattedSearch) || customer.name.toLowerCase() === formattedSearch)
     this.retrieveUserInfo(foundUser)
     this.currentSearch = "";
     this.currentSearch = foundUser;

@@ -656,7 +656,7 @@ const bookRoomAsManager = (event) => {
   console.log("NEW BOOKING", newBooking)
   manager.addBookingForUser(found, newBooking)
   // hotel.addBooking(newBooking);
-  // apiCalls.postBooking(newBooking)
+  apiCalls.postBooking(newBooking)
   // console.log("WORKING >>>", hotel)
   closeManagerModal();
   // let selectedDate = datePicker.value;
