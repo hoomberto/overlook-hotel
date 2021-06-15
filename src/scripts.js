@@ -316,6 +316,10 @@ const renderDatePicker = (element, name) => {
   let availableForUsers = document.getElementById('availableForUsers')
 
   displayAvailableRooms(manager.hotel, availableForUsers)
+  document.querySelectorAll("button[name='info']").forEach(element => {
+    element.name = 'infoManager'
+    element.classList.add('info-manager')
+  })
   makeChangeable(document.getElementById('datePick'))
 }
 
@@ -572,12 +576,16 @@ document.body.addEventListener('click', (event) => {
     closeManagerModal();
   }
 
+  if (event.target.closest(".info-manager")) {
+    let managerModal = document.getElementById('managerModal')
+    renderManagerModal(managerModal)
+
+  }
+
   if (event.target.name === "info") {
 
     let modal = document.getElementById('userInputModal')
-    let managerModal = document.getElementById('managerModal')
     renderModal(modal)
-    renderManagerModal(managerModal)
     // // alert("working")
     // modal.innerHTML = "";
     // let previous = event.target.previousElementSibling;
@@ -708,6 +716,9 @@ const updateHeader = () => {
   // availableText.innerText += `All Rooms Available on ${displayDate}`
 
 }
+
+
+
 
 // const getUniqueDates = (sorted) => {
 //   let uniqueDates = [];
