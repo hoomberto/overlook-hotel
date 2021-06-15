@@ -185,19 +185,3 @@ export const renderFilter = (result) => {
     }
 
   }
-
-
-
-  // `
-  //   <article class="available-room">
-  //   <div class="info-container">
-  //     <h3>Room Number: ${room.number}</h3>
-  //     <h4>Room Type: ${room.roomType.toUpperCase()}</h4>
-  //     <h4>Cost Per Night: $${room.costPerNight}</h5>
-  //   </div>
-  //   <button class="info-btn" name="info">More Info</button
-  //   <div>
-  //     <img alt="hotel-room-photo" />
-  //   </div>
-  //   </article>
-  // `
