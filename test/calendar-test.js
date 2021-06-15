@@ -2,8 +2,7 @@ import chai from 'chai';
 import dayjs from 'dayjs';
 import dayOfYear from 'dayjs/plugin/dayOfYear'
 dayjs.extend(dayOfYear)
-// import User from '../src/User'
-// import Hotel from '../src/Hotel'
+
 import Calendar from '../src/Calendar'
 const expect = chai.expect;
 
@@ -29,7 +28,4 @@ describe('Calendar', () => {
     expect(calendar.checkIfPastBooking("2020/01/01")).to.be.true;
     expect(calendar.checkIfPastBooking("2022/01/01")).to.be.false;
   });
-
-
-
 });

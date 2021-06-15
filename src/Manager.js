@@ -16,16 +16,6 @@ class Manager extends User {
     return `$${revenue.toFixed(2)}`;
   }
 
-  // getTotalRevenueToday() {
-  //   let revenue = 0;
-  //   // let filtered = this.hotel.bookings.filter(booking => booking.date === this.hotel.calendar.currentDate)
-  //   this.hotel.availableToday.bookedRooms.forEach(booking => {
-  //     let correlatedRoom = this.hotel.rooms.find(room => room.number === booking.roomNumber)
-  //     revenue += correlatedRoom.costPerNight
-  //   })
-  //   return `$${revenue.toFixed(2)}`;
-  // }
-
   getBookingsOnDate(date) {
     return this.hotel.checkAvailability(date).bookedRooms;
   }
@@ -34,12 +24,10 @@ class Manager extends User {
     this.hotel.availableToday.bookedRooms.forEach(bookedRoom => {
       let found = this.hotel.customers.find(customer => customer.bookings.present.some(booking => bookedRoom.number === booking.roomNumber))
       let data = found.bookings.present.find(booking => bookedRoom.number === booking.roomNumber)
-      // console.log(found)
       bookedRoom.bookedBy = found.name;
       bookedRoom.customerID = found.id;
       bookedRoom.bookingID = data.id;
     });
-    // return this.hotel.availableToday.bookedRooms;
   }
 
   occupiedPercentageOnDate(date) {
@@ -70,17 +58,13 @@ class Manager extends User {
       return
     }
     else {
-      // console.log(this.hotel.bookings.length)
       let updated = this.hotel.bookings.filter(booking => booking.id !== bookingID)
       this.hotel.bookings = updated
-      // this.hotel.correlateData();
-      // foundUser.setRoomData(this.hotel)
-      // console.log(this.hotel.bookings.length)
+
       this.hotel.resetCustomerData();
       this.hotel.correlateData();
     }
-    // this.hotel.customers[3].resetRoomData();
-    // console.log(this.hotel.customers[3]);
+
     this.hotel.availableToday = this.hotel.checkAvailability(this.hotel.calendar.currentDate)
   }
 

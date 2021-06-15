@@ -33,26 +33,16 @@ const postBooking = (newBooking) => {
 
 const checkResponse = (response) => {
   if (response.ok) {
-    // document.getElementById('errorMessage').innerText = ""
-    let message = {
-      message: `Booking successfully posted`,
-    };
-    console.log(message)
     return response.json();
   }
   else {
     console.log(response.status)
     if (response.status === 422) {
       let error = new Error('Bad Post Request')
-      // let message = `${response.status} ${error.message} - Please enter data correctly`
-      // document.getElementById('errorMessage').innerText = message
       throw error;
     }
     else {
       let error = new Error('Something went wrong')
-      let message = `${error.message}`;
-      alert(message)
-      // document.getElementById('errorMessage').innerText = message
       throw error
     }
   }
@@ -60,11 +50,6 @@ const checkResponse = (response) => {
 
 const checkDeleteResponse = (response) => {
   if (response.ok) {
-    // document.getElementById('errorMessage').innerText = ""
-    let message = {
-      message: `Booking successfully deleted`,
-    };
-    console.log(message)
     return response.json();
   }
   else {

@@ -31,10 +31,6 @@ class Calendar {
       return true
     }
     return false
-    // if (dayjs(inputDate).dayOfYear() === dayjs(this.currentDate).dayOfYear()) {
-    //   return true
-    // }
-    // return false
   }
 }
 
