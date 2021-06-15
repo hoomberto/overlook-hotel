@@ -2,6 +2,7 @@
 @import 'login';
 @import 'navbar';
 @import 'userDash';
+@import 'userBookings';
 
 body {
   margin: 0;
@@ -207,65 +208,65 @@ main {
   width: 100%;
 }
 
-section {
-  margin: 0;
-}
-
-main section {
-  transform: translate(50px, 150px);
-}
-
-.user-dashboard {
-  width: 30%;
-}
-
-.booking-section {
-  width: 60%;
-}
-
-.available-rooms-section {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr;
-  grid-gap: 1rem;
-  margin: 0;
-  margin-top: -10%;
-  height: 600px;
-  overflow: auto;
-}
-
-img {
-  width: 160px;
-  height: 160px;
-}
-
-.smaller-set {
-  display: grid;
-  grid-gap: 2rem;
-  margin: 0;
-  margin-top: -10%;
-  height: 600px;
-  overflow: auto;
-}
-
-.available-rooms {
-  width: 100%;
-}
-
-input {
-  width: 40%;
-}
-
-.available-room {
-  display: flex;
-  justify-content: space-between;
-}
-
-.info-btn {
-  height: 40px;
-  width: 90px;
-  align-self: center;
-}
+// section {
+//   margin: 0;
+// }
+//
+// main section {
+//   transform: translate(50px, 150px);
+// }
+//
+// .user-dashboard {
+//   width: 30%;
+// }
+//
+// .booking-section {
+//   width: 60%;
+// }
+//
+// .available-rooms-section {
+//   display: grid;
+//   grid-template-columns: repeat(2, 1fr);
+//   grid-template-rows: 1fr;
+//   grid-gap: 1rem;
+//   margin: 0;
+//   margin-top: -10%;
+//   height: 600px;
+//   overflow: auto;
+// }
+//
+// img {
+//   width: 160px;
+//   height: 160px;
+// }
+//
+// .smaller-set {
+//   display: grid;
+//   grid-gap: 2rem;
+//   margin: 0;
+//   margin-top: -10%;
+//   height: 600px;
+//   overflow: auto;
+// }
+//
+// .available-rooms {
+//   width: 100%;
+// }
+//
+// input {
+//   width: 40%;
+// }
+//
+// .available-room {
+//   display: flex;
+//   justify-content: space-between;
+// }
+//
+// .info-btn {
+//   height: 40px;
+//   width: 90px;
+//   align-self: center;
+// }
 
 // MODAL
 
@@ -277,9 +278,7 @@ input {
   z-index: 10;
   top: 0;
   left: 0;
-  // background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
-  // display: flex;
   display: none;
 }
 
@@ -294,7 +293,6 @@ input {
   width: 450px;
   height: 500px;
   padding: 10px;
-  // overflow-y: scroll;
   box-shadow: 0px 7px 29px 0px black;
 }
 
