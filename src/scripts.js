@@ -30,7 +30,11 @@ import {
   displayManagerDashBoard,
   resetSearch,
   resetUserInfo,
-  makeChangeable } from './domUpdates'
+  makeChangeable,
+  renderManagerModal,
+  closeModal,
+  closeManagerModal,
+  closeDeleteModal } from './domUpdates'
 
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
@@ -437,29 +441,29 @@ const renderModal = (modal) => {
 
 
 
-const renderManagerModal = (modal) => {
-  modal.innerHTML = "";
-  let previous = event.target.previousElementSibling;
-  let next = event.target.nextElementSibling
-  let roomImage = next
-  let selectedDate = document.getElementById('datePick').value;
-  let formatted = dayjs(selectedDate, "YYYY-MM-DD").format('LL')
-
-  modal.style.display = 'flex'
-  modal.innerHTML += `
-  <article class='user-input-content'>
-    <div class='info-container modal'>
-      <h3>${previous.children[0].innerText}</h3>
-      <h4>${previous.children[1].innerText}</h4>
-      <h4>${previous.children[2].innerText}</h4>
-    </div>
-    <img class="modal-img" src="${roomImage.src}" alt="${roomImage.alt}">
-    <h5>Make Booking for: ${formatted}</h5>
-    <button class="new-booking-as-manager">BOOK ROOM</button>
-    <button class="close-modal close-manager-modal">CLOSE</button>
-  </article>
-  `
-}
+// const renderManagerModal = (modal) => {
+//   modal.innerHTML = "";
+//   let previous = event.target.previousElementSibling;
+//   let next = event.target.nextElementSibling
+//   let roomImage = next
+//   let selectedDate = document.getElementById('datePick').value;
+//   let formatted = dayjs(selectedDate, "YYYY-MM-DD").format('LL')
+//
+//   modal.style.display = 'flex'
+//   modal.innerHTML += `
+//   <article class='user-input-content'>
+//     <div class='info-container modal'>
+//       <h3>${previous.children[0].innerText}</h3>
+//       <h4>${previous.children[1].innerText}</h4>
+//       <h4>${previous.children[2].innerText}</h4>
+//     </div>
+//     <img class="modal-img" src="${roomImage.src}" alt="${roomImage.alt}">
+//     <h5>Make Booking for: ${formatted}</h5>
+//     <button class="new-booking-as-manager">BOOK ROOM</button>
+//     <button class="close-modal close-manager-modal">CLOSE</button>
+//   </article>
+//   `
+// }
 
 
 
@@ -511,17 +515,17 @@ document.body.addEventListener('click', (event) => {
 
 })
 
-const closeModal = () => {
-  document.getElementById("userInputModal").style.display = "none"
-}
-
-const closeManagerModal = () => {
-  document.getElementById("managerModal").style.display = "none"
-}
-
-const closeDeleteModal = () => {
-  document.getElementById("deleteModal").style.display = "none"
-}
+// const closeModal = () => {
+//   document.getElementById("userInputModal").style.display = "none"
+// }
+//
+// const closeManagerModal = () => {
+//   document.getElementById("managerModal").style.display = "none"
+// }
+//
+// const closeDeleteModal = () => {
+//   document.getElementById("deleteModal").style.display = "none"
+// }
 
 
 const renderDeleteModal = (modal) => {
