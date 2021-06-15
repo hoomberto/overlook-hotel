@@ -1,0 +1,90 @@
+.manager {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+}
+
+.hotel-data,
+.users-data {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hotel-data {
+  background: $login-grad;
+  width: 35%;
+  border-right: 8px solid white;
+}
+
+.users-data {
+  background: $main-grad;
+  width: 65%;
+}
+
+.bookings-today-manager {
+  padding: 5px;
+  width: 90%;
+  height: 500px;
+  background-color: white;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+.bookings-today-manager article {
+  border-bottom: 1px solid gray;
+}
+
+.search-form {
+  width: 60%;
+}
+
+.search-results {
+  display: flex;
+  margin-top: 3%;
+  width: 80%;
+  height: 400px;
+  background-color: white;
+}
+
+.user-info-search {
+  width: 32%;
+}
+
+.user-past-info-search,
+.user-upcoming-info-search {
+  width: 34%;
+  overflow: auto;
+}
+
+.book-for-user {
+  width: 80%;
+}
+
+.search-container {
+  margin-top: 5%;
+  background-color: white;
+  height: 400px;
+  overflow: auto;
+}
+
+.all-users-container {
+  padding: 5px;
+  width: 100%;
+  background-color: white;
+  overflow-y: auto;
+  border-radius: 8px;
+  height: 350px;
+}
+
+.all-users-section {
+  width: 80%;
+}
+
+.delete {
+  height: 40px;
+  width: 100px;
+}

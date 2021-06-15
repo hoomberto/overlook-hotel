@@ -1,0 +1,43 @@
+@media screen and (max-width: 1100px) {
+  .booking-section {
+    width: 50%;
+  }
+
+  #availableRoomsSection {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: 1fr;
+  }
+
+  .upcoming {
+    transform: translate(47px, 112px);
+    width: 140%;
+  }
+}
+
+@media screen and (max-width: 946px) {
+  main {
+    flex-direction: column;
+  }
+
+  .booking-section {
+    order: 1;
+    margin-bottom: 21%;
+    width: 68%;
+  }
+
+  .user-dashboard {
+    order: 2;
+    margin-top: 10%;
+  }
+
+  .available-rooms-section {
+    margin-top: 10%;
+  }
+
+  #availableRoomsSection {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: 1fr;
+    height: 400px;
+    margin-top: -31%;
+  }
+}

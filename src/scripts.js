@@ -170,7 +170,6 @@ const login = (event) => {
 // POSTING / DELETING Bookings
 
 const deleteBooking = () => {
-  // console.log(manager.currentSearch, manager.currentToDelete)
   const found = manager.currentSearch
   manager.deleteBooking(manager.currentToDelete)
   apiCalls.deleteBooking(manager.currentToDelete)
@@ -195,7 +194,6 @@ const bookRoom = (event) => {
   }
   hotel.addBooking(newBooking);
   apiCalls.postBooking(newBooking)
-  console.log(newBooking)
   closeModal();
   let selectedDate = datePicker.value;
   let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
@@ -288,7 +286,6 @@ searchBtn.addEventListener('click', () => {
     renderSearch(userSearch.value, manager)
   }
 })
-
 
 datePicker.addEventListener('change', () => {
   let selectedDate = datePicker.value;
