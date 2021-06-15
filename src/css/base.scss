@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'login';
 @import 'navbar';
+@import 'userDash';
 
 body {
   margin: 0;
@@ -159,46 +160,45 @@ main h1 {
 //   height: 8px;
 // }
 
-.user-booking-section {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-template-rows: repeat(1, 1fr);
-  width: 270px;
-  height: 400px;
-  overflow: scroll;
-}
+// .user-booking-section {
+//   display: grid;
+//   grid-template-columns: repeat(1, 1fr);
+//   grid-template-rows: repeat(1, 1fr);
+//   width: 270px;
+//   height: 400px;
+//   overflow: scroll;
+// }
+//
+// .user-booking-section article {
+//   box-shadow: $main-box-shadow;
+//   border-bottom: 1px solid gray;
+// }
+//
 
-.user-booking-section article {
-  box-shadow: $main-box-shadow;
-  border-bottom: 1px solid gray;
-}
-
-// UPCOMING BOOKING section
-
-.upcoming {
-  position: absolute;
-  margin: 0;
-  transform: translate(47px, 119px);
-}
-
-.upcoming-container {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-template-rows: repeat(1, 1fr);
-  width: 270px;
-  height: 200px;
-  overflow: scroll;
-}
-
-.upcoming-spacer {
-  width: 100%;
-}
-
-.upcoming-container article {
-  box-shadow: $main-box-shadow;
-  border-bottom: 1px solid gray;
-}
-
+//
+// .upcoming {
+//   position: absolute;
+//   margin: 0;
+//   transform: translate(47px, 119px);
+// }
+//
+// .upcoming-container {
+//   display: grid;
+//   grid-template-columns: repeat(1, 1fr);
+//   grid-template-rows: repeat(1, 1fr);
+//   width: 270px;
+//   height: 200px;
+//   overflow: scroll;
+// }
+//
+// .upcoming-spacer {
+//   width: 100%;
+// }
+//
+// .upcoming-container article {
+//   box-shadow: $main-box-shadow;
+//   border-bottom: 1px solid gray;
+// }
 
 // MAIN BOOKING SECTION
 
