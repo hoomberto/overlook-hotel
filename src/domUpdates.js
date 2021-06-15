@@ -1,3 +1,12 @@
+import dayjs from 'dayjs';
+import dayOfYear from 'dayjs/plugin/dayOfYear'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+
+dayjs.extend(localizedFormat)
+dayjs.extend(dayOfYear)
+dayjs.extend(weekOfYear)
+
 export const greetUser = (currentUser) => {
   let userSpent = currentUser.getTotalSpent();
   let userPreference = currentUser.roomPreference.toUpperCase();
@@ -207,6 +216,8 @@ export const renderAllUsers = (manager) => {
   })
 }
 
+// USER DASHBOARD
+
 export const displayUserDashboard = () => {
   show(document.querySelector('main'))
   show(document.querySelector('nav'))
@@ -226,6 +237,76 @@ export const hide = (element) => {
 export const show = (element) => {
   element.classList.remove('hidden')
 }
+
+export const resetManagerDashboard = () => {
+  document.getElementById('managerCurrentBookings').innerHTML = ""
+  document.getElementById('revenue').innerText = "";
+  document.getElementById('occupied').innerText = "";
+  document.getElementById('revenue').innerText += `Today's Revenue: `
+  document.getElementById('occupied').innerText += `Today's Occupancy: `
+}
+
+export const displayManagerDashBoard = (manager) => {
+
+  resetManagerDashboard();
+  let managerCurrentBookings = document.getElementById('managerCurrentBookings')
+
+  manager.setCurrentBookings();
+  if (!manager.hotel.availableToday.bookedRooms.length) {
+    managerCurrentBookings.innerHTML += `
+    <h1>No bookings for today currently!</h1>
+    `
+  }
+  manager.hotel.availableToday.bookedRooms.forEach(booking => {
+    managerCurrentBookings.innerHTML += `
+      <article>
+        <div>
+          <h3>Booked By: ${booking.bookedBy}, customer ID: ${booking.customerID}</h3>
+          <h3>Booking ID: ${booking.bookingID}</h3>
+          <h3>Profit: $${booking.costPerNight}</h4>
+        </div>
+      </article>
+    `
+  })
+  document.getElementById('revenue').innerText += ` ${manager.getTotalRevenueOnDay(manager.hotel.calendar.currentDate)}`
+  document.getElementById('occupied').innerText += ` ${manager.occupiedPercentageOnDate(manager.hotel.calendar.currentDate)}`
+}
+
+export const resetSearch = () => {
+  let searchResults = document.getElementById('searchResults')
+  searchResults.innerHTML = "";
+  searchResults.innerHTML += `
+  <div id="userSearchInfo" class="user-info-search">
+  </div>
+  <div id="userUpcomingSearchInfo" class="user-past-info-search">
+  </div>
+  <div id="userPastSearchInfo" class="user-upcoming-info-search">
+  </div>
+  `
+}
+
+export const resetUserInfo = () => {
+  let userInfo = document.getElementById('userSearchInfo')
+  let pastBookings = document.getElementById('userPastSearchInfo')
+  let upcomingBookings = document.getElementById('userUpcomingSearchInfo')
+  userInfo.innerHTML = "";
+  pastBookings.innerHTML = "";
+  upcomingBookings.innerHTML = "";
+}
+
+export const makeChangeable = (element) => {
+  element.addEventListener('change', () => {
+    let selectedDate = element.value;
+    let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
+    let displayDate = dayjs(selectedDate).format('LL')
+    updateAvailableRooms(manager.hotel, formatted, document.getElementById('availableForUsers'));
+    document.querySelectorAll("button[name='info']").forEach(element => {
+      element.name = 'infoManager'
+      element.classList.add('info-manager')
+    })
+  })
+}
+
 
   // `
   //   <article class="available-room">
