@@ -101,7 +101,7 @@ export const updateUserUpcomingBookings = (currentUser) => {
     currentUser.bookings.present.forEach(booking => {
       upcomingBookings.innerHTML += `
       <article>
-      <h3>Booking on: ${booking.date}</h3>
+      <h3>Booking Today: ${booking.date}</h3>
       <h4>Room Type: ${booking.roomType.toUpperCase()}</h4>
       <h4>Room Cost: $${booking.cost}</h5>
       <h4>Room Number: ${booking.roomNumber}</h4>

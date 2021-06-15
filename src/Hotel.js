@@ -76,7 +76,7 @@ class Hotel {
             user.bookings.past.push(booking)
           }
           else if (isCurrentBooking) {
-            user.bookings.current.push(booking)
+            user.bookings.present.push(booking)
           }
           else {
             user.bookings.future.push(booking)

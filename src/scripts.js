@@ -281,13 +281,14 @@ const bookRoom = (event) => {
   let roomNum = bookingInfo.children[0].innerText.split(': ')[1]
 
   let newBooking = {
-    id: Date.now().toString(),
+    id: Date.now(),
     userID: currentUser.id,
     date: formattedDate,
     roomNumber: parseInt(roomNum),
     roomServiceCharges: []
   }
   hotel.addBooking(newBooking);
+  apiCalls.postBooking(newBooking)
   console.log(hotel)
   closeModal();
   let selectedDate = datePicker.value;

@@ -34,6 +34,10 @@ const postBooking = (newBooking) => {
 const checkResponse = (response) => {
   if (response.ok) {
     // document.getElementById('errorMessage').innerText = ""
+    let message = {
+      message: `Booking successfully posted`,
+    };
+    console.log(message)
     return response.json();
   }
   else {
@@ -47,13 +51,25 @@ const checkResponse = (response) => {
     else {
       let error = new Error('Something went wrong')
       let message = `${error.message}`;
-      document.getElementById('errorMessage').innerText = message
+      alert(message)
+      // document.getElementById('errorMessage').innerText = message
       throw error
     }
   }
 }
 
+const deleteBooking = (bookingID) => {
+  let url = 'http://localhost:3001/api/v1/bookings/'
+  fetch(url + bookingID, {
+    method: 'DELETE',
+    headers: { "Content-Type": "application/json" },
+  })
+  .then(checkResponse);
+}
+
+
+
 const getData = () => {
   return Promise.all([fetchCustomersData(), fetchBookingsData(), fetchRoomsData()])
 }
-export default { getData, fetchUser, postBooking }
+export default { getData, fetchUser, postBooking, deleteBooking }
