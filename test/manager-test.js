@@ -38,21 +38,21 @@ describe('Manager', () => {
 
     let bookings = [
       {
-        "id": "5fwrgu4i7k55hl6sz",
+        "id": "one",
         "userID": 1,
-        "date": "2020/01/22",
+        "date": "2052/01/22",
         "roomNumber": 3,
         "roomServiceCharges": []
       },
       {
-        "id": "5fwrgu4i7k55hl6t5",
+        "id": "two",
         "userID": 1,
         "date": "2020/01/24",
         "roomNumber": 2,
         "roomServiceCharges": []
       },
       {
-        "id": "5fwrgu4i7k55hl6t6",
+        "id": "three",
         "userID": 2,
         "date": "2020/01/10",
         "roomNumber": 1,
@@ -76,13 +76,14 @@ describe('Manager', () => {
     let calendar = new Calendar();
     let hotel = new Hotel(users, rooms, bookings, calendar)
     manager = new Manager(hotel);
+    manager.hotel.correlateData();
   })
 
   it('should be a function', () => {
     expect(Manager).to.be.a('function');
   });
 
-  it('should be an instance of Hotel', () => {
+  it('should be an instance of Manager', () => {
     expect(manager).to.be.an.instanceof(Manager);
   });
 
@@ -98,5 +99,58 @@ describe('Manager', () => {
     expect(manager.getTotalRevenueOnDay("2020/01/24")).to.equal('$968.52');
   });
 
+  it('should return a list of bookings on a specified date', () => {
+    let newBooking = {
+      "id": "5fwrgu4i7k55hl6sz",
+      "userID": 1,
+      "date": "2020/01/24",
+      "roomNumber": 3,
+      "roomServiceCharges": []
+    }
+    manager.hotel.bookings.push(newBooking)
+    expect(manager.getBookingsOnDate("2020/01/24").length).to.equal(2);
+  });
+
+  it('should return the percentage of occupied rooms on a specified date', () => {
+    expect(manager.occupiedPercentageOnDate("2020/01/24")).to.equal("33%");
+  });
+
+  it('should be able to search for a user by name', () => {
+    expect(manager.searchForUser("nerdo")).to.deep.equal({
+      id: 1,
+      name: 'Nerdo',
+      bookings: { past: [
+      {
+        id: 'two',
+        userID: 1,
+        date: '2020/01/24',
+        roomNumber: 2,
+        roomServiceCharges: [],
+        roomType: 'single room',
+        cost: 477.38
+      }
+    ],
+    present: [],
+    future: [{
+      id: 'one',
+      userID: 1,
+      date: '2052/01/22',
+      roomNumber: 3,
+      roomServiceCharges: [],
+      roomType: 'single room',
+      cost: 491.14
+    }]},
+    roomPreference: 'single room',
+    spent: '968.52'
+    });
+  });
+
+  it('should be able to remove a booking if it is not a past booking', () => {
+    expect(manager.hotel.bookings.length).to.equal(3);
+    manager.deleteBooking("two")
+    expect(manager.hotel.bookings.length).to.equal(3)
+    manager.deleteBooking("one")
+    expect(manager.hotel.bookings.length).to.equal(2)
+  });
 
 });

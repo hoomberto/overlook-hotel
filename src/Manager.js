@@ -25,31 +25,33 @@ class Manager extends User {
     let available = checkedOnDate.availableRooms.length
     let booked = checkedOnDate.bookedRooms.length
     let occupied = (booked * 100) / (available + booked)
-    return `${occupied}%`;
+    return `${Math.floor(occupied)}%`;
   }
 
   deleteBooking(bookingID) {
-    let foundBooking = this.hotel.bookings.find(booking => booking.id === bookingID)
-    this.hotel.bookings.splice(foundBooking, 1);
-    return this.hotel.bookings;
+    let found = this.hotel.bookings.find(booking => booking.id === bookingID);
+    let isPastBooking = this.hotel.calendar.checkIfPastBooking(found.date);
+    if (isPastBooking) {
+      return
+    }
+    else {
+      let updated = this.hotel.bookings.filter(booking => booking.id !== bookingID)
+      this.hotel.bookings = updated
+    }
   }
 
   searchForUser(search) {
-    return this.customers
-    .find(customer => customer.name.includes(search.toLowerCase()) ||
+    let foundUser = this.hotel.customers.find(customer => customer.name.toLowerCase()
+    .includes(search.toLowerCase()) ||
     customer.name.toLowerCase().split(' ')
     .some(word => search.includes(word)));
+    this.retrieveUserInfo(foundUser)
+    return foundUser
   }
 
-  viewUserInfo(foundUser) {
+  retrieveUserInfo(foundUser) {
     foundUser.setRoomData(this.hotel);
-    return foundUser.getTotalSpent();
   }
-
-//   I should be able to search for any user by name and:
-// View their name, a list of all of their bookings, and the total amount they’ve spent
-// Add a room booking for that user
-// Delete any upcoming room bookings for that user (they cannot delete a booking from the past)
 }
 
 export default Manager;
