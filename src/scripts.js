@@ -90,6 +90,7 @@ const loginManager = () => {
     hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
     manager = new Manager(hotel)
     hotel.correlateData()
+    hideLoginShowManager();
     displayManagerDashBoard();
     console.log(manager)
     // show(document.querySelector('main'))
@@ -137,19 +138,35 @@ const displayUserDashboard = () => {
   displayAvailableRooms(hotel)
 }
 
+const hideLoginShowManager = () => {
+  hide(document.getElementById('login'))
+  show(document.getElementById('managerDash'))
+}
+
+const resetManagerDashboard = () => {
+  document.getElementById('managerCurrentBookings').innerHTML = ""
+  document.getElementById('revenue').innerText = "";
+  document.getElementById('occupied').innerText = "";
+  document.getElementById('revenue').innerText += `Today's Revenue: `
+  document.getElementById('occupied').innerText += `Today's Occupancy: `
+}
+
 const displayManagerDashBoard = () => {
   // show(document.querySelector('main'))
   // show(document.querySelector('nav'))
-  hide(document.getElementById('login'))
-  show(document.getElementById('managerDash'))
+  // hide(document.getElementById('login'))
+  // show(document.getElementById('managerDash'))
+  resetManagerDashboard();
+  let managerCurrentBookings = document.getElementById('managerCurrentBookings')
+  // managerCurrentBookings.innerHTML = "";
   manager.setCurrentBookings();
   if (!manager.hotel.availableToday.bookedRooms.length) {
-    document.getElementById('managerCurrentBookings').innerHTML += `
+    managerCurrentBookings.innerHTML += `
     <h1>No bookings for today currently!</h1>
     `
   }
   manager.hotel.availableToday.bookedRooms.forEach(booking => {
-    document.getElementById('managerCurrentBookings').innerHTML += `
+    managerCurrentBookings.innerHTML += `
       <article>
         <div>
           <h3>Booked By: ${booking.bookedBy}, customer ID: ${booking.customerID}</h3>
@@ -300,8 +317,8 @@ const renderSearch = (searchValue) => {
   renderDatePicker(bookForUser, found.name)
   // makeChangeable();
   userInfo.innerHTML += `
-  <h2>Name: ${found.name}</h2>
-  <h3>ID: ${found.id}</h3>
+  <h2 id="searchedName">Name: ${found.name}</h2>
+  <h3 id="searchedID">ID: ${found.id}</h3>
   <h3>Total Spent: $${found.spent}</h3>
   <h3>Room Preference: ${found.roomPreference}</h3>
   `
@@ -491,6 +508,36 @@ const renderModal = (modal) => {
   `
 }
 
+
+
+const renderManagerModal = (modal) => {
+  modal.innerHTML = "";
+  let previous = event.target.previousElementSibling;
+  let next = event.target.nextElementSibling
+  let roomImage = next
+  let selectedDate = document.getElementById('datePick').value;
+  let formatted = dayjs(selectedDate, "YYYY-MM-DD").format('LL')
+
+  console.log(roomImage)
+
+  modal.style.display = 'flex'
+  modal.innerHTML += `
+  <article class='user-input-content'>
+    <div class='info-container modal'>
+      <h3>${previous.children[0].innerText}</h3>
+      <h4>${previous.children[1].innerText}</h4>
+      <h4>${previous.children[2].innerText}</h4>
+    </div>
+    <img class="modal-img" src="${roomImage.src}" alt="${roomImage.alt}">
+    <h5>Make Booking for: ${formatted}</h5>
+    <button class="new-booking-as-manager">BOOK ROOM</button>
+    <button class="close-modal close-manager-modal">CLOSE</button>
+  </article>
+  `
+}
+
+
+
 document.body.addEventListener('click', (event) => {
 
   if (
@@ -498,12 +545,16 @@ document.body.addEventListener('click', (event) => {
     closeModal()
   }
 
+  if (event.target.closest(".close-manager-modal")) {
+    closeManagerModal();
+  }
+
   if (event.target.name === "info") {
 
     let modal = document.getElementById('userInputModal')
     let managerModal = document.getElementById('managerModal')
     renderModal(modal)
-    renderModal(managerModal)
+    renderManagerModal(managerModal)
     // // alert("working")
     // modal.innerHTML = "";
     // let previous = event.target.previousElementSibling;
@@ -536,11 +587,19 @@ document.body.addEventListener('click', (event) => {
   }
 
 
+  if (event.target.closest('.new-booking-as-manager')) {
+    bookRoomAsManager(event)
+  }
+
 
 })
 
 const closeModal = () => {
   document.getElementById("userInputModal").style.display = "none"
+}
+
+const closeManagerModal = () => {
+  document.getElementById("managerModal").style.display = "none"
 }
 
 
@@ -571,6 +630,44 @@ const bookRoom = (event) => {
   currentUser.setRoomData(hotel)
   updateUserUpcomingBookings(currentUser)
   updateHeader();
+  // console.log(newBooking)
+}
+
+const bookRoomAsManager = (event) => {
+  let bookingInfo = event.target.previousElementSibling
+  .previousElementSibling
+  .previousElementSibling;
+  // let userID = document.getElementById('searchedID').innerText.split(': ')[1];
+  // let bookingDate = document.getElementById('searchedName').innerText.split(': ')[1];
+  let bookingDate = document.getElementById('datePick').value;
+  console.log(bookingDate)
+  let formattedDate = dayjs(bookingDate).format("YYYY/MM/DD");
+  let found = manager.currentSearch;
+  let roomNum = bookingInfo.children[0].innerText.split(': ')[1]
+
+  let newBooking = {
+    id: Date.now(),
+    userID: found.id,
+    date: formattedDate,
+    roomNumber: parseInt(roomNum),
+    roomServiceCharges: []
+  }
+
+  console.log("NEW BOOKING", newBooking)
+  manager.addBookingForUser(found, newBooking)
+  // hotel.addBooking(newBooking);
+  // apiCalls.postBooking(newBooking)
+  // console.log("WORKING >>>", hotel)
+  closeManagerModal();
+  // let selectedDate = datePicker.value;
+  // let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
+  // updateAvailableRooms(manager.hotel, formatted, document.getElementById('availableForUsers'));
+  renderSearch(found.name)
+  displayManagerDashBoard();
+  // roomTypeFilter.selectedIndex = 0;
+  // currentUser.setRoomData(hotel)
+  // updateUserUpcomingBookings(currentUser)
+  // updateHeader();
   // console.log(newBooking)
 }
 

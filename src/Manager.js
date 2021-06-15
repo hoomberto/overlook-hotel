@@ -3,7 +3,7 @@ import User from '../src/User'
 class Manager extends User {
   constructor(hotelData) {
     super(hotelData)
-    this.hotel = hotelData
+    this.hotel = hotelData;
   }
 
   getTotalRevenueOnDay(date) {
@@ -34,7 +34,7 @@ class Manager extends User {
     this.hotel.availableToday.bookedRooms.forEach(bookedRoom => {
       let found = this.hotel.customers.find(customer => customer.bookings.present.some(booking => bookedRoom.number === booking.roomNumber))
       let data = found.bookings.present.find(booking => bookedRoom.number === booking.roomNumber)
-      console.log(found)
+      // console.log(found)
       bookedRoom.bookedBy = found.name;
       bookedRoom.customerID = found.id;
       bookedRoom.bookingID = data.id;
@@ -53,6 +53,7 @@ class Manager extends User {
   addBookingForUser(foundUser, newBooking) {
     this.hotel.addBooking(newBooking)
     foundUser.setRoomData(this.hotel)
+    this.hotel.availableToday = this.hotel.checkAvailability(this.hotel.calendar.currentDate)
   }
 
   deleteBooking(bookingID) {
@@ -69,8 +70,10 @@ class Manager extends User {
 
   searchForUser(search) {
     let foundUser = this.hotel.customers.find(customer => customer.name
-    .toLowerCase().split(' ').includes(search))
+    .toLowerCase().split(' ').includes(search) || customer.name === search)
     this.retrieveUserInfo(foundUser)
+    this.currentSearch = "";
+    this.currentSearch = foundUser;
     return foundUser
   }
 
