@@ -1,0 +1,45 @@
+.login-section {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.login-img-container {
+  display: flex;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  justify-content: space-around;
+  margin-top: 5%;
+}
+
+.entrance-pic, .pool-pic {
+  width: 600px;
+  height: 900px;
+}
+
+.login-form {
+  @include flex-column();
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  height: 700px;
+  background: $login-grad;
+  margin-top: 10%;
+  border-radius: 9px;
+  box-shadow: $main-box-shadow;
+}
+
+.login-form button {
+  width: 150px;
+  height: 50px;
+  margin-top: 5%;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 0;
+  transition: .2s all ease;
+}
+
+.login-form button:hover {
+  width: 200px;
+}

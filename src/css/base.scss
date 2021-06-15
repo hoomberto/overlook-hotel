@@ -1,82 +1,60 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
-// $primary-background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
-// ;
-//
-// body {
-//   background: $primary-background;
-// }
-
-
-$main-grad: linear-gradient(90deg, #EA8372 0%, #FFB88C 100%);
-$scrollbar-grad: linear-gradient(to top,#EA8372,#FFB88C);
-$main-box-shadow: 0px 15px 100px -5px rgba(0,0,0,0.08);
-$nav-fallback: rgb(112,129,188);
-$nav-grad: linear-gradient(132deg, rgba(112,129,188,1) 0%, rgba(254,212,214,1) 100%);
-
+@import 'variables';
+@import 'login';
 // LOGIN
 
-.login-section {
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.login-img-container {
-  display: flex;
-  position: absolute;
-  z-index: -1;
-  width: 100%;
-  justify-content: space-around;
-  margin-top: 5%;
-}
-
-.entrance-pic, .pool-pic {
-
-  width: 600px;
-  height: 900px;
-}
-
-.entrance-pic {
-
-}
-
-.pool-pic {
-
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 500px;
-  height: 700px;
-  background: $nav-grad;
-  margin-top: 10%;
-  border-radius: 9px;
-  box-shadow: $main-box-shadow;
-}
-
-.login-form button {
-  width: 150px;
-  height: 50px;
-  margin-top: 5%;
-  border-radius: 8px;
-  cursor: pointer;
-  border: 0;
-  transition: .2s all ease;
-}
-
-.login-form button:hover {
-  width: 200px;
-}
+// .login-section {
+//   display: flex;
+//   justify-content: center;
+//   overflow: hidden;
+// }
+//
+// .login-img-container {
+//   display: flex;
+//   position: absolute;
+//   z-index: -1;
+//   width: 100%;
+//   justify-content: space-around;
+//   margin-top: 5%;
+// }
+//
+// .entrance-pic, .pool-pic {
+//   width: 600px;
+//   height: 900px;
+// }
+//
+//
+// .login-form {
+//   @include flex-column();
+//   align-items: center;
+//   justify-content: center;
+//   width: 500px;
+//   height: 700px;
+//   background: $login-grad;
+//   margin-top: 10%;
+//   border-radius: 9px;
+//   box-shadow: $main-box-shadow;
+// }
+//
+// .login-form button {
+//   width: 150px;
+//   height: 50px;
+//   margin-top: 5%;
+//   border-radius: 8px;
+//   cursor: pointer;
+//   border: 0;
+//   transition: .2s all ease;
+// }
+//
+// .login-form button:hover {
+//   width: 200px;
+// }
 
 
 // $main-grad: linear-gradient(90deg, #EA8372 0%, #FFB88C 100%);
 // $scrollbar-grad: linear-gradient(to top,#EA8372,#FFB88C);
 // $main-box-shadow: 0px 15px 100px -5px rgba(0,0,0,0.08);
 // $nav-fallback: rgb(112,129,188);
-// $nav-grad: linear-gradient(132deg, rgba(112,129,188,1) 0%, rgba(254,212,214,1) 100%);
+// $login-grad: linear-gradient(132deg, rgba(112,129,188,1) 0%, rgba(254,212,214,1) 100%);
 
 body {
   margin: 0;
@@ -113,7 +91,6 @@ main h1 {
 
 /* NAVIGATION BAR */
 
-
 nav {
   display: flex;
   justify-content: space-between;
@@ -126,7 +103,6 @@ nav {
   color: #333333;
   width: 100vw;
   box-shadow: $main-box-shadow;
-  // margin-bottom: 10%;
 }
 
 nav div {
@@ -135,43 +111,6 @@ nav div {
   align-items: center;
 }
 
-// figcaption {
-//   position: absolute;
-//   top: 5%;
-//   right: 20%;
-//   align-self: flex-end;
-//   cursor: pointer;
-// }
-//
-// figcaption::before {
-//   font-family: 'Font Awesome 5 Free';
-//   content: '\f083';
-//   font-weight: 900;
-//   position: absolute;
-//   top: 4%;
-//   left: -35%;
-//   color: #D45D62;
-//   transition: all .2s ease;
-// }
-//
-// figcaption:hover::before {
-//   transform: translateX(-12px);
-// }
-//
-// figcaption::after {
-//   color: #ffb88c;
-//   font-family: 'Font Awesome 5 Free';
-//   content: '\f83e';
-//   font-weight: 900;
-//   position: absolute;
-//   top: 4%;
-//   left: 109%;
-//   transition: all .2s ease
-// }
-//
-// figcaption:hover::after {
-//   transform: translateX(12px);
-// }
 
 figure {
   width: 100%;
@@ -241,18 +180,6 @@ ul li::before {
   content: "\f4e3";
   font-weight: 900;
 }
-//
-// .two::before {
-//   font-family: "Font Awesome 5 Free";
-//   content: "\f3e0";
-//   font-weight: 900;
-// }
-//
-// .three::before {
-//   font-family: "Font Awesome 5 Free";
-//   content: "\f4e3";
-//   font-weight: 900;
-// }
 
 li::after {
   content: '';
@@ -269,13 +196,6 @@ li::after {
   transform: translate(-66px, 17px);
 }
 
-// .two::after {
-//   transform: translate(-54px, 17px);
-// }
-//
-// .three::after {
-//   transform: translate(-69px, 17px);
-// }
 
 li:hover::after {
   width: 82%;
@@ -327,9 +247,6 @@ li:hover::after {
 
 .upcoming-spacer {
   width: 100%;
-  // position: absolute;
-  // transform: translate(48px, 145px);
-  // z-index: -1;
 }
 
 .upcoming-container article {
@@ -350,7 +267,6 @@ section {
 }
 
 main section {
-  // width: 60%;
   transform: translate(50px, 150px);
 }
 
@@ -361,16 +277,6 @@ main section {
 .booking-section {
   width: 60%;
 }
-
-// #availableRoomsSection {
-//   display: grid;
-//   grid-template-columns: repeat(2, 1fr);
-//   grid-template-rows: 1fr;
-//   margin: 0;
-//   margin-top: -10%;
-//   height: 600px;
-//   overflow: auto;
-// }
 
 .available-rooms-section {
   display: grid;
@@ -390,8 +296,6 @@ img {
 
 .smaller-set {
   display: grid;
-  // grid-template-columns: 1fr;
-  // grid-template-rows: 1fr;
   grid-gap: 2rem;
   margin: 0;
   margin-top: -10%;
@@ -417,7 +321,6 @@ input {
   width: 90px;
   align-self: center;
 }
-
 
 // MODAL
 
@@ -492,47 +395,7 @@ article button {
 .single {
 
 }
-// #previousBookings article::after {
-//   position: absolute;
-//   content: '';
-//   width: 0;
-//   height: 170px;
-//   transform: translate(0px, -34.5px);
-//   border-radius: 4px;
-//   background: $main-grad;
-//   transition: all .2s linear;
-// }
-//
-// #previousBookings article:hover::after {
-//   width: 90%;
-// }
 
-
-// .card-box {
-//   background-color: #DBD7D2;
-//   margin: 3% 0;
-//   border-radius: 4px;
-//   cursor: pointer;
-//   height: 35px;
-//   transition: all .2s ease;
-// }
-//
-// .card-box p {
-//   position: relative;
-//   margin: 9px 0;
-//   margin-left: 3%;
-//   z-index: 2;
-//   font-weight: 300;
-//   font-size: 14px;
-//   text-transform: uppercase;
-// }
-// .card-box p::after {
-//   position: absolute;
-//   font-family: "Font Awesome 5 Free";
-//   content: '\f105';
-//   font-weight: 900;
-//   transform: translate(70px, 1px)
-// }
 
 @media screen and (max-width: 1100px) {
   .booking-section {
@@ -542,8 +405,6 @@ article button {
   #availableRoomsSection {
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: 1fr;
-    // height: 500px;
-    // margin-top: -43%;
   }
 
   .upcoming {
@@ -600,10 +461,7 @@ article button {
 }
 
 .hotel-data {
-  // flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
-  background: $nav-grad;
+  background: $login-grad;
   width: 35%;
   border-right: 8px solid white;
 }

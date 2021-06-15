@@ -1,0 +1,16 @@
+$main-grad: linear-gradient(90deg, #EA8372 0%, #FFB88C 100%);
+$scrollbar-grad: linear-gradient(to top,#EA8372,#FFB88C);
+$main-box-shadow: 0px 15px 100px -5px rgba(0,0,0,0.08);
+$nav-fallback: rgb(112,129,188);
+$login-grad: linear-gradient(132deg, rgba(112,129,188,1) 0%, rgba(254,212,214,1) 100%);
+
+// *****************MIXINS******************
+@mixin flex-column() {
+  display:flex;
+  flex-direction:column;
+}
+
+// @mixin flex-row() {
+//   display:flex;
+//   flex-direction:row;
+// }
