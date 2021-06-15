@@ -63,9 +63,6 @@ const login = (event) => {
 }
 
 loginBtn.addEventListener('click', login)
-// const successfulLogin = (id) => {
-//   fetch(id);
-// }
 
 const unsuccessfulLogin = () => {
   alert("PLEASE TRY AGAIN")
@@ -108,7 +105,7 @@ const fetch = (id) => {
   .catch(err => displayPageLevelError(err))
 }
 
-const renderAllUsers = () => {
+const renderAllUsers = (manager) => {
   document.querySelector('.all-users-container').innerHTML = ""
   manager.hotel.customers.forEach(customer => {
     manager.retrieveUserInfo(customer)
@@ -263,8 +260,6 @@ const resetUserInfo = () => {
   userInfo.innerHTML = "";
   pastBookings.innerHTML = "";
   upcomingBookings.innerHTML = "";
-  // pastBookings.classList.add('user-booking-info-search')
-  // upcomingBookings.classList.add('')
 }
 
 const makeChangeable = (element) => {
@@ -277,8 +272,6 @@ const makeChangeable = (element) => {
       element.name = 'infoManager'
       element.classList.add('info-manager')
     })
-    // availableText.innerText = `All Room Types Available on ${displayDate}`
-    // roomTypeFilter.selectedIndex = 0;
   })
 }
 
@@ -305,17 +298,11 @@ const renderDatePicker = (element, name) => {
 }
 
 
-const renderSearch = (searchValue) => {
+const renderSearch = (searchValue, manager) => {
   resetSearch();
   resetUserInfo();
-  // let found;
-  // if (previousResult) {
-  //   found = previousResult
-  //   console.log(previousResult)
-  // }
-  // else {
-  // }
-  console.log(manager.hotel.bookings)
+
+  // console.log(manager.hotel.bookings)
   let found = manager.searchForUser(searchValue)
   let searchResults = document.getElementById('searchResults')
   let userInfo = document.getElementById('userSearchInfo')
@@ -331,7 +318,7 @@ const renderSearch = (searchValue) => {
     return
   }
   renderDatePicker(bookForUser, found.name)
-  // makeChangeable();
+
   userInfo.innerHTML += `
   <h2 id="searchedName">Name: ${found.name}</h2>
   <h3 id="searchedID">ID: ${found.id}</h3>
@@ -392,11 +379,6 @@ const renderSearch = (searchValue) => {
 }
 
 
-// let test = document.getElementById('test')
-let test3 = document.getElementById('test3')
-// test.addEventListener('click', function() {
-//   console.log(currentUser)
-// })
 let roomTypeFilter = document.getElementById('typeFilter');
 let datePicker = document.getElementById('dateSelector');
 let availableText = document.getElementById('availableText');
@@ -405,63 +387,22 @@ const userSearch = document.getElementById('userSearch')
 const searchBtn = document.getElementById('searchBtn');
 let searchResults = document.getElementById('searchResults')
 
-// test3.addEventListener('click', function() {
-//   console.log(currentUser)
-// })
+
 
 userSearch.addEventListener('keyup', (event) => {
   if (event.keyCode === 13) {
     event.preventDefault();
     if (userSearch.value) {
-      renderSearch(userSearch.value)
+      renderSearch(userSearch.value, manager)
     }
   }
 })
 
 searchBtn.addEventListener('click', () => {
   if (userSearch.value) {
-    renderSearch(userSearch.value)
+    renderSearch(userSearch.value, manager)
   }
 })
-
-
-// const makeChangeable = () => {
-//   datePicker.addEventListener('change', () => {
-//     let selectedDate = datePicker.value;
-//     let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
-//     let displayDate = dayjs(selectedDate).format('LL')
-//     updateAvailableRooms(hotel, formatted);
-//     availableText.innerText = `All Room Types Available on ${displayDate}`
-//     roomTypeFilter.selectedIndex = 0;
-//   })
-//
-//   roomTypeFilter.addEventListener('change', () => {
-//     availableText.innerText = "";
-//     if (roomTypeFilter.value === 'viewAll') {
-//       let selectedDate = datePicker.value;
-//       let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
-//       let displayDate = dayjs(selectedDate).format('LL')
-//       updateAvailableRooms(hotel, formatted);
-//       availableText.innerText += `All Room Types Available on ${displayDate}`
-//       return
-//     }
-//     let choice = roomTypeFilter.value;
-//     let selectedDate = datePicker.value;
-//     let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
-//     let filtered = hotel.filterByType(choice, formatted);
-//     let displayDate = dayjs(selectedDate).format('LL')
-//     if (!filtered.length) {
-//       availableText.innerText = "";
-//       availableText.innerText +=`
-//       We're sorry! We're currently out of this room type for this date, please try another.`;
-//       renderFilter(filtered)
-//       return
-//     }
-//     availableText.innerText = "";
-//     availableText.innerText += `${choice.toUpperCase()} Rooms Available on ${displayDate}`
-//     renderFilter(filtered)
-//   })
-// }
 
 
 datePicker.addEventListener('change', () => {
@@ -581,30 +522,6 @@ document.body.addEventListener('click', (event) => {
 
     let modal = document.getElementById('userInputModal')
     renderModal(modal)
-    // // alert("working")
-    // modal.innerHTML = "";
-    // let previous = event.target.previousElementSibling;
-    // let next = event.target.nextElementSibling
-    // let roomImage = next
-    // let selectedDate = datePicker.value;
-    // let formatted = dayjs(selectedDate, "YYYY-MM-DD").format('LL')
-    //
-    // console.log(roomImage)
-    //
-    // modal.style.display = 'flex'
-    // modal.innerHTML += `
-    // <article class='user-input-content'>
-    //   <div class='info-container modal'>
-    //     <h3>${previous.children[0].innerText}</h3>
-    //     <h4>${previous.children[1].innerText}</h4>
-    //     <h4>${previous.children[2].innerText}</h4>
-    //   </div>
-    //   <img class="modal-img" src="${roomImage.src}" alt="${roomImage.alt}">
-    //   <h5>Make Booking for: ${formatted}</h5>
-    //   <button class="new-booking">BOOK ROOM</button>
-    //   <button class="close-modal">CLOSE</button>
-    // </article>
-    // `
   }
 
 
@@ -715,14 +632,12 @@ const bookRoomAsManager = (event) => {
   let bookingInfo = event.target.previousElementSibling
   .previousElementSibling
   .previousElementSibling;
-  // let userID = document.getElementById('searchedID').innerText.split(': ')[1];
-  // let bookingDate = document.getElementById('searchedName').innerText.split(': ')[1];
+
   let bookingDate = document.getElementById('datePick').value;
-  console.log(bookingDate)
+
   let formattedDate = dayjs(bookingDate).format("YYYY/MM/DD");
   let found = manager.currentSearch;
   let roomNum = bookingInfo.children[0].innerText.split(': ')[1]
-  let id = manager.hotel.bookings.length + 1;
 
   let newBooking = {
     id: Date.now(),
@@ -734,28 +649,9 @@ const bookRoomAsManager = (event) => {
 
   console.log("NEW BOOKING", newBooking)
   manager.addBookingForUser(found, newBooking)
-  // console.log(manager.hotel.customers[3])
-  // hotel.addBooking(newBooking);
+
   apiCalls.postBooking(newBooking)
   retrieveFreshData(found)
-  // setTimeout(, 500)
-
-  // apiCalls.getData().then(data => {
-  //   let customerData = data[0];
-  //   let bookingsData = data[1];
-  //   let roomsData = data[2];
-  //
-  //   let calendar = new Calendar()
-  //   let instaUsers = customerData.customers.map(customer => new User(customer))
-  //   hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
-  //   manager = new Manager(hotel)
-  //   hotel.correlateData()
-  //   hideLoginShowManager();
-  //   renderAllUsers();
-  //   displayManagerDashBoard();
-  //   renderSearch(found.name)
-  // })
-
   closeManagerModal();
 
 
@@ -770,14 +666,13 @@ const retrieveFreshData = (found) => {
     let calendar = new Calendar()
     let instaUsers = customerData.customers.map(customer => new User(customer))
     hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
-    manager = new Manager(hotel)
     hotel.correlateData()
+    manager = new Manager(hotel)
     hideLoginShowManager();
-    renderAllUsers()
-    // setTimeout(renderAllUsers(), 500);
+    renderAllUsers(manager)
     displayManagerDashBoard(manager);
     if (found) {
-      renderSearch(found.name)
+      renderSearch(found.name, manager)
     }
   })
   .catch(err => displayPageLevelError(err))
@@ -793,20 +688,4 @@ const updateHeader = () => {
     availableText.innerText = "";
     availableText.innerText += `All Rooms Available on ${displayDate}`
   }, 700)
-  // availableText.innerText += `All Rooms Available on ${displayDate}`
-
 }
-
-
-
-
-// const getUniqueDates = (sorted) => {
-//   let uniqueDates = [];
-//   sorted.forEach((booking) => {
-//     let date = booking.date
-//     if (!uniqueDates.includes(date)) {
-//       uniqueDates.push(date)
-//     }
-//   });
-//   return uniqueDates;
-// }

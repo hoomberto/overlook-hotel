@@ -51,6 +51,10 @@ class Manager extends User {
   }
 
   addBookingForUser(foundUser, newBooking) {
+    let alreadyExists = this.hotel.bookings.find(booking => booking.id === newBooking.id)
+    if (alreadyExists) {
+      return
+    }
     this.hotel.addBooking(newBooking)
     foundUser.setRoomData(this.hotel)
     this.hotel.availableToday = this.hotel.checkAvailability(this.hotel.calendar.currentDate)
