@@ -10,6 +10,7 @@ dayjs.extend(weekOfYear)
 import apiCalls from './apiCalls'
 import Hotel from './Hotel'
 import User from './User'
+import Manager from './Manager'
 import Calendar from './Calendar'
 import { greetUser, displayPreviousBookings, displayAvailableRooms, renderRoomTypes, renderFilter, renderDefaultDate, updateAvailableRooms, updateUserUpcomingBookings } from './domUpdates'
 
@@ -26,15 +27,11 @@ import './images/residential.jpg'
 import './images/suite.jpg'
 import './images/hotel-entrance.jpg'
 import './images/pool-pic.jpg'
-// import './images/img5.jpg'
-// import './images/img6.jpg'
-// import './images/img7.jpg'
-// import './images/img8.jpg'
 
 
 // Global Variables
 
-let hotel, currentUser;
+let hotel, currentUser, manager;
 
 // console.log('This is the JavaScript entry file - your code begins here.');
 
@@ -55,6 +52,9 @@ const login = (event) => {
   // console.log('userCheck', customerCheck)
   if (userCheck[0] === 'custome' && (id > 0 && id < 51) && passwordMatch) {
     fetch(id);
+  }
+  else if (username === 'manager' && passwordMatch) {
+    loginManager();
   }
   else {
     unsuccessfulLogin();
@@ -79,6 +79,32 @@ const show = (element) => {
   element.classList.remove('hidden')
 }
 
+const loginManager = () => {
+  apiCalls.getData().then(data => {
+    let customerData = data[0];
+    let bookingsData = data[1];
+    let roomsData = data[2];
+
+    let calendar = new Calendar()
+    let instaUsers = customerData.customers.map(customer => new User(customer))
+    hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
+    manager = new Manager(hotel)
+    hotel.correlateData()
+    displayManagerDashBoard();
+    console.log(manager)
+    // show(document.querySelector('main'))
+    // show(document.querySelector('nav'))
+    // hide(document.getElementById('login'))
+    // displayAvailableRooms(hotel)
+    // let formattedForInput = hotel.calendar.currentDate.split('/').join('-')
+    // document.getElementById('dateSelector').setAttribute('min', `${formattedForInput}`)
+    // document.getElementById('dateSelector').setAttribute('value', `${formattedForInput}`)
+    // renderRoomTypes(hotel)
+    // getUser(id)
+  })
+  .catch(err => displayPageLevelError(err))
+}
+
 
 const fetch = (id) => {
   apiCalls.getData().then(data => {
@@ -101,6 +127,21 @@ const fetch = (id) => {
     getUser(id)
   })
   .catch(err => displayPageLevelError(err))
+}
+
+const displayUserDashboard = () => {
+  show(document.querySelector('main'))
+  show(document.querySelector('nav'))
+  hide(document.getElementById('login'))
+  displayAvailableRooms(hotel)
+}
+
+const displayManagerDashBoard = () => {
+  // show(document.querySelector('main'))
+  // show(document.querySelector('nav'))
+  hide(document.getElementById('login'))
+  show(document.getElementById('managerDash'))
+  // displayAvailableRooms(hotel)
 }
 
 // let fetched = apiCalls.getData().then(data => {

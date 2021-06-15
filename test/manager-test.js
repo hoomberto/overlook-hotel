@@ -163,6 +163,9 @@ describe('Manager', () => {
       "roomServiceCharges": []
     }
 
+    expect(manager.hotel.bookings.length).to.equal(3)
+    expect(found.bookings.future.length).to.equal(1)
+
     manager.addBookingForUser(found, newBooking)
     found = manager.searchForUser("nerdo")
     expect(manager.hotel.bookings.length).to.equal(4)
