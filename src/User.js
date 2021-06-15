@@ -28,6 +28,12 @@ class User {
     this.getPreferredRoomType()
   }
 
+  resetRoomData() {
+    this.bookings.past = [];
+    this.bookings.present = [];
+    this.bookings.future = [];
+  }
+
   resetDataForUpdate() {
     this.spent = 0;
     Object.values(this.bookings).forEach(dataset => {
@@ -85,6 +91,20 @@ class User {
       this.roomPreference = preferred.type;
     }
   }
+
+  // deleteBooking(hotel) {
+    // let allUserBookings = []
+    // Object.values(this.bookings).forEach((dataset) => {
+    //   if (dataset.length) {
+    //     dataset.forEach(booking => {
+    //       allUserBookings.push(booking)
+    //     })
+    //   }
+    // });
+    // let foundBooking = allUserBookings.find(booking => booking.id === bookingID)
+    // console.log(result)
+    // this.setRoomData(hotel)
+  // }
 }
 
 export default User;

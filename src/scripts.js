@@ -80,31 +80,7 @@ const show = (element) => {
 }
 
 const loginManager = () => {
-  apiCalls.getData().then(data => {
-    let customerData = data[0];
-    let bookingsData = data[1];
-    let roomsData = data[2];
-
-    let calendar = new Calendar()
-    let instaUsers = customerData.customers.map(customer => new User(customer))
-    hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
-    manager = new Manager(hotel)
-    hotel.correlateData()
-    hideLoginShowManager();
-    renderAllUsers();
-    displayManagerDashBoard();
-    console.log(manager)
-    // show(document.querySelector('main'))
-    // show(document.querySelector('nav'))
-    // hide(document.getElementById('login'))
-    // displayAvailableRooms(hotel)
-    // let formattedForInput = hotel.calendar.currentDate.split('/').join('-')
-    // document.getElementById('dateSelector').setAttribute('min', `${formattedForInput}`)
-    // document.getElementById('dateSelector').setAttribute('value', `${formattedForInput}`)
-    // renderRoomTypes(hotel)
-    // getUser(id)
-  })
-  .catch(err => displayPageLevelError(err))
+  retrieveFreshData();
 }
 
 
@@ -174,7 +150,7 @@ const resetManagerDashboard = () => {
   document.getElementById('occupied').innerText += `Today's Occupancy: `
 }
 
-const displayManagerDashBoard = () => {
+const displayManagerDashBoard = (manager) => {
   // show(document.querySelector('main'))
   // show(document.querySelector('nav'))
   // hide(document.getElementById('login'))
@@ -249,8 +225,9 @@ const getUser = (id) => {
 }
 
 const addBooking = (user, date, selection) => {
+  let id = hotel.bookings.length + 1;
   let newBooking = {
-    "id": Date.now(),
+    "id": id,
     "userID": user.id,
     "date": date,
     "roomNumber": selection.roomNumber,
@@ -296,6 +273,10 @@ const makeChangeable = (element) => {
     let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
     let displayDate = dayjs(selectedDate).format('LL')
     updateAvailableRooms(hotel, formatted, document.getElementById('availableForUsers'));
+    document.querySelectorAll("button[name='info']").forEach(element => {
+      element.name = 'infoManager'
+      element.classList.add('info-manager')
+    })
     // availableText.innerText = `All Room Types Available on ${displayDate}`
     // roomTypeFilter.selectedIndex = 0;
   })
@@ -325,9 +306,17 @@ const renderDatePicker = (element, name) => {
 
 
 const renderSearch = (searchValue) => {
-  let found = manager.searchForUser(searchValue)
   resetSearch();
   resetUserInfo();
+  // let found;
+  // if (previousResult) {
+  //   found = previousResult
+  //   console.log(previousResult)
+  // }
+  // else {
+  // }
+  console.log(manager.hotel.bookings)
+  let found = manager.searchForUser(searchValue)
   let searchResults = document.getElementById('searchResults')
   let userInfo = document.getElementById('userSearchInfo')
   let pastBookings = document.getElementById('userPastSearchInfo')
@@ -364,6 +353,7 @@ const renderSearch = (searchValue) => {
       <h4>Room Type: ${booking.roomType.toUpperCase()}</h4>
       <h4>Room Number: ${booking.roomNumber}</h4>
       <h4>Room Cost: $${booking.cost}</h4>
+      <h4 class="booking-id">Booking id: ${booking.id}</h4>
       <button class="delete">Delete Booking</button>
       </article>
       `
@@ -378,6 +368,7 @@ const renderSearch = (searchValue) => {
       <h4>Room Type: ${booking.roomType.toUpperCase()}</h4>
       <h4>Room Number: ${booking.roomNumber}</h4>
       <h4>Room Cost: $${booking.cost}</h4>
+      <h4 class="booking-id">Booking id: ${booking.id}</h4>
       <button class="delete">Delete Booking</button>
       </article>
       `
@@ -576,6 +567,10 @@ document.body.addEventListener('click', (event) => {
     closeManagerModal();
   }
 
+  if (event.target.closest(".close-delete-modal")) {
+    closeDeleteModal();
+  }
+
   if (event.target.closest(".info-manager")) {
     let managerModal = document.getElementById('managerModal')
     renderManagerModal(managerModal)
@@ -622,6 +617,17 @@ document.body.addEventListener('click', (event) => {
     bookRoomAsManager(event)
   }
 
+  if (event.target.closest('.delete')) {
+    // let id = event.target.closest('h3');
+    // console.log(id)
+    // manager.currentToDelete = id;
+    let deleteModal = document.getElementById('deleteModal')
+    renderDeleteModal(deleteModal)
+  }
+
+  if (event.target.closest('.delete-as-manager')) {
+    deleteBooking(event)
+  }
 
 })
 
@@ -633,6 +639,47 @@ const closeManagerModal = () => {
   document.getElementById("managerModal").style.display = "none"
 }
 
+const closeDeleteModal = () => {
+  document.getElementById("deleteModal").style.display = "none"
+}
+
+
+const renderDeleteModal = (modal) => {
+  modal.innerHTML = "";
+    let id = event.target.previousElementSibling.innerText.split(': ')[1];
+  // let id = event.target.closest('.booking-id');
+    console.log(id)
+    manager.currentToDelete = id;
+    modal.style.display = 'flex'
+    modal.innerHTML += `
+  <article class='user-input-content'>
+    <h2>Are you sure you want to delete booking ${id}?<h2>
+    <button class="delete-as-manager">DELETE BOOKING</button>
+    <button class="close-modal close-delete-modal">CLOSE</button>
+  </article>
+  `
+}
+
+
+
+
+
+
+const deleteBooking = () => {
+  console.log(manager)
+  const found = manager.currentSearch
+  manager.deleteBooking(manager.currentSearch, manager.currentToDelete)
+  apiCalls.deleteBooking(manager.currentToDelete)
+  retrieveFreshData(found)
+  closeDeleteModal();
+}
+
+
+
+
+
+
+
 
 const bookRoom = (event) => {
   let bookingInfo = event.target.previousElementSibling
@@ -640,7 +687,7 @@ const bookRoom = (event) => {
   .previousElementSibling;
   let bookingDate = event.target.previousElementSibling.innerText.split('for: ')[1];
   let formattedDate = dayjs(bookingDate).format("YYYY/MM/DD");
-
+  // let id = hotel.bookings.length + 1;
   let roomNum = bookingInfo.children[0].innerText.split(': ')[1]
 
   let newBooking = {
@@ -652,7 +699,7 @@ const bookRoom = (event) => {
   }
   hotel.addBooking(newBooking);
   apiCalls.postBooking(newBooking)
-  console.log(hotel)
+  console.log(newBooking)
   closeModal();
   let selectedDate = datePicker.value;
   let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
@@ -675,6 +722,7 @@ const bookRoomAsManager = (event) => {
   let formattedDate = dayjs(bookingDate).format("YYYY/MM/DD");
   let found = manager.currentSearch;
   let roomNum = bookingInfo.children[0].innerText.split(': ')[1]
+  let id = manager.hotel.bookings.length + 1;
 
   let newBooking = {
     id: Date.now(),
@@ -686,21 +734,53 @@ const bookRoomAsManager = (event) => {
 
   console.log("NEW BOOKING", newBooking)
   manager.addBookingForUser(found, newBooking)
+  // console.log(manager.hotel.customers[3])
   // hotel.addBooking(newBooking);
   apiCalls.postBooking(newBooking)
-  // console.log("WORKING >>>", hotel)
+  retrieveFreshData(found)
+  // setTimeout(, 500)
+
+  // apiCalls.getData().then(data => {
+  //   let customerData = data[0];
+  //   let bookingsData = data[1];
+  //   let roomsData = data[2];
+  //
+  //   let calendar = new Calendar()
+  //   let instaUsers = customerData.customers.map(customer => new User(customer))
+  //   hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
+  //   manager = new Manager(hotel)
+  //   hotel.correlateData()
+  //   hideLoginShowManager();
+  //   renderAllUsers();
+  //   displayManagerDashBoard();
+  //   renderSearch(found.name)
+  // })
+
   closeManagerModal();
-  // let selectedDate = datePicker.value;
-  // let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
-  // updateAvailableRooms(manager.hotel, formatted, document.getElementById('availableForUsers'));
-  renderSearch(found.name)
-  renderAllUsers();
-  displayManagerDashBoard();
-  // roomTypeFilter.selectedIndex = 0;
-  // currentUser.setRoomData(hotel)
-  // updateUserUpcomingBookings(currentUser)
-  // updateHeader();
-  // console.log(newBooking)
+
+
+}
+
+const retrieveFreshData = (found) => {
+  apiCalls.getData().then(data => {
+    let customerData = data[0];
+    let bookingsData = data[1];
+    let roomsData = data[2];
+
+    let calendar = new Calendar()
+    let instaUsers = customerData.customers.map(customer => new User(customer))
+    hotel = new Hotel(instaUsers, roomsData.rooms, bookingsData.bookings, calendar)
+    manager = new Manager(hotel)
+    hotel.correlateData()
+    hideLoginShowManager();
+    renderAllUsers()
+    // setTimeout(renderAllUsers(), 500);
+    displayManagerDashBoard(manager);
+    if (found) {
+      renderSearch(found.name)
+    }
+  })
+  .catch(err => displayPageLevelError(err))
 }
 
 const updateHeader = () => {

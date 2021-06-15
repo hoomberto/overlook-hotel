@@ -56,16 +56,24 @@ class Manager extends User {
     this.hotel.availableToday = this.hotel.checkAvailability(this.hotel.calendar.currentDate)
   }
 
-  deleteBooking(bookingID) {
-    let found = this.hotel.bookings.find(booking => booking.id === bookingID);
+  deleteBooking(foundUser, bookingID) {
+    let found = this.hotel.bookings.find(booking => booking.id == bookingID);
     let isPastBooking = this.hotel.calendar.checkIfPastBooking(found.date);
     if (isPastBooking) {
       return
     }
     else {
+      // console.log(this.hotel.bookings.length)
       let updated = this.hotel.bookings.filter(booking => booking.id !== bookingID)
       this.hotel.bookings = updated
+      // this.hotel.correlateData();
+      // foundUser.setRoomData(this.hotel)
+      // console.log(this.hotel.bookings.length)
+      this.hotel.resetCustomerData();
+      this.hotel.correlateData();
     }
+    // this.hotel.customers[3].resetRoomData();
+    console.log(this.hotel.customers[3]);
     this.hotel.availableToday = this.hotel.checkAvailability(this.hotel.calendar.currentDate)
   }
 

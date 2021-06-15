@@ -58,13 +58,37 @@ const checkResponse = (response) => {
   }
 }
 
+const checkDeleteResponse = (response) => {
+  if (response.ok) {
+    // document.getElementById('errorMessage').innerText = ""
+    let message = {
+      message: `Booking successfully deleted`,
+    };
+    console.log(message)
+    return response.json();
+  }
+  else {
+    console.log(response.status)
+    if (response.status === 422) {
+      let error = new Error('Bad Post Request')
+      throw error;
+    }
+    else {
+      let error = new Error('Something went wrong')
+      let message = `${error.message}`;
+      alert(message)
+      throw error
+    }
+  }
+}
+
 const deleteBooking = (bookingID) => {
   let url = 'http://localhost:3001/api/v1/bookings/'
   fetch(url + bookingID, {
     method: 'DELETE',
     headers: { "Content-Type": "application/json" },
   })
-  .then(checkResponse);
+  .then(checkDeleteResponse);
 }
 
 
