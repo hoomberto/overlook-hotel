@@ -141,6 +141,19 @@ const displayManagerDashBoard = () => {
   // show(document.querySelector('nav'))
   hide(document.getElementById('login'))
   show(document.getElementById('managerDash'))
+  manager.setCurrentBookings();
+  manager.hotel.availableToday.bookedRooms.forEach(booking => {
+    document.getElementById('managerCurrentBookings').innerHTML += `
+      <article>
+        <h3>Booked By: ${booking.bookedBy}, customer ID: ${booking.customerID}</h3>
+        <h3>Booking ID: ${booking.bookingID}</h3>
+        <h3>Profit: $${booking.costPerNight}</h4>
+      </article>
+    `
+
+  })
+  document.getElementById('revenue').innerText += ` ${manager.getTotalRevenueOnDay(manager.hotel.calendar.currentDate)}`
+  document.getElementById('occupied').innerText += ` ${manager.occupiedPercentageOnDate(manager.hotel.calendar.currentDate)}`
   // displayAvailableRooms(hotel)
 }
 
