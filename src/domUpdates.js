@@ -207,6 +207,26 @@ export const renderAllUsers = (manager) => {
   })
 }
 
+export const displayUserDashboard = () => {
+  show(document.querySelector('main'))
+  show(document.querySelector('nav'))
+  hide(document.getElementById('login'))
+  displayAvailableRooms(hotel)
+}
+
+export const hideLoginShowManager = () => {
+  hide(document.getElementById('login'))
+  show(document.getElementById('managerDash'))
+}
+
+export const hide = (element) => {
+  element.classList.add('hidden')
+}
+
+export const show = (element) => {
+  element.classList.remove('hidden')
+}
+
   // `
   //   <article class="available-room">
   //   <div class="info-container">
