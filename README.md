@@ -33,9 +33,9 @@ Customers can search for bookings by date, filter bookings by room type, and POS
 Site features an about page that gives brief description of hotel<br>
 ![alt text](https://media.giphy.com/media/wR91wq3x45c5wj10H2/giphy.gif "About Page demo")
 
-Manager can login and access manager dashboard that shows a list of all users, the current day's bookings, and occupancy percentage<br>
-Manager can search for user by name and POST bookings for user for a selected date<br>
-Booking a room for a user will update all analytics on dashboard<br>
+- Manager can login and access manager dashboard that shows a list of all users, the current day's bookings, and occupancy percentage
+- Manager can search for user by name and POST bookings for user for a selected date
+- Booking a room for a user will update all analytics on dashboard<br>
 ![alt text](https://media.giphy.com/media/O5LZjGn18rMwh66Tib/giphy.gif "Manager dashboard demo")
 
 Manager can DELETE bookings, which updates all analytics on dashboard<br>
