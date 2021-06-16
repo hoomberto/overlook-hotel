@@ -44,7 +44,8 @@ import {
   renderDatePicker,
   displayPageLevelError,
   updateHeader,
-  unsuccessfulLogin } from './domUpdates'
+  unsuccessfulLogin,
+  closeAboutModal } from './domUpdates'
 
 // CSS
 import './css/base.scss';
@@ -269,6 +270,15 @@ document.body.addEventListener('click', (event) => {
 
   if (event.target.closest('.delete-as-manager')) {
     deleteBooking(event)
+  }
+
+  if (event.target.closest('.about-page')) {
+    let aboutUs = document.getElementById('aboutUs')
+    aboutUs.style.display = "flex";
+  }
+
+  if (event.target.closest('.close-about')) {
+    closeAboutModal();
   }
 })
 

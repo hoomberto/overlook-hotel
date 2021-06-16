@@ -97,7 +97,7 @@ export const displayAvailableRooms = (hotel, element) => {
       </div>
       <button class="info-btn" name="info">More Info</button
       <div>
-      <img src="./images/${imgClass}.jpg" alt="hotel-room-photo" />
+      <img src="./images/${imgClass}.jpg" alt="${imgClass}-photo" />
       </div>
       </article>
       `
@@ -316,6 +316,10 @@ export const closeModal = () => {
   document.getElementById("userInputModal").style.display = "none"
 }
 
+export const closeAboutModal = () => {
+  document.getElementById("aboutUs").style.display = "none"
+}
+
 export const closeManagerModal = () => {
   document.getElementById("managerModal").style.display = "none"
 }
@@ -468,6 +472,7 @@ export const displayPageLevelError = (err) => {
   <h2>Technical Difficulties - try again later!</h2>
   `
   let notifierText = document.getElementById('notifier');
+  notifierText.classList.add('error')
   notifierText.innerText = "";
   notifierText.innerText += `Sorry, we're having some trouble - Please try again later!`
   console.log(err)
@@ -487,6 +492,7 @@ export const updateHeader = (element) => {
 
 export const unsuccessfulLogin = () => {
   let notifierText = document.getElementById('notifier');
+  notifierText.classList.add('error')
   notifierText.innerText = "";
   notifierText.innerText += `Unsuccessful Login - Please try again`
 }
