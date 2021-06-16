@@ -7,9 +7,8 @@
 
 .hotel-data,
 .users-data {
-  display: flex;
+  @include flex-column();
   height: 100vh;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }

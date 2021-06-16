@@ -27,7 +27,7 @@
   .booking-section {
     order: 1;
     margin-bottom: 21%;
-    width: 68%;
+    width: 85%;
   }
 
   .user-dashboard {
@@ -40,15 +40,11 @@
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: 1fr;
     height: 400px;
-    // margin-top: -31%;
   }
-  //
-  // #availableRoomsSection {
-  //   grid-template-columns: repeat(1, 1fr);
-  //   grid-template-rows: 1fr;
-  //   height: 400px;
-  //   margin-top: -31%;
-  // }
+
+  main section {
+    transform: translate(13px, 107px);
+  }
 
   .manager {
     flex-direction: column;
@@ -60,15 +56,17 @@
     height: auto;
     padding: 5% 0;
   }
-  //
-  // .hotel-data {
-  //   background: $login-grad;
-  //   width: 35%;
-  //   border-right: 8px solid white;
-  // }
-  //
-  // .users-data {
-  //   background: $main-grad;
-  //   width: 65%;
-  // }
+
+  .login-form {
+    width: 90%;
+    padding: 3%;
+  }
+
+  nav h1 {
+    transform: translateX(-30px);
+  }
+
+  .user-booking-section {
+    width: 300%;
+  }
 }
