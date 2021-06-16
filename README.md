@@ -55,6 +55,10 @@ Site is designed with accessibility in mind, passing the dev console lighthouse 
 
 ## Contributors
 [Bobby Vasquez](https://github.com/hoomberto/)<br>
+[Dean Cook](https://github.com/novaraptur/)<br>
+
+Project Manager:<br>
+[Hannah Hudson](https://github.com/hannahhch/)
 
 ## Technologies Used
 JavaScript<br>
