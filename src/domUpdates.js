@@ -334,8 +334,8 @@ export const renderDeleteModal = (modal, manager) => {
   manager.currentToDelete = id;
   modal.style.display = 'flex'
   modal.innerHTML += `
-  <article class='user-input-content'>
-    <h2>Are you sure you want to delete booking ${id}?<h2>
+  <article class='user-input-content delete-modal'>
+    <h2>Are you sure you want to delete booking ${id}?</h2>
     <button class="delete-as-manager">DELETE BOOKING</button>
     <button class="close-modal close-delete-modal">CLOSE</button>
   </article>
