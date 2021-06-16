@@ -22,18 +22,13 @@ import {
   displayAvailableRooms,
   renderRoomTypes,
   renderFilter,
-  renderDefaultDate,
   updateAvailableRooms,
   updateUserUpcomingBookings,
   renderAllUsers,
-  displayUserDashboard,
   hideLoginShowManager,
   hide,
   show,
-  resetManagerDashboard,
   displayManagerDashBoard,
-  resetSearch,
-  resetUserInfo,
   renderManagerModal,
   closeModal,
   closeManagerModal,
@@ -41,11 +36,11 @@ import {
   renderDeleteModal,
   renderModal,
   renderSearch,
-  renderDatePicker,
   displayPageLevelError,
   updateHeader,
   unsuccessfulLogin,
-  closeAboutModal } from './domUpdates'
+  closeAboutModal
+} from './domUpdates'
 
 // CSS
 import './css/base.scss';
@@ -71,10 +66,8 @@ const loginBtn = document.getElementById('loginBtn');
 const roomTypeFilter = document.getElementById('typeFilter');
 const datePicker = document.getElementById('dateSelector');
 const availableText = document.getElementById('availableText');
-const availableSection = document.getElementById('availableRoomsSection');
 const userSearch = document.getElementById('userSearch')
 const searchBtn = document.getElementById('searchBtn');
-const searchResults = document.getElementById('searchResults')
 
 // FETCH / GET
 
@@ -90,7 +83,6 @@ const getUser = (id) => {
 
 const retrieveFreshManagerData = (found) => {
   apiCalls.getData().then(data => {
-
     let customerData = data[0];
     let bookingsData = data[1];
     let roomsData = data[2];
@@ -112,7 +104,7 @@ const retrieveFreshManagerData = (found) => {
       renderSearch(found.name, currentManager)
     }
   })
-  .catch(err => displayPageLevelError(err))
+    .catch(err => displayPageLevelError(err))
 }
 
 const fetch = (id) => {
@@ -140,7 +132,7 @@ const fetch = (id) => {
     renderRoomTypes(hotel)
     getUser(id)
   })
-  .catch(err => displayPageLevelError(err))
+    .catch(err => displayPageLevelError(err))
 }
 
 // Login Form
@@ -158,11 +150,9 @@ const login = (event) => {
   let id = parseInt(userCheck[1])
   if (userCheck[0] === 'custome' && (id > 0 && id < 51) && passwordMatch) {
     fetch(id);
-  }
-  else if (username === 'manager' && passwordMatch) {
+  } else if (username === 'manager' && passwordMatch) {
     loginManager();
-  }
-  else {
+  } else {
     unsuccessfulLogin();
     return
   }
@@ -180,8 +170,8 @@ const deleteBooking = () => {
 
 const bookRoom = (event) => {
   let bookingInfo = event.target.previousElementSibling
-  .previousElementSibling
-  .previousElementSibling;
+    .previousElementSibling
+    .previousElementSibling;
   let bookingDate = event.target.previousElementSibling.innerText.split('for: ')[1];
   let formattedDate = dayjs(bookingDate).format("YYYY/MM/DD");
   let roomNum = bookingInfo.children[0].innerText.split(': ')[1]
@@ -207,8 +197,8 @@ const bookRoom = (event) => {
 
 const bookRoomAsManager = (event) => {
   let bookingInfo = event.target.previousElementSibling
-  .previousElementSibling
-  .previousElementSibling;
+    .previousElementSibling
+    .previousElementSibling;
 
   let bookingDate = document.getElementById('datePick').value;
   let formattedDate = dayjs(bookingDate).format("YYYY/MM/DD");
@@ -232,7 +222,7 @@ const bookRoomAsManager = (event) => {
 document.body.addEventListener('click', (event) => {
 
   if (
-  event.target.closest(".close-modal") || !event.target.closest(".user-input-modal")) {
+    event.target.closest(".close-modal") || !event.target.closest(".user-input-modal")) {
     closeModal()
   }
 
@@ -323,7 +313,7 @@ roomTypeFilter.addEventListener('change', () => {
   let displayDate = dayjs(selectedDate).format('LL')
   if (!filtered.length) {
     availableText.innerText = "";
-    availableText.innerText +=`
+    availableText.innerText += `
     We're sorry! We're currently out of this room type for this date, please try another.`;
     renderFilter(filtered)
     return

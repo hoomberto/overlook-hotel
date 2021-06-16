@@ -58,8 +58,7 @@ class User {
     if (isCurrentBooking) {
       this.bookings.current.push(booking)
       return
-    }
-    else {
+    } else {
       this.bookings.future.push(booking)
       return
     }
@@ -79,13 +78,15 @@ class User {
       let count = this.bookings.past.reduce((acc, currentVal) => {
         let typeOfRoom = currentVal.roomType;
         if (!acc[typeOfRoom]) {
-          acc[typeOfRoom] = {type: typeOfRoom, count: 0};
+          acc[typeOfRoom] = {
+            type: typeOfRoom,
+            count: 0
+          };
         }
         acc[typeOfRoom].count++;
         return acc
       }, {})
-      let preferred = Object.values(count)
-      .sort((a, b) => a.count > b.count ? -1 : 1)[0];
+      let preferred = Object.values(count).sort((a, b) => a.count > b.count ? -1 : 1)[0];
       this.roomPreference = preferred.type;
     }
   }

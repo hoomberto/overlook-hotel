@@ -11,11 +11,9 @@ class Calendar {
     let currentYear = this.currentDate.split('/')[0];
     if (inputYear > currentYear) {
       return false
-    }
-    else if (inputYear < currentYear) {
+    } else if (inputYear < currentYear) {
       return true
-    }
-    else {
+    } else {
       if (dayjs(inputDate).dayOfYear() < dayjs(this.currentDate).dayOfYear()) {
         return true
       }

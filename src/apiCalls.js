@@ -25,23 +25,22 @@ const postBooking = (newBooking) => {
   let url = 'http://localhost:3001/api/v1/bookings/'
   fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(newBooking)
-  })
-  .then(checkResponse);
+  }).then(checkResponse);
 }
 
 const checkResponse = (response) => {
   if (response.ok) {
     return response.json();
-  }
-  else {
+  } else {
     console.log(response.status)
     if (response.status === 422) {
       let error = new Error('Bad Post Request')
       throw error;
-    }
-    else {
+    } else {
       let error = new Error('Something went wrong')
       throw error
     }
@@ -51,14 +50,12 @@ const checkResponse = (response) => {
 const checkDeleteResponse = (response) => {
   if (response.ok) {
     return response.json();
-  }
-  else {
+  } else {
     console.log(response.status)
     if (response.status === 422) {
       let error = new Error('Bad Post Request')
       throw error;
-    }
-    else {
+    } else {
       let error = new Error('Something went wrong')
       let message = `${error.message}`;
       alert(message)
@@ -71,9 +68,10 @@ const deleteBooking = (bookingID) => {
   let url = 'http://localhost:3001/api/v1/bookings/'
   fetch(url + bookingID, {
     method: 'DELETE',
-    headers: { "Content-Type": "application/json" },
-  })
-  .then(checkDeleteResponse);
+    headers: {
+      "Content-Type": "application/json"
+    },
+  }).then(checkDeleteResponse);
 }
 
 
@@ -81,4 +79,9 @@ const deleteBooking = (bookingID) => {
 const getData = () => {
   return Promise.all([fetchCustomersData(), fetchBookingsData(), fetchRoomsData()])
 }
-export default { getData, fetchUser, postBooking, deleteBooking }
+export default {
+  getData,
+  fetchUser,
+  postBooking,
+  deleteBooking
+}
