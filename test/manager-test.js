@@ -120,28 +120,30 @@ describe('Manager', () => {
       id: 1,
       name: 'Nerdo',
       bookings: { past: [
-      {
-        id: 'two',
+        {
+          id: 'two',
+          userID: 1,
+          date: '2020/01/24',
+          roomNumber: 2,
+          roomServiceCharges: [],
+          roomType: 'single room',
+          cost: 477.38
+        }
+      ],
+      present: [],
+      future: [{
+        id: 'one',
         userID: 1,
-        date: '2020/01/24',
-        roomNumber: 2,
+        date: '2052/01/22',
+        roomNumber: 3,
         roomServiceCharges: [],
         roomType: 'single room',
-        cost: 477.38
+        cost: 491.14
       }
-    ],
-    present: [],
-    future: [{
-      id: 'one',
-      userID: 1,
-      date: '2052/01/22',
-      roomNumber: 3,
-      roomServiceCharges: [],
-      roomType: 'single room',
-      cost: 491.14
-    }]},
-    roomPreference: 'single room',
-    spent: '968.52'
+      ]
+      },
+      roomPreference: 'single room',
+      spent: '968.52'
     });
   });
 

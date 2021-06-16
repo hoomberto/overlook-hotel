@@ -102,8 +102,7 @@ export const displayAvailableRooms = (hotel, element) => {
       </article>
       `
     });
-  }
-  else {
+  } else {
     element.innerHTML += `
     <h2>We're sorry! There are no rooms available for this date, please try selecting another date.</h2>
     `
@@ -168,8 +167,7 @@ export const updateAvailableRooms = (hotel, date, element) => {
       </article>
       `
     });
-  }
-  else {
+  } else {
     element.innerHTML += `
     <h2>We're sorry! There are no rooms available for this date, please try selecting another date.</h2>
     `
@@ -199,7 +197,7 @@ export const renderAllUsers = (manager) => {
 
 // USER DASHBOARD
 
-export const displayUserDashboard = () => {
+export const displayUserDashboard = (hotel) => {
   show(document.querySelector('main'))
   show(document.querySelector('nav'))
   hide(document.getElementById('login'))
@@ -279,7 +277,6 @@ const makeChangeable = (element, manager) => {
   element.addEventListener('change', () => {
     let selectedDate = element.value;
     let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
-    let displayDate = dayjs(selectedDate).format('LL')
     updateAvailableRooms(manager.hotel, formatted, document.getElementById('availableForUsers'));
     document.querySelectorAll("button[name='info']").forEach(element => {
       element.name = 'infoManager'
@@ -393,7 +390,6 @@ export const renderSearch = (searchValue, manager) => {
   resetUserInfo();
 
   let found = manager.searchForUser(searchValue)
-  let searchResults = document.getElementById('searchResults')
   let userInfo = document.getElementById('userSearchInfo')
   let pastBookings = document.getElementById('userPastSearchInfo')
   let upcomingBookings = document.getElementById('userUpcomingSearchInfo')
@@ -480,8 +476,8 @@ export const displayPageLevelError = (err) => {
 
 export const updateHeader = (element) => {
   let selectedDate = element.value;
-  let formatted = dayjs(selectedDate).format("YYYY/MM/DD")
   let displayDate = dayjs(selectedDate).format('LL')
+  let availableText = document.getElementById('availableText')
   availableText.innerText = "";
   availableText.innerText += `Thank you for booking with us!`
   setTimeout(function() {

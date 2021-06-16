@@ -49,15 +49,14 @@ class Manager extends User {
   }
 
   deleteBooking(bookingID) {
-    let found = this.hotel.bookings.find(booking => booking.id == bookingID);
+    let found = this.hotel.bookings.find(booking => booking.id === bookingID);
     if (!found) {
       return
     }
     let isPastBooking = this.hotel.calendar.checkIfPastBooking(found.date);
     if (isPastBooking) {
       return
-    }
-    else {
+    } else {
       let updated = this.hotel.bookings.filter(booking => booking.id !== bookingID)
       this.hotel.bookings = updated
 
@@ -71,7 +70,7 @@ class Manager extends User {
   searchForUser(search) {
     let formattedSearch = search.toLowerCase();
     let foundUser = this.hotel.customers.find(customer => customer.name
-    .toLowerCase().split(' ').includes(formattedSearch) || customer.name.toLowerCase() === formattedSearch)
+      .toLowerCase().split(' ').includes(formattedSearch) || customer.name.toLowerCase() === formattedSearch)
     this.retrieveUserInfo(foundUser)
     this.currentSearch = "";
     this.currentSearch = foundUser;

@@ -16,18 +16,9 @@ class Hotel {
     }
   }
 
-  // checkIfRoomAvailable(number, date) {
-  //   let roomsOnDay = this.checkAvailability(date);
-  //   let bookedRoom = roomsOnDay.bookedRooms.find(room => room.number === number)
-  //   if (bookedRoom) {
-  //     return false
-  //   }
-  //   return true
-  // }
-
   filterByType(type, date) {
     return this.checkAvailability(date).availableRooms
-    .filter(room => room.roomType === type)
+      .filter(room => room.roomType === type)
   }
 
   addBooking(newBooking) {
@@ -36,8 +27,7 @@ class Hotel {
     let isCurrentBooking = this.calendar.checkIfCurrentBooking(newBooking.date)
     if (isCurrentBooking) {
       found.bookings.present.push(newBooking)
-    }
-    else {
+    } else {
       found.bookings.future.push(newBooking)
     }
   }
@@ -55,15 +45,17 @@ class Hotel {
   }
 
   uniqueRoomTypes() {
-    return this.rooms.reduce((acc, currentVal, index) => {
-      let roomInfo = { type: currentVal.roomType, price: currentVal.costPerNight}
+    return this.rooms.reduce((acc, currentVal) => {
+      let roomInfo = {
+        type: currentVal.roomType,
+        price: currentVal.costPerNight
+      }
       if (!acc.some(room => room.type === roomInfo.type)) {
         acc.push(roomInfo)
       }
       return acc
     }, [])
   }
-
 
   resetCustomerData() {
     this.customers.forEach(customer => {
@@ -82,11 +74,9 @@ class Hotel {
           let isCurrentBooking = this.calendar.checkIfCurrentBooking(booking.date)
           if (isPastBooking) {
             user.bookings.past.push(booking)
-          }
-          else if (isCurrentBooking) {
+          } else if (isCurrentBooking) {
             user.bookings.present.push(booking)
-          }
-          else {
+          } else {
             user.bookings.future.push(booking)
           }
         }
@@ -94,7 +84,5 @@ class Hotel {
     })
   }
 }
-
-// Hotel should hold onto all data pulled into API, will serve as repo
 
 export default Hotel;
