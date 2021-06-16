@@ -19,10 +19,15 @@
     flex-direction: column;
   }
 
+  img {
+    width: 100px;
+    height: 100px;
+  }
+
   .booking-section {
     order: 1;
     margin-bottom: 21%;
-    width: 68%;
+    width: 85%;
   }
 
   .user-dashboard {
@@ -32,12 +37,36 @@
 
   .available-rooms-section {
     margin-top: 10%;
-  }
-
-  #availableRoomsSection {
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: 1fr;
     height: 400px;
-    margin-top: -31%;
+  }
+
+  main section {
+    transform: translate(13px, 107px);
+  }
+
+  .manager {
+    flex-direction: column;
+  }
+
+  .hotel-data,
+  .users-data {
+    width: 100%;
+    height: auto;
+    padding: 5% 0;
+  }
+
+  .login-form {
+    width: 90%;
+    padding: 3%;
+  }
+
+  nav h1 {
+    transform: translateX(-30px);
+  }
+
+  .user-booking-section {
+    width: 300%;
   }
 }
