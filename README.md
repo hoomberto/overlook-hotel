@@ -7,7 +7,7 @@ Turing 2103 FE Final Solo Project
 * [Features](#Features)
 * [Future Additions](#Future-Additions)
 * [Contributors](#Contributors)
-* [Languages](#Technologies-Used)
+* [Technologies Used](#Technologies-Used)
 
 ## Introduction
 This is an interactive website that is meant to demonstrate an understanding of object-oriented programming, test-driven development, class interaction, and working with an API. 
